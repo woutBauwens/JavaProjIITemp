@@ -16,7 +16,7 @@ import javax.xml.transform.Result;
 public class SQLConnection {
     
     private static Connection con;
-    private final String url = "jdbc:sqlserver://LocalHost:1433;DatabaseName=GBDB;user=Login;password=1234";
+    private final String url = "jdbc:sqlserver://0.0.0.0:1433;DatabaseName=GBDB;user=Login;password=1234";
     
     private SQLConnection() throws SQLException, ClassNotFoundException{
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
