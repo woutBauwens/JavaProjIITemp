@@ -24,7 +24,7 @@ public class SQLConnection {
         System.out.println("You are now connected to the server.");
     }
     
-    public static Connection connect() throws SQLException, ClassNotFoundException{
+    public static Connection getConnection() throws SQLException, ClassNotFoundException{
         if(con == null)
             new SQLConnection();
         
