@@ -39,7 +39,7 @@ public class LoginUser {
 
     public LoginUser(String email, String password) {
         this();
-        Lector l = em.createQuery("SELECT c.* FROM ContactPersoonc WHERE c.Discriminator IS Lector AND c.EmailContactPersoon IS LIKE :email", Lector.class).setParameter(0, email).getSingleResult();
+        Lector l = em.createQuery("SELECT c.* FROM ContactPersoon c WHERE c.Discriminator = 'Lector' AND c.EmailContactPersoon = :email", Lector.class).setParameter(0, email).getSingleResult();
         if (l == null) {
             throw new IllegalArgumentException("De lector kan niet gevonden worden.");
         } else {
