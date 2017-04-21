@@ -5,14 +5,15 @@
  */
 package domein;
 
-import java.util.List;
-
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  *
- * @author BelgoBits
+ * @author Jonas
  */
-public class Lector extends ContactPersoon{
-    private List<GBGroep> groepen;
+@Entity
+@Table(name="Activiteit")
+public abstract class Activiteit {
     
 }

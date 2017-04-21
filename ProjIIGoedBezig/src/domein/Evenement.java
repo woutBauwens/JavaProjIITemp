@@ -5,14 +5,10 @@
  */
 package domein;
 
-import java.util.List;
-
-
 /**
  *
- * @author BelgoBits
+ * @author Jonas
  */
-public class Lector extends ContactPersoon{
-    private List<GBGroep> groepen;
+public class Evenement extends Activiteit{
     
 }
