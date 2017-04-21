@@ -5,61 +5,60 @@
  */
 package Persistentie;
 
+import domein.ContactPersoon;
 import domein.Lector;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
-import jdk.nashorn.internal.ir.annotations.Ignore;
-import util.JPAUtil;
+import javax.persistence.Transient;
 
 /**
  *
  * @author BelgoBits
  */
-
-
 @Entity
 @Table(name = "JavaUser")
 public class LoginUser implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LectorId")
-    private int id;
+    private int UserId;
+    
     private String password; // voorlopig simpel hashing later
-    
-    @PersistenceContext
+
+    @Transient
     private final EntityManager em;
-    
+
     //@NamedQuery(name = "LectorByEmail", query = "SELECT c FROM ContactPersoon c WHERE c.Discriminator = 'Lector' AND c.EmailContactPersoon = :email;")
-    
     private LoginUser() {
         em = SQLConnection.getManager();
     }
 
     public LoginUser(String email, String password) {
         this();
-        Lector l = em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email;", Lector.class).setParameter("email", email).getSingleResult();
+        ContactPersoon l = em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :mail", Lector.class).setParameter("mail", email).getSingleResult();
         if (l == null) {
             throw new IllegalArgumentException("De lector kan niet gevonden worden.");
         } else {
-            getUserById(l.getId());
+            UserId = l.getId();
+            validate(password);
         }
     }
 
-    private void getUserById(int id) {
-        LoginUser u = em.createQuery("SELECT u.* FROM LoginUser u WHERE u.id == :id", LoginUser.class).setParameter(0, id).getSingleResult();
-        if(password.equals(u.password)){
-            
-        } else {
-            throw new IllegalArgumentException("Het paswoord komt niet overeen met het email adresss.");
+    private void validate(String p){
+        try {
+            String pass = em.createQuery("SELECT u FROM LoginUser u WHERE u.UserId = :id", LoginUser.class).setParameter(0, UserId).getSingleResult().password;
+            if (p.equals(pass)) {
+                password = p;
+            } else {
+                throw new IllegalArgumentException("Het paswoord komt niet overeen met het email adresss.");
+            }
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("De gebruiker is nog niet geregistreerd.");
         }
+        
     }
 }

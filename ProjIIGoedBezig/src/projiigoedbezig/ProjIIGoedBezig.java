@@ -11,8 +11,12 @@ import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -32,6 +36,7 @@ public class ProjIIGoedBezig extends Application {
         TextField username = new TextField("email");
         TextField password = new PasswordField();
         Button btn = new Button();
+        Label error = new Label();
         btn.setText("Login");
         btn.setOnAction(new EventHandler<ActionEvent>() {
             
@@ -41,18 +46,18 @@ public class ProjIIGoedBezig extends Application {
                     LoginUser user = new LoginUser(username.getText(), password.getText());
                     
                 } catch (IllegalArgumentException e){
-                    System.err.println(e.getMessage());
+                    error.setText(e.getMessage());
                 }
             }
         });
         
         StackPane root = new StackPane();
-        VBox login = new VBox(username, password, btn);
+        VBox login = new VBox(username, password, btn, error);
         root.getChildren().add(login);
         
-        Scene scene = new Scene(root, 300, 250);
+        Scene scene = new Scene(root, 600, 500);
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Login");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
