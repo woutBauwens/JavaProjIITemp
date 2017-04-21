@@ -7,7 +7,9 @@ package Persistentie;
 
 
 import java.sql.*;
+import javax.persistence.EntityManager;
 import javax.xml.transform.Result;
+import util.JPAUtil;
 
 /** 
  *
@@ -17,10 +19,13 @@ public class SQLConnection {
     
     private static Connection con;
     private final String url = "jdbc:sqlserver://0.0.0.0:1433;DatabaseName=GBDB;user=Login;password=1234";
+    private static EntityManager em;
+
     
     private SQLConnection() throws SQLException, ClassNotFoundException{
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         con = DriverManager.getConnection(url);
+        em = JPAUtil.getEntityManagerFactory().createEntityManager();
         System.out.println("You are now connected to the server.");
     }
     
@@ -29,5 +34,9 @@ public class SQLConnection {
             new SQLConnection();
         
         return con;
+    }
+    
+    public static EntityManager getManager(){
+        return em;
     }
 }

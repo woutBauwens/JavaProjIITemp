@@ -6,12 +6,15 @@
 package Persistentie;
 
 import domein.Lector;
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import util.JPAUtil;
@@ -20,9 +23,11 @@ import util.JPAUtil;
  *
  * @author BelgoBits
  */
+
+
 @Entity
 @Table(name = "JavaUser")
-public class LoginUser {
+public class LoginUser implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,16 +35,18 @@ public class LoginUser {
     private int id;
     private String password; // voorlopig simpel hashing later
     
-    @Ignore
+    @PersistenceContext
     private final EntityManager em;
-
+    
+    //@NamedQuery(name = "LectorByEmail", query = "SELECT c FROM ContactPersoon c WHERE c.Discriminator = 'Lector' AND c.EmailContactPersoon = :email;")
+    
     private LoginUser() {
-        em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        em = SQLConnection.getManager();
     }
 
     public LoginUser(String email, String password) {
         this();
-        Lector l = em.createQuery("SELECT c.* FROM ContactPersoon c WHERE c.Discriminator = 'Lector' AND c.EmailContactPersoon = :email", Lector.class).setParameter(0, email).getSingleResult();
+        Lector l = em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email;", Lector.class).setParameter("email", email).getSingleResult();
         if (l == null) {
             throw new IllegalArgumentException("De lector kan niet gevonden worden.");
         } else {

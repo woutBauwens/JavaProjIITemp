@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -29,7 +30,7 @@ public class ProjIIGoedBezig extends Application {
     public void start(Stage primaryStage) {
         connect();
         TextField username = new TextField("email");
-        TextField password = new TextField("paswoord");
+        TextField password = new PasswordField();
         Button btn = new Button();
         btn.setText("Login");
         btn.setOnAction(new EventHandler<ActionEvent>() {

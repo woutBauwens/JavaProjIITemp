@@ -5,10 +5,12 @@
  */
 package domein;
 
+
 /**
  *
  * @author BelgoBits
  */
 public class Lector extends ContactPersoon{
+    
     
 }

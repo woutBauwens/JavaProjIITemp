@@ -5,19 +5,34 @@
  */
 package domein;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  *
  * @author BelgoBits
  */
-public class ContactPersoon {
 
-    protected int id;
+@Entity
+@Table(name = "ContactPersoon")
+public class ContactPersoon implements Serializable{
+
+    @Id
+    protected int ContactPersoonId;
+    
+    protected String EmailContactPersoon;
+    protected String Functie;
+    protected String NaamContactPersoon;
+    protected String VoornaamContactPersoon;
+    
 
     public ContactPersoon(){
         
     }
     
     public int getId() {
-        return id;
+        return ContactPersoonId;
     }
 }
