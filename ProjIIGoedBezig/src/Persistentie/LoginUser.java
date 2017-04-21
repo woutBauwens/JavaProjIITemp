@@ -50,13 +50,13 @@ public class LoginUser implements Serializable {
 
     private void validate(String p){
         try {
-            String pass = em.createQuery("SELECT u FROM LoginUser u WHERE u.UserId = :id", LoginUser.class).setParameter(0, UserId).getSingleResult().password;
+            String pass = em.createQuery("SELECT u FROM LoginUser u WHERE u.UserId = :id", LoginUser.class).setParameter("id", UserId).getSingleResult().password;
             if (p.equals(pass)) {
                 password = p;
             } else {
                 throw new IllegalArgumentException("Het paswoord komt niet overeen met het email adresss.");
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException("De gebruiker is nog niet geregistreerd.");
         }
         
