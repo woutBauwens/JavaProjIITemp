@@ -5,7 +5,7 @@
  */
 package main;
 
-import gui.LoginLectorOrganisatieController;
+import gui.LoginController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,7 +22,7 @@ public class StartUp extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        LoginLectorOrganisatieController root = new LoginLectorOrganisatieController();
+        LoginController root = new LoginController();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
