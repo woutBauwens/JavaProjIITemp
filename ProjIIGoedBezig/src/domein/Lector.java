@@ -22,6 +22,7 @@ public class Lector extends ContactPersoon {
         em = SQLConnection.getManager();
         ContactPersoonId = id;
         groepen = em.createQuery("SELECT g FROM Groep g WHERE g.HoofdLectorContactPersoonId = :lectorId", Groep.class).setParameter("lectorId", id).getResultList();
+        
     }
 
     public List<Groep> getGroepenByLector() {
