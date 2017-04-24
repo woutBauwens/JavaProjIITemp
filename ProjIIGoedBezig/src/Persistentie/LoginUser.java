@@ -42,6 +42,7 @@ public class LoginUser implements Serializable {
     }
 
     public LoginUser(String email, String password) {
+       
         this();
         lector = new Lector(
                 em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :mail"
@@ -52,6 +53,7 @@ public class LoginUser implements Serializable {
             UserId = lector.getId();
             validate(password);
         }
+        
     }
 
     private void validate(String p){
