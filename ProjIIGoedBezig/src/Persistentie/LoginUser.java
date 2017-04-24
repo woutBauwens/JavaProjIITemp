@@ -54,6 +54,7 @@ public class LoginUser implements Serializable {
                         , ContactPersoon.class).setParameter("mail", email).getSingleResult().getId());
         }catch( NoResultException ex){
             throw new NoResultException("Ongeldige Login");
+
         }
         UserId = lector.getId();
         validate(password);
