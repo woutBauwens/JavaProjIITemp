@@ -50,7 +50,7 @@ public class LoginUser implements Serializable {
 
         try{
         lector = new Lector(
-                em.createQuery("SELECT c from  c WHERE c.EmailContactPersoon = :mail"
+                em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :mail"
                         , ContactPersoon.class).setParameter("mail", email).getSingleResult().getId());
         }catch( NoResultException ex){
             throw new NoResultException("Ongeldige Login");
