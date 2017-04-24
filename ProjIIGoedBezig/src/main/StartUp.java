@@ -24,7 +24,9 @@ public class StartUp extends Application {
     public void start(Stage primaryStage) {
         LoginController root = new LoginController();
         Scene scene = new Scene(root);
+        
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Log in:");
         primaryStage.show();
     }
 

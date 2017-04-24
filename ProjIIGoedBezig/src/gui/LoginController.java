@@ -32,7 +32,7 @@ public class LoginController extends Pane {
 
     public LoginController() {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginController.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
         loader.setRoot(this);
         loader.setController(this);
         try {
