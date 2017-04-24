@@ -21,7 +21,7 @@ import jdk.nashorn.internal.ir.annotations.Ignore;
 public class Motivatie {
 
     @Id
-    private int Id;
+    private int MotivatieId;
     private String tekst;
     private String feedback;
 
@@ -34,7 +34,7 @@ public class Motivatie {
     }
     
     public Motivatie(int id){
-         em.createQuery("SELECT o FROM Motivatie o WHERE o.Id = :id", Motivatie.class).setParameter(0, Id).getSingleResult();
+         em.createQuery("SELECT o FROM Motivatie o WHERE o.MotivatieId = :id", Motivatie.class).setParameter("id", MotivatieId).getSingleResult();
     }
     
 
