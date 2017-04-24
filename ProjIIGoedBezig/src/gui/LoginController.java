@@ -6,6 +6,7 @@
 package gui;
 
 import Persistentie.LoginUser;
+import domein.DomeinController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,6 +26,8 @@ import javafx.scene.layout.Pane;
  */
 public class LoginController extends Pane {
 
+    
+    
     @FXML
     private TextField userNameTxtField;
     @FXML
@@ -34,8 +37,10 @@ public class LoginController extends Pane {
     @FXML
     private Label errorLbl;
 
-    public LoginController() {
-
+    private final DomeinController dc;
+    
+    public LoginController(DomeinController dc) {
+        this.dc = dc;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -50,10 +55,13 @@ public class LoginController extends Pane {
     private void LogIn(ActionEvent event) {
         try {
                     LoginUser user = new LoginUser(userNameTxtField.getText(), passwordTxtField.getText());
+                    
                     //OverViewScreen(user);//controller volgende scherm
                 } catch (Exception e) {
                     errorLbl.setText(e.getMessage());
                 }
+        //dc.setUser(); lector setten zodat kan meegegeven worden et dc naar volgend scherm
+          GroepOverzichtController GOC = new GroepOverzichtController(dc);
     }
 
 }

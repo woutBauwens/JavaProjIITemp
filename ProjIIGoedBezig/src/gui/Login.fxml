@@ -10,10 +10,10 @@
 <fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="489.0" type="Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="userNameTxtField" layoutX="113.0" layoutY="35.0" />
-      <TextField fx:id="passwordTxtField" layoutX="113.0" layoutY="90.0" />
       <Button fx:id="logInButton" layoutX="113.0" layoutY="141.0" mnemonicParsing="false" onAction="#LogIn" text="Log In" />
       <Text layoutX="35.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
       <Text layoutX="35.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password: " />
-      <Label fx:id="errorLbl" layoutX="113.0" layoutY="180.0" prefHeight="21.0" prefWidth="193.0" />
+      <Label fx:id="errorLbl" layoutX="113.0" layoutY="180.0" prefHeight="21.0" prefWidth="360.0" />
+      <PasswordField fx:id="passwordTxtField" layoutX="113.0" layoutY="90.0" />
    </children>
 </fx:root>

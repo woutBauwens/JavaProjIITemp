@@ -6,6 +6,7 @@
 package Persistentie;
 
 import domein.ContactPersoon;
+import domein.DomeinController;
 import domein.Groep;
 import domein.Lector;
 import java.io.Serializable;
@@ -28,40 +29,39 @@ public class LoginUser implements Serializable {
 
     @Id
     private int UserId;
-    
+
     private String password; // voorlopig simpel hashing later
 
     @Transient
     private final EntityManager em;
-    
+
     @Transient
     private Lector lector;
 
+    
+    
     //@NamedQuery(name = "LectorByEmail", query = "SELECT c FROM ContactPersoon c WHERE c.Discriminator = 'Lector' AND c.EmailContactPersoon = :email;")
     protected LoginUser() {
         em = SQLConnection.getManager();
     }
 
     public LoginUser(String email, String password) {
-       
         this();
+
         try{
         lector = new Lector(
                 em.createQuery("SELECT c from  c WHERE c.EmailContactPersoon = :mail"
                         , ContactPersoon.class).setParameter("mail", email).getSingleResult().getId());
         }catch( NoResultException ex){
             throw new NoResultException("Ongeldige Login");
+
         }
-        if (lector == null) {
-            throw new IllegalArgumentException("De lector kan niet gevonden worden.");
-        } else {
-            UserId = lector.getId();
-            validate(password);
-        }
-        
+        UserId = lector.getId();
+        validate(password);
+        dc.setUser(lector);//subj to change
     }
 
-    private void validate(String p){
+    private void validate(String p) {
         try {
             String pass = em.createQuery("SELECT u FROM LoginUser u WHERE u.UserId = :id", LoginUser.class).setParameter("id", UserId).getSingleResult().password;
             if (p.equals(pass)) {
@@ -73,8 +73,9 @@ public class LoginUser implements Serializable {
             throw new IllegalArgumentException("De gebruiker is nog niet geregistreerd.");
         }
     }
-    
-    public List<Groep> getGroepen(){
+
+    public List<Groep> getGroepen() {
         return lector.getGroepenByLector();
     }
+    
 }

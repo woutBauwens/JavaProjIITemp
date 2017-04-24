@@ -6,6 +6,7 @@
 package main;
 
 import Persistentie.SQLConnection;
+import domein.DomeinController;
 import gui.LoginController;
 import java.sql.SQLException;
 import javafx.application.Application;
@@ -22,9 +23,11 @@ import javafx.stage.Stage;
  */
 public class StartUp extends Application {
 
+    
     @Override
     public void start(Stage primaryStage) {
-        LoginController root = new LoginController();
+        DomeinController dc = new DomeinController();
+        LoginController root = new LoginController(dc);
         Scene scene = new Scene(root);
         connect();
         primaryStage.setScene(scene);
