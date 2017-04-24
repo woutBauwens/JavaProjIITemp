@@ -8,7 +8,10 @@ package domein;
 import Persistentie.SQLConnection;
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -21,6 +24,10 @@ public class Activiteit implements Serializable {
 
     @Id
     private int ActiviteitId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "GBGroepId")
+    private Groep GBGroepId;
 
     public int getId() {
         return ActiviteitId;
@@ -35,6 +42,7 @@ public class Activiteit implements Serializable {
     }
 
     public Activiteit(int id) {
+        // GBGroepId = id;
         SQLConnection.getManager().createQuery("SELECT a FROM dbo.Activiteit a WHERE a.GBGroepId = :id;", Activiteit.class).setParameter("id", id).getResultList();
     }
 }

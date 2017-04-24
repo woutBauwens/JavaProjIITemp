@@ -8,8 +8,12 @@ package domein;
 import Persistentie.SQLConnection;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 
 /**
@@ -22,36 +26,39 @@ public class Motivatie {
 
     @Id
     private int MotivatieId;
-    private String tekst;
-    private String feedback;
-
-    @Ignore
-        private EntityManager em;
-
+    private String MotivatieTekst;
+    private String Feedback;
     
-    private Motivatie(){
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "GBGroepId")
+    private Groep GBGroepId;
+
+    @Transient
+    private EntityManager em;
+
+    private Motivatie() {
         em = SQLConnection.getManager();
     }
-    
-    public Motivatie(int id){
-         em.createQuery("SELECT o FROM Motivatie o WHERE o.MotivatieId = :id", Motivatie.class).setParameter("id", MotivatieId).getSingleResult();
+
+    public Motivatie(int id) {
+      //  GBGroepId = id;
+        em.createQuery("SELECT o FROM Motivatie o WHERE o.MotivatieId = :id", Motivatie.class).setParameter("id", MotivatieId).getSingleResult();
     }
-    
 
     public String getTekst() {
-        return tekst;
+        return MotivatieTekst;
     }
 
     public void setTekst(String tekst) {
-        this.tekst = tekst;
+        MotivatieTekst = tekst;
     }
 
     public String getFeedback() {
-        return feedback;
+        return Feedback;
     }
 
     public void setFeedback(String feedback) {
-        this.feedback = feedback;
+        Feedback = feedback;
     }
 
 }

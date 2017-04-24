@@ -25,9 +25,9 @@ public class Groep implements Serializable {
 
     @Id
     private int GBGroepId;
-    @OneToMany
+    @OneToMany(mappedBy = "GBGroepId")
     private List<Motivatie> motivaties;
-    @OneToMany
+    @OneToMany(mappedBy = "GBGroepId")
     private List<Activiteit> acties;
 
     private String naam;
@@ -43,7 +43,7 @@ public class Groep implements Serializable {
 
     public Groep(int id) {
         GBGroepId = id;
-        em.createQuery("SELECT o FROM Groep o WHERE o.GBGroepId = :id", Groep.class).setParameter("id", id).getSingleResult();
+        em.createQuery("SELECT o, m, a FROM Groep o JOIN Motivatie m ON o.GBGroepId = m.GBGroepId JOIN Activiteit a ON a.GBGroepId = o.GBGroepId WHERE o.GBGroepId = :id;", Groep.class).setParameter("id", id).getSingleResult();
         motivaties = new ArrayList<>();
         motivaties.add(new Motivatie(id));
         acties = new ArrayList<>();
@@ -52,6 +52,6 @@ public class Groep implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%s \n %s \n %s", naam,"","");//, motivaties.get(0).getTekst(), acties.get(0).getId());
+        return String.format("%s\n%s\n%s", naam,"","");//, motivaties.get(0).getTekst(), acties.get(0).getId());
     }
 }
