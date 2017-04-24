@@ -7,6 +7,7 @@ package projiigoedbezig;
 
 import Persistentie.LoginUser;
 import Persistentie.SQLConnection;
+import domein.Groep;
 import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -27,7 +28,7 @@ import javafx.stage.Stage;
 public class ProjIIGoedBezig extends Application {
 
     private Stage stage;
-    
+
     @Override
     public void start(Stage primaryStage) {
         stage = primaryStage;
@@ -76,19 +77,21 @@ public class ProjIIGoedBezig extends Application {
         root.getChildren().add(login);
 
         Scene scene = new Scene(root, 600, 500);
-        scene.getStylesheets().add("gui/GiveADayStyle.css"); 
+        scene.getStylesheets().add("gui/GiveADayStyle.css");
 
         stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();
     }
-    
-    private void OverViewScreen(LoginUser user){
-        Label groepen = new Label(user.getGroepen().toString());
+
+    private void OverViewScreen(LoginUser user) {
         StackPane root = new StackPane();
-        root.getChildren().add(groepen);
+        user.getGroepen().forEach((g) -> {
+            root.getChildren().add(new Button(g.toString()));
+        });
+
         Scene scene = new Scene(root, 600, 500);
-        
+
         stage.setTitle("Overzicht");
         stage.setScene(scene);
     }

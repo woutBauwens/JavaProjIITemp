@@ -8,31 +8,29 @@ package domein;
 import Persistentie.SQLConnection;
 import java.io.Serializable;
 import java.util.List;
-import javafx.collections.transformation.SortedList;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import jdk.nashorn.internal.ir.annotations.Ignore;
-
+import javax.persistence.Transient;
 /**
  *
  * @author Jonas
  */
 @Entity
-@Table(name = "Groep")
 public class Groep implements Serializable {
     @Id
-    private int Id;
+    private int GBGroepId;
     @OneToMany
-    private SortedList<Motivatie> motivaties;
+    private List<Motivatie> motivaties;
     @OneToMany
     private List<Activiteit> acties;
     
+    private String naam;
+    
     private int HoofdLectorContactPersoonId;
     
-    @Ignore
+    @Transient
     private EntityManager em;
     
     protected Groep(){
@@ -40,10 +38,12 @@ public class Groep implements Serializable {
     }
     
     public Groep(int id){
-         em.createQuery("SELECT o FROM Groep o WHERE o.Id = :id", Motivatie.class).setParameter(0, Id).getSingleResult();
-    }
-    public Groep(int id, int lectorId){
-         em.createQuery("SELECT o FROM Groep o WHERE o.Id = :id", Motivatie.class).setParameter(0, Id).getSingleResult();
-    }
+        GBGroepId = id;
+        em.createQuery("SELECT o FROM Groep o WHERE o.GBGroepId = :id", Motivatie.class).setParameter("id", id).getSingleResult();
+    }   
     
+    @Override
+    public String toString(){
+        return naam;
+    }
 }

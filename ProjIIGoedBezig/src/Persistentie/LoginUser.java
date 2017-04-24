@@ -33,11 +33,11 @@ public class LoginUser implements Serializable {
     @Transient
     private final EntityManager em;
     
-    @Ignore
+    @Transient
     private Lector lector;
 
     //@NamedQuery(name = "LectorByEmail", query = "SELECT c FROM ContactPersoon c WHERE c.Discriminator = 'Lector' AND c.EmailContactPersoon = :email;")
-    private LoginUser() {
+    protected LoginUser() {
         em = SQLConnection.getManager();
     }
 
