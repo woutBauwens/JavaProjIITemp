@@ -86,7 +86,7 @@ public class ProjIIGoedBezig extends Application {
     private void OverViewScreen(LoginUser user) {
         StackPane root = new StackPane();
         user.getGroepen().forEach((g) -> {
-            root.getChildren().add(new Button(g.toString()));
+            root.getChildren().add(new Label(g.toString()));
         });
 
         Scene scene = new Scene(root, 600, 500);

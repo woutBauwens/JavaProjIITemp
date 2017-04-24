@@ -52,6 +52,6 @@ public class Groep implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%s\n%s\n%s", naam,"","");//, motivaties.get(0).getTekst(), acties.get(0).getId());
+        return String.format("%s\n%s\n%s", naam, motivaties.get(0).getTekst(),acties.isEmpty()? "Geen acties": acties.get(0).getId());
     }
 }

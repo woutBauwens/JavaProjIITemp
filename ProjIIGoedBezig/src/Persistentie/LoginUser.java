@@ -58,7 +58,7 @@ public class LoginUser implements Serializable {
         }
         UserId = lector.getId();
         validate(password);
-        dc.setUser(lector);//subj to change
+      //  dc.setUser(lector);//subj to change
     }
 
     private void validate(String p) {
