@@ -5,10 +5,12 @@
  */
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -29,11 +31,19 @@ public class LoginController extends Pane {
     private Button logInButton;
 
     public LoginController() {
-        
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginController.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+        try {
+            loader.load();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @FXML
     private void LogIn(ActionEvent event) {
     }
-    
+
 }
