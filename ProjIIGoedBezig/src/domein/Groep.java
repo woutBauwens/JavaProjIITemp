@@ -6,6 +6,7 @@
 package domein;
 
 import Persistentie.SQLConnection;
+import java.io.Serializable;
 import java.util.List;
 import javafx.collections.transformation.SortedList;
 import javax.persistence.Entity;
@@ -20,8 +21,8 @@ import jdk.nashorn.internal.ir.annotations.Ignore;
  * @author Jonas
  */
 @Entity
-@Table(name = "GBGroep")
-public class GBGroep {
+@Table(name = "Groep")
+public class Groep implements Serializable {
     @Id
     private int Id;
     @OneToMany
@@ -29,16 +30,20 @@ public class GBGroep {
     @OneToMany
     private List<Activiteit> acties;
     
-    @Ignore
-        private EntityManager em;
-
+    private int HoofdLectorContactPersoonId;
     
-    private GBGroep(){
+    @Ignore
+    private EntityManager em;
+    
+    protected Groep(){
         em = SQLConnection.getManager();
     }
     
-    public GBGroep(int id){
-         em.createQuery("SELECT o FROM GBGroep o WHERE o.Id = :id", Motivatie.class).setParameter(0, Id).getSingleResult();
+    public Groep(int id){
+         em.createQuery("SELECT o FROM Groep o WHERE o.Id = :id", Motivatie.class).setParameter(0, Id).getSingleResult();
+    }
+    public Groep(int id, int lectorId){
+         em.createQuery("SELECT o FROM Groep o WHERE o.Id = :id", Motivatie.class).setParameter(0, Id).getSingleResult();
     }
     
 }

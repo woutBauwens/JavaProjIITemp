@@ -11,9 +11,6 @@ import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -79,6 +76,7 @@ public class ProjIIGoedBezig extends Application {
         root.getChildren().add(login);
 
         Scene scene = new Scene(root, 600, 500);
+        scene.getStylesheets().add("gui/GiveADayStyle.css"); 
 
         stage.setTitle("Login");
         stage.setScene(scene);
@@ -86,7 +84,12 @@ public class ProjIIGoedBezig extends Application {
     }
     
     private void OverViewScreen(LoginUser user){
+        Label groepen = new Label(user.getGroepen().toString());
+        StackPane root = new StackPane();
+        root.getChildren().add(groepen);
+        Scene scene = new Scene(root, 600, 500);
+        
         stage.setTitle("Overzicht");
-        stage.setScene(new Scene(new StackPane(), 600,500));
+        stage.setScene(scene);
     }
 }

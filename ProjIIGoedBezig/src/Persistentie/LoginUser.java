@@ -6,15 +6,16 @@
 package Persistentie;
 
 import domein.ContactPersoon;
+import domein.Groep;
 import domein.Lector;
 import java.io.Serializable;
-import javax.persistence.Column;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 
 /**
  *
@@ -31,6 +32,9 @@ public class LoginUser implements Serializable {
 
     @Transient
     private final EntityManager em;
+    
+    @Ignore
+    private Lector lector;
 
     //@NamedQuery(name = "LectorByEmail", query = "SELECT c FROM ContactPersoon c WHERE c.Discriminator = 'Lector' AND c.EmailContactPersoon = :email;")
     private LoginUser() {
@@ -39,11 +43,13 @@ public class LoginUser implements Serializable {
 
     public LoginUser(String email, String password) {
         this();
-        ContactPersoon l = em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :mail", Lector.class).setParameter("mail", email).getSingleResult();
-        if (l == null) {
+        lector = new Lector(
+                em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :mail"
+                        , ContactPersoon.class).setParameter("mail", email).getSingleResult().getId());
+        if (lector == null) {
             throw new IllegalArgumentException("De lector kan niet gevonden worden.");
         } else {
-            UserId = l.getId();
+            UserId = lector.getId();
             validate(password);
         }
     }
@@ -59,6 +65,9 @@ public class LoginUser implements Serializable {
         } catch (Exception e) {
             throw new IllegalArgumentException("De gebruiker is nog niet geregistreerd.");
         }
-        
+    }
+    
+    public List<Groep> getGroepen(){
+        return lector.getGroepenByLector();
     }
 }

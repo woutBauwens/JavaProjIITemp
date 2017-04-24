@@ -8,7 +8,6 @@ package Persistentie;
 
 import java.sql.*;
 import javax.persistence.EntityManager;
-import javax.xml.transform.Result;
 import util.JPAUtil;
 
 /** 
