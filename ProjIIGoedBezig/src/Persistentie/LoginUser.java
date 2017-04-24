@@ -47,12 +47,12 @@ public class LoginUser implements Serializable {
 
     public LoginUser(String email, String password) {
         this();
-        DomeinController dc = new DomeinController();
-        try {
-            lector = new Lector(
-                    em.createQuery("SELECT c from JavaUser c WHERE c.Lector = :mail",
-                            ContactPersoon.class).setParameter("mail", email).getSingleResult().getId());
-        } catch (NoResultException ex) {
+
+        try{
+        lector = new Lector(
+                em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :mail"
+                        , ContactPersoon.class).setParameter("mail", email).getSingleResult().getId());
+        }catch( NoResultException ex){
             throw new NoResultException("Ongeldige Login");
         }
         UserId = lector.getId();

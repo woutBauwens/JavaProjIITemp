@@ -77,7 +77,6 @@ public class ProjIIGoedBezig extends Application {
         root.getChildren().add(login);
 
         Scene scene = new Scene(root, 600, 500);
-        scene.getStylesheets().add("gui/GiveADayStyle.css");
 
         stage.setTitle("Login");
         stage.setScene(scene);

@@ -5,9 +5,13 @@
  */
 package domein;
 
+import Persistentie.SQLConnection;
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -15,21 +19,30 @@ import javax.persistence.Table;
  * @author Jonas
  */
 @Entity
-@Table(name="Activiteit")
+@Table(name = "Activiteit")
 public class Activiteit implements Serializable {
 
     @Id
-    private int id;
+    private int ActiviteitId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "GBGroepId")
+    private Groep GBGroepId;
 
     public int getId() {
-        return id;
+        return ActiviteitId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.ActiviteitId = id;
     }
-    
-    protected Activiteit(){
-        
+
+    protected Activiteit() {
+
+    }
+
+    public Activiteit(int id) {
+        // GBGroepId = id;
+        SQLConnection.getManager().createQuery("SELECT a FROM dbo.Activiteit a WHERE a.GBGroepId = :id;", Activiteit.class).setParameter("id", id).getResultList();
     }
 }
