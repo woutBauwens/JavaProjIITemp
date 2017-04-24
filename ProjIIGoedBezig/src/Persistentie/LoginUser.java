@@ -13,6 +13,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
+import javax.persistence.NoResultException;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import jdk.nashorn.internal.ir.annotations.Ignore;
@@ -42,16 +43,22 @@ public class LoginUser implements Serializable {
     }
 
     public LoginUser(String email, String password) {
+       
         this();
+        try{
         lector = new Lector(
                 em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :mail"
                         , ContactPersoon.class).setParameter("mail", email).getSingleResult().getId());
+        }catch( NoResultException ex){
+            throw new NoResultException("Ongeldige Login");
+        }
         if (lector == null) {
             throw new IllegalArgumentException("De lector kan niet gevonden worden.");
         } else {
             UserId = lector.getId();
             validate(password);
         }
+        
     }
 
     private void validate(String p){
