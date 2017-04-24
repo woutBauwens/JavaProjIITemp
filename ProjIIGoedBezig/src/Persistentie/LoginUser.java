@@ -44,9 +44,11 @@ public class LoginUser implements Serializable {
     public LoginUser(String email, String password) {
        
         this();
+       
         lector = new Lector(
                 em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :mail"
                         , ContactPersoon.class).setParameter("mail", email).getSingleResult().getId());
+        
         if (lector == null) {
             throw new IllegalArgumentException("De lector kan niet gevonden worden.");
         } else {
