@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -87,6 +88,25 @@ public class ProjIIGoedBezig extends Application {
         StackPane root = new StackPane();
         user.getGroepen().forEach((g) -> {
             root.getChildren().add(new Label(g.toString()));
+            if (g.isGoedgekeurd()) {
+                root.getChildren().add(new Label("Goedgekeurd"));
+            } else if (g.isVerstuurd()) {
+                Button b = new Button("Keur goed");
+                b.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        g.keur("", true);
+                    }
+                });
+                Button c = new Button("Keur af");
+                b.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        g.keur("", false);
+                    }
+                });
+                root.getChildren().add(new HBox(b,c));
+            }
         });
 
         Scene scene = new Scene(root, 600, 500);

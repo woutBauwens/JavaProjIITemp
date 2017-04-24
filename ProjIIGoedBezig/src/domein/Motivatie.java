@@ -28,6 +28,7 @@ public class Motivatie {
     private int MotivatieId;
     private String MotivatieTekst;
     private String Feedback;
+    private boolean IsVerstuurd;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "GBGroepId")
@@ -61,4 +62,7 @@ public class Motivatie {
         Feedback = feedback;
     }
 
+    public boolean isVerstuurd(){
+        return IsVerstuurd;
+    }
 }

@@ -30,6 +30,7 @@ public class Groep implements Serializable {
     @OneToMany(mappedBy = "GBGroepId")
     private List<Activiteit> acties;
 
+    private boolean MotivatieIsGoedgekeurd;
     private String naam;
 
     private int HoofdLectorContactPersoonId;
@@ -52,6 +53,19 @@ public class Groep implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%s\n%s\n%s", naam, motivaties.get(0).getTekst(),acties.isEmpty()? "Geen acties": acties.get(0).getId());
+        return String.format("%s\n%s\n%s", naam, motivaties.get(0).getTekst(), acties.isEmpty() ? "Geen acties" : acties.get(0).getId());
+    }
+
+    public boolean isGoedgekeurd() {
+        return MotivatieIsGoedgekeurd;
+    }
+
+    public boolean isVerstuurd() {
+        return motivaties.get(0).isVerstuurd();
+    }
+    
+    public void keur(String feedback, boolean b){
+        motivaties.get(0).setFeedback(feedback);
+        MotivatieIsGoedgekeurd = b;
     }
 }
