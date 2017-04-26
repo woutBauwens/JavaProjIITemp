@@ -26,10 +26,10 @@ public class StartUp extends Application {
     
     @Override
     public void start(Stage primaryStage) {
+        connect();
         DomeinController dc = new DomeinController();
         LoginController root = new LoginController(dc);
         Scene scene = new Scene(root);
-        connect();
         primaryStage.setScene(scene);
         primaryStage.setTitle("Log in:");
         primaryStage.show();

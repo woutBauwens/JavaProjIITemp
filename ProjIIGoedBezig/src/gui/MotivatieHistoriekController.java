@@ -6,8 +6,10 @@
 package gui;
 
 import domein.DomeinController;
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -34,6 +36,14 @@ public class MotivatieHistoriekController extends GridPane {
 
     public MotivatieHistoriekController(DomeinController dc){
         this.dc=dc;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MotivatieHistoriek.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+        try {
+            loader.load();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
     /**
      * Initializes the controller class.

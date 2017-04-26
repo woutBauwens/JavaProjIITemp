@@ -6,15 +6,16 @@
 package domein;
 
 import Persistentie.SQLConnection;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 
 /**
  *
@@ -24,16 +25,27 @@ import jdk.nashorn.internal.ir.annotations.Ignore;
 @Table(name = "Motivatie")
 public class Motivatie {
 
+    private String Feedback;
+    @Temporal(TemporalType.DATE)
+    private Date Date;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int MotivatieId;
     private String MotivatieTekst;
-    private String Feedback;
-    private boolean IsVerstuurd;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "GBGroepId")
-    private Groep GBGroepId;
+    private String NaamOrganisatie;
+    private String AdresOrganisatie;
+    private boolean isVerstuurd;
+    private String EmailOrganisatie;
+    private String WebsiteUrlOrganisatie;
+    private String NaamContactPersoon;
+    private String VoornaamContactPersoon;
+    private String EmailContactPersoon;
+    private String TitelContactPersoon;
+    private int GBGroepId;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @Column(name = "GBGroepId")
+//    private Groep GBGroep;
     @Transient
     private EntityManager em;
 
@@ -42,7 +54,7 @@ public class Motivatie {
     }
 
     public Motivatie(int id) {
-      //  GBGroepId = id;
+        //  GBGroepId = id;
         em.createQuery("SELECT o FROM Motivatie o WHERE o.MotivatieId = :id", Motivatie.class).setParameter("id", MotivatieId).getSingleResult();
     }
 
@@ -62,13 +74,14 @@ public class Motivatie {
         Feedback = feedback;
     }
 
-    public boolean isVerstuurd(){
-        return IsVerstuurd;
+    public boolean isVerstuurd() {
+        return isVerstuurd;
     }
 
     public int getMotivatieId() {
         return MotivatieId;
     }
-    
-    
+
+  
+
 }

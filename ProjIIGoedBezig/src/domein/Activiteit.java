@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -32,6 +33,7 @@ public class Activiteit implements Serializable {
 
     private String titel;
     private String omschrijving;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date uitvoeringsdatum;
 
     public int getId() {

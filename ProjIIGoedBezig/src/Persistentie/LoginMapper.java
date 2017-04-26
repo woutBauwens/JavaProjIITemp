@@ -41,14 +41,14 @@ public class LoginMapper {
 
     }
 
-    public Lector getLector(String email) {
-        Lector lector = (Lector) em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email", ContactPersoon.class).setParameter("email", email).getSingleResult();
+    public ContactPersoon getLector(String email) {
+       ContactPersoon lector =  em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email", ContactPersoon.class).setParameter("email", email).getSingleResult();
         return lector;
     }
 
-    public Lector getLectorAdhvUser(LoginUser user) {
+    public ContactPersoon getLectorAdhvUser(LoginUser user) {
         //
-        Lector l = (Lector) em.createQuery("SELECT c from ContactPersoon c WHERE c.ContactPersoonId = :userId", ContactPersoon.class).setParameter("userId", user.getUserId()).getSingleResult();
+        ContactPersoon l = em.createQuery("SELECT c from ContactPersoon c WHERE c.ContactPersoonId = :userId", ContactPersoon.class).setParameter("userId", user.getUserId()).getSingleResult();
         return l;
     }
 

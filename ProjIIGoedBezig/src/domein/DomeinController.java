@@ -5,9 +5,10 @@
  */
 package domein;
 
+import Persistentie.GroepMapper;
 import Persistentie.LoginMapper;
 import Persistentie.LoginUser;
-import Persistentie.MotivatieMapper;
+import java.util.List;
 
 /**
  *
@@ -15,22 +16,22 @@ import Persistentie.MotivatieMapper;
  */
 public class DomeinController {
 
-    private Lector lector;
+    private ContactPersoon lector;
     private Groep selectedGroep;
     private LoginMapper loginMapper;
-    private MotivatieMapper motivatieMapper;
+    private GroepMapper groepMapper;
     private LoginUser user;
 
     public DomeinController() {
         loginMapper = new LoginMapper();
-        motivatieMapper = new MotivatieMapper();
+        groepMapper = new GroepMapper();
     }
 
-    public void setLector(Lector lector) {
+    public void setLector(ContactPersoon lector) {
         this.lector = lector;
     }
 
-    public Lector getLector() {
+    public ContactPersoon getLector() {
         return lector;
     }
     public Groep getSelectedGroep(){
@@ -52,14 +53,19 @@ public class DomeinController {
 
     public String toonMotivatie(String groepsnaam) {
 
-        Groep g = motivatieMapper.geefGroep(groepsnaam);
-        selectedGroep = g;
-        return g.getHuidigeMotivatie().getTekst();
+       Motivatie g = groepMapper.geefMotivatie(groepsnaam);
+        selectedGroep = groepMapper.geefGroep(groepsnaam);
+        selectedGroep.addMotivatie(g);
+        return g.getTekst();
     }
 
     public void setFeedback(String response) {
         selectedGroep.getHuidigeMotivatie().setFeedback(response);
-        motivatieMapper.bewaarFeedback(selectedGroep,response);
+      groepMapper.bewaarFeedback(selectedGroep,response);
+    }
+
+    public List<Groep> getGroepenByLector() {
+        return groepMapper.getGroepenByLector(lector.getId());
     }
 
 }

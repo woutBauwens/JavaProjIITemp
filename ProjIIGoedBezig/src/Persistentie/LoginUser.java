@@ -62,8 +62,7 @@ public class LoginUser implements Serializable {
     private void validate(String p) {
         String pass;
         try {
-            pass = em.createQuery("SELECT u.password FROM LoginUser u WHERE u.UserId = :id",
-                    LoginUser.class).setParameter("id", UserId).getSingleResult().password;
+            pass = em.createQuery("SELECT u.password FROM LoginUser u WHERE u.UserId = :id").setParameter("id", UserId).getSingleResult().toString();
         } catch (Exception e) {
             throw new IllegalArgumentException("De gebruiker is nog niet geregistreerd");
         }

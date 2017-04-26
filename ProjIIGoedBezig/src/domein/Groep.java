@@ -25,7 +25,7 @@ public class Groep implements Serializable {
 
     @Id
     private int GBGroepId;
-    @OneToMany(mappedBy = "GBGroepId")
+    @OneToMany
     private List<Motivatie> motivaties;
     @OneToMany(mappedBy = "GBGroepId")
     private List<Activiteit> acties;
@@ -67,6 +67,7 @@ public class Groep implements Serializable {
     public void keur(String feedback, boolean b){
         motivaties.get(0).setFeedback(feedback);
         MotivatieIsGoedgekeurd = b;
+    
     }
     
     public String getNaam(){
@@ -81,6 +82,10 @@ public class Groep implements Serializable {
 
     public List<Activiteit> getActies() {
         return acties;
+    }
+    
+    public void addMotivatie(Motivatie m){
+        motivaties.add(m);
     }
     
     

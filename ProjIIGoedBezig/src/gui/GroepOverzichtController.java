@@ -126,7 +126,13 @@ public class GroepOverzichtController extends GridPane {
 
     @FXML
     private void HistoriekTonen(ActionEvent event) {
-        
+        MotivatieHistoriekController MHC = new MotivatieHistoriekController(dc);
+
+        Stage stage = (Stage) (this.getScene().getWindow());
+        Scene scene = new Scene(MHC);
+
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void FeedBackSchrijven(ActionEvent event) {

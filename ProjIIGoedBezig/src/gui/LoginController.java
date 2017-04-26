@@ -55,6 +55,8 @@ public class LoginController extends Pane {
 
     @FXML
     private void LogIn(ActionEvent event) {
+        String email = userNameTxtField.getText();
+        String pass = passwordTxtField.getText();
         try {
             if (dc.checkLogin(userNameTxtField.getText(), passwordTxtField.getText())) {
 
