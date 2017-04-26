@@ -38,44 +38,56 @@ public class LoginUser implements Serializable {
     @Transient
     private Lector lector;
 
-    
-    
     //@NamedQuery(name = "LectorByEmail", query = "SELECT c FROM ContactPersoon c WHERE c.Discriminator = 'Lector' AND c.EmailContactPersoon = :email;")
     protected LoginUser() {
         em = SQLConnection.getManager();
     }
 
-    public LoginUser(String email, String password) {
+    public LoginUser(String email, String password) throws Exception {
         this();
-
-        try{
-        lector = new Lector(
-                em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :mail"
-                        , ContactPersoon.class).setParameter("mail", email).getSingleResult().getId());
-        }catch( NoResultException ex){
-            throw new NoResultException("Ongeldige Login");
+        try {
+          //  this = em.createQuery("SELECT c from LoginUser c WHERE c.UserId = :id", LoginUser.class).setParameter("id",lector.getId()).getSingleResult().;
+            lector = new Lector(
+                    em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email",
+                             ContactPersoon.class).setParameter("email", email).getSingleResult().getId());
+        } catch (Exception ex) {
+            throw new Exception("Ongeldige Login");
 
         }
         UserId = lector.getId();
         validate(password);
-      //  dc.setUser(lector);//subj to change
+        //  dc.setUser(lector);//subj to change
     }
 
     private void validate(String p) {
+        String pass;
         try {
-            String pass = em.createQuery("SELECT u FROM LoginUser u WHERE u.UserId = :id", LoginUser.class).setParameter("id", UserId).getSingleResult().password;
-            if (p.equals(pass)) {
-                password = p;
-            } else {
-                throw new IllegalArgumentException("Het paswoord komt niet overeen met het email adresss.");
-            }
+            pass = em.createQuery("SELECT u.password FROM LoginUser u WHERE u.UserId = :id",
+                    LoginUser.class).setParameter("id", UserId).getSingleResult().password;
         } catch (Exception e) {
-            throw new IllegalArgumentException("De gebruiker is nog niet geregistreerd.");
+            throw new IllegalArgumentException("De gebruiker is nog niet geregistreerd");
         }
+
+        if (p.equals(pass)) {
+            password = p;
+        } else {
+            throw new IllegalArgumentException("Het paswoord komt niet overeen met het email adresss.");
+        }
+
     }
 
     public List<Groep> getGroepen() {
         return lector.getGroepenByLector();
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getUserId() {
+        return UserId;
+    }
     
+    
+
 }

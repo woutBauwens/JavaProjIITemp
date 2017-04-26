@@ -67,7 +67,7 @@ public class ProjIIGoedBezig extends Application {
                 try {
                     LoginUser user = new LoginUser(username.getText(), password.getText());
                     OverViewScreen(user);
-                } catch (IllegalArgumentException e) {
+                } catch (Exception e) {
                     error.setText(e.getMessage());
                 }
             }

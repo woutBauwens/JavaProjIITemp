@@ -7,6 +7,7 @@ package domein;
 
 import Persistentie.SQLConnection;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -29,6 +30,10 @@ public class Activiteit implements Serializable {
     @JoinColumn(name = "GBGroepId")
     private Groep GBGroepId;
 
+    private String titel;
+    private String omschrijving;
+    private Date uitvoeringsdatum;
+
     public int getId() {
         return ActiviteitId;
     }
@@ -45,4 +50,17 @@ public class Activiteit implements Serializable {
         // GBGroepId = id;
         SQLConnection.getManager().createQuery("SELECT a FROM dbo.Activiteit a WHERE a.GBGroepId = :id;", Activiteit.class).setParameter("id", id).getResultList();
     }
+
+    public String getTitel() {
+        return titel;
+    }
+
+    public String getOmschrijving() {
+        return omschrijving;
+    }
+
+    public Date getUitvoeringsdatum() {
+        return uitvoeringsdatum;
+    }
+
 }

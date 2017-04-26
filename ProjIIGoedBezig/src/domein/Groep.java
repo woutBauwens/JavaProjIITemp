@@ -68,4 +68,20 @@ public class Groep implements Serializable {
         motivaties.get(0).setFeedback(feedback);
         MotivatieIsGoedgekeurd = b;
     }
+    
+    public String getNaam(){
+        return naam;
+    }
+    
+    public Motivatie getHuidigeMotivatie(){
+        if(isVerstuurd())
+            return motivaties.get(0);
+        return null; 
+    }
+
+    public List<Activiteit> getActies() {
+        return acties;
+    }
+    
+    
 }

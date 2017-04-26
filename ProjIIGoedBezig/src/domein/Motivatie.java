@@ -65,4 +65,10 @@ public class Motivatie {
     public boolean isVerstuurd(){
         return IsVerstuurd;
     }
+
+    public int getMotivatieId() {
+        return MotivatieId;
+    }
+    
+    
 }
