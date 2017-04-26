@@ -8,7 +8,7 @@ package Persistentie;
 import domein.ContactPersoon;
 import domein.Lector;
 import javax.persistence.EntityManager;
-import util.JPAUtil;
+import javax.persistence.Query;
 
 /**
  *
@@ -23,10 +23,12 @@ public class LoginMapper {
     }
 
     public boolean checkLogin(String email, String password) throws Exception {
-        Lector lector;
+        ContactPersoon CPersoon;
         try {
-
-            lector = (Lector) em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email", ContactPersoon.class).setParameter("email", email).getSingleResult();
+            Query query = em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email", ContactPersoon.class).setParameter("email", email);
+            query.setFirstResult(0);
+            query.setMaxResults(1);
+            CPersoon = (ContactPersoon) query.getSingleResult();
 
 //                   new Lector(
 //                    em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email",
@@ -35,10 +37,10 @@ public class LoginMapper {
             return false; //gooit nullpointerexception for some reason
 
         }
-        int UserId = lector.getId();
+        int UserId = CPersoon.getId();
 
         LoginUser user = em.createQuery("SELECT u FROM LoginUser u WHERE u.UserId = :id",
-                LoginUser.class).setParameter("id", lector.getId()).getSingleResult();
+                LoginUser.class).setParameter("id", CPersoon.getId()).getSingleResult();
         return user.getPassword().equals(password);//true or false
 
     }
