@@ -71,35 +71,8 @@ public class GroepOverzichtController extends GridPane {
         //for loop
     }
 
-    @FXML
     private void KiesGroep(MouseEvent event) {
         //  if (event.getClickCount() == 2) {
-        motivatieTxtArea.setWrapText(true);
-        motivatieTxtArea.setDisable(true); //motivatie field uneditable maken
-        List<Groep> groepen = dc.getGroepenByLector();
-        for (Groep g : groepen) {
-            if (g.getNaam().equals(groepListView.getSelectionModel().getSelectedItem())) {
-                motivatieTxtArea.setText(dc.toonMotivatie(g));
-            }
-        }
-        if (!dc.getSelectedGroep().isVerstuurd() || dc.getSelectedGroep().isGoedgekeurd()) {
-            goedkeurenBtn.setDisable(true);
-            afkeurenBtn.setDisable(true);
-        } else {
-            goedkeurenBtn.setDisable(false);
-            afkeurenBtn.setDisable(false);
-            if (dc.getSelectedGroep().isGoedgekeurd()) {
-                motivatieStatusLbl.setVisible(true);
-                motivatieStatusLbl.setText("Motivatie Goedgekeurd");
-            } else {
-
-                motivatieStatusLbl.setVisible(true);
-                motivatieStatusLbl.setText("Motivatie Afgekeurd");
-                if (dc.getSelectedGroep().getHuidigeMotivatie().getFeedback().equals(null)) {
-                    motivatieStatusLbl.setText("Motivatie nog niet gekeurd");
-                }
-            }
-        }
 
         //  motivatieTxtArea.setText(dc.toonMotivatie(groepListView.getSelectionModel().getSelectedItem()));
         //  }
@@ -130,25 +103,6 @@ public class GroepOverzichtController extends GridPane {
                 });
     }
 
-    private void KeurMotivatieGoed(ActionEvent event) {
-
-        dc.getSelectedGroep().keur("", true);
-        motivatieStatusLbl.setVisible(true);
-        motivatieStatusLbl.setText("Motivatie Goedgekeurd");
-        goedkeurenBtn.setDisable(true);
-        afkeurenBtn.setDisable(true);
-        //method keur mag geen feedback meegeven
-    }
-
-    private void KeurMotivatieAf(ActionEvent event) {
-        FeedBackSchrijven(event);
-        dc.getSelectedGroep().keur("", false);
-        motivatieStatusLbl.setVisible(true);
-        motivatieStatusLbl.setText("Motivatie Afgekeurd");
-        goedkeurenBtn.setDisable(true);
-        afkeurenBtn.setDisable(true);
-        //method keur mag geen feedback meegeven
-    }
 
     @FXML
     private void motivatieTonen(ActionEvent event) {
@@ -167,10 +121,23 @@ public class GroepOverzichtController extends GridPane {
 
     @FXML
     private void keurMotivatieGoed(ActionEvent event) {
+        dc.getSelectedGroep().keur("", true);
+        motivatieStatusLbl.setVisible(true);
+        motivatieStatusLbl.setText("Motivatie Goedgekeurd");
+        goedkeurenBtn.setDisable(true);
+        afkeurenBtn.setDisable(true);
+        //method keur mag geen feedback meegeven
+       
     }
 
     @FXML
     private void keurMotivatieAf(ActionEvent event) {
+        dc.getSelectedGroep().keur("", false);
+        motivatieStatusLbl.setVisible(true);
+        motivatieStatusLbl.setText("Motivatie Afgekeurd");
+        goedkeurenBtn.setDisable(true);
+        afkeurenBtn.setDisable(true);
+        //method keur mag geen feedback meegeven
     }
 
     @FXML
@@ -183,6 +150,36 @@ public class GroepOverzichtController extends GridPane {
 
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    private void kiesGroep(MouseEvent event) {
+        motivatieTxtArea.setWrapText(true);
+        motivatieTxtArea.setDisable(true); //motivatie field uneditable maken
+        List<Groep> groepen = dc.getGroepenByLector();
+        for (Groep g : groepen) {
+            if (g.getNaam().equals(groepListView.getSelectionModel().getSelectedItem())) {
+                motivatieTxtArea.setText(dc.toonMotivatie(g));
+            }
+        }
+        if (!dc.getSelectedGroep().isVerstuurd() || dc.getSelectedGroep().isGoedgekeurd()) {
+            goedkeurenBtn.setDisable(true);
+            afkeurenBtn.setDisable(true);
+        } else {
+            goedkeurenBtn.setDisable(false);
+            afkeurenBtn.setDisable(false);
+            if (dc.getSelectedGroep().isGoedgekeurd()) {
+                motivatieStatusLbl.setVisible(true);
+                motivatieStatusLbl.setText("Motivatie Goedgekeurd");
+            } else {
+
+                motivatieStatusLbl.setVisible(true);
+                motivatieStatusLbl.setText("Motivatie Afgekeurd");
+                if (dc.getSelectedGroep().getHuidigeMotivatie().getFeedback().equals(null)) {
+                    motivatieStatusLbl.setText("Motivatie nog niet gekeurd");
+                }
+            }
+        }
     }
 
 }
