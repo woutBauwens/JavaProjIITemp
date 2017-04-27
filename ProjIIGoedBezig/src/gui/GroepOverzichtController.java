@@ -72,18 +72,6 @@ public class GroepOverzichtController extends GridPane {
     }
 
     @FXML
-    private void LogOut(ActionEvent event) {
-        DomeinController dc = new DomeinController();//lege domeincontroller om mee te geven aan loginscherm
-        LoginController loginC = new LoginController(dc);
-
-        Stage stage = (Stage) (this.getScene().getWindow());
-        Scene scene = new Scene(loginC);
-
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
     private void KiesGroep(MouseEvent event) {
         //  if (event.getClickCount() == 2) {
         motivatieTxtArea.setWrapText(true);
@@ -104,28 +92,17 @@ public class GroepOverzichtController extends GridPane {
                 motivatieStatusLbl.setVisible(true);
                 motivatieStatusLbl.setText("Motivatie Goedgekeurd");
             } else {
-                
+
                 motivatieStatusLbl.setVisible(true);
                 motivatieStatusLbl.setText("Motivatie Afgekeurd");
-                if(dc.getSelectedGroep().getHuidigeMotivatie().getFeedback().equals(null)){
-                          motivatieStatusLbl.setText("Motivatie nog niet gekeurd");
+                if (dc.getSelectedGroep().getHuidigeMotivatie().getFeedback().equals(null)) {
+                    motivatieStatusLbl.setText("Motivatie nog niet gekeurd");
                 }
             }
         }
 
         //  motivatieTxtArea.setText(dc.toonMotivatie(groepListView.getSelectionModel().getSelectedItem()));
         //  }
-    }
-
-    @FXML
-    private void ActiesTonen(ActionEvent event) {
-        ActiesOverzichtController AOC = new ActiesOverzichtController(dc);
-
-        Stage stage = (Stage) (this.getScene().getWindow());
-        Scene scene = new Scene(AOC);
-
-        stage.setScene(scene);
-        stage.show();
     }
 
     private void HistoriekTonen(ActionEvent event) {
@@ -153,7 +130,6 @@ public class GroepOverzichtController extends GridPane {
                 });
     }
 
-    @FXML
     private void KeurMotivatieGoed(ActionEvent event) {
 
         dc.getSelectedGroep().keur("", true);
@@ -164,7 +140,6 @@ public class GroepOverzichtController extends GridPane {
         //method keur mag geen feedback meegeven
     }
 
-    @FXML
     private void KeurMotivatieAf(ActionEvent event) {
         FeedBackSchrijven(event);
         dc.getSelectedGroep().keur("", false);
@@ -177,6 +152,37 @@ public class GroepOverzichtController extends GridPane {
 
     @FXML
     private void motivatieTonen(ActionEvent event) {
+    }
+
+    @FXML
+    private void actiesTonen(ActionEvent event) {
+        ActiesOverzichtController AOC = new ActiesOverzichtController(dc);
+
+        Stage stage = (Stage) (this.getScene().getWindow());
+        Scene scene = new Scene(AOC);
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void keurMotivatieGoed(ActionEvent event) {
+    }
+
+    @FXML
+    private void keurMotivatieAf(ActionEvent event) {
+    }
+
+    @FXML
+    private void logOut(ActionEvent event) {
+        DomeinController dc = new DomeinController();//lege domeincontroller om mee te geven aan loginscherm
+        LoginController loginC = new LoginController(dc);
+
+        Stage stage = (Stage) (this.getScene().getWindow());
+        Scene scene = new Scene(loginC);
+
+        stage.setScene(scene);
+        stage.show();
     }
 
 }
