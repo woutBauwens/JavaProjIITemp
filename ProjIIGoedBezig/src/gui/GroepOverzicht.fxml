@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1008.0" type="GridPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1008.0" type="GridPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GroepOverzichtController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="160.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="665.0" minWidth="10.0" prefWidth="439.0" />
@@ -30,7 +30,7 @@
           <RowConstraints maxHeight="53.0" minHeight="2.0" prefHeight="48.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="actiesBtn" mnemonicParsing="false" onAction="#ActiesTonen" text="Acties" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button fx:id="actiesBtn" mnemonicParsing="false" onAction="#actiesTonen" text="Acties" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <Label fx:id="motivatieStatusLbl" prefHeight="21.0" prefWidth="197.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <Button fx:id="motivatie" mnemonicParsing="false" onAction="#motivatieTonen" text="Motivatie" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
          </children>
@@ -45,8 +45,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="goedkeurenBtn" mnemonicParsing="false" onAction="#KeurMotivatieGoed" text="Goedkeuren" GridPane.halignment="CENTER" />
-            <Button fx:id="afkeurenBtn" mnemonicParsing="false" onAction="#KeurMotivatieAf" text="Afkeuren" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <Button fx:id="goedkeurenBtn" mnemonicParsing="false" onAction="#keurMotivatieGoed" text="Goedkeuren" GridPane.halignment="CENTER" />
+            <Button fx:id="afkeurenBtn" mnemonicParsing="false" onAction="#keurMotivatieAf" text="Afkeuren" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
       <TextArea fx:id="motivatieTxtArea" prefHeight="346.0" prefWidth="677.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -54,7 +54,7 @@
       <TextArea fx:id="feedbackTxtArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Label text="Groepen" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
       <Label text="Historiek" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-      <Button fx:id="logOutBtn" mnemonicParsing="false" onAction="#LogOut" text="Log out" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+      <Button fx:id="logOutBtn" mnemonicParsing="false" onAction="#logOut" text="Log out" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
          <GridPane.margin>
             <Insets bottom="50.0" right="20.0" />
          </GridPane.margin>
