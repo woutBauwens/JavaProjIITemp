@@ -15,15 +15,4 @@ import javax.persistence.Id;
  * @author BelgoBits
  */
 public class Lector extends ContactPersoon {
-
-    @Id
-    protected int ContactPersoonId;
-    private List<Groep> groepen;
-    //private final EntityManager em;
-
-    
-    
-    public List<Groep> getGroepenByLector() {
-        return groepen;
-    }
 }

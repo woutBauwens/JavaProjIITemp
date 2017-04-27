@@ -33,8 +33,7 @@ public class ContactPersoon implements Serializable {
 
     private String Discriminator;
 
-    @OneToMany
-    @JoinColumn(name = "GBGroepId")
+    @OneToMany(mappedBy = "HoofdLectorContactPersoonId")
     private List<Groep> groepen;
 
     public ContactPersoon() {

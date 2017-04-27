@@ -29,15 +29,6 @@ public class Organisatie implements Serializable {
     private String Naam;
     private boolean heeftLabel;
     
-    @Ignore
-    private EntityManager em;
-
-    
     private Organisatie(){
-        em = SQLConnection.getManager();
-    }
-    
-    public Organisatie(int Id){
-        em.createQuery("SELECT o FROM Organisatie o WHERE o.OrganisatieId = :id", Organisatie.class).setParameter(0, Id).getSingleResult();
     }
 }
