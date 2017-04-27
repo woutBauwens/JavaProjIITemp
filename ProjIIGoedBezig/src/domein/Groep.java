@@ -13,6 +13,8 @@ import javafx.collections.transformation.SortedList;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
@@ -24,7 +26,9 @@ import javax.persistence.Transient;
 public class Groep implements Serializable {
 
     @Id
-    private int GBGroepId;
+    @ManyToOne
+    @JoinColumn(name = "ContactPersoonId")
+    private ContactPersoon GBGroepId;
     @OneToMany
     private List<Motivatie> motivaties;
     @OneToMany(mappedBy = "GBGroepId")
@@ -35,22 +39,9 @@ public class Groep implements Serializable {
 
     private int HoofdLectorContactPersoonId;
 
-    @Transient
-    private EntityManager em;
-
     protected Groep() {
-        em = SQLConnection.getManager();
     }
-
-    public Groep(int id) {
-        GBGroepId = id;
-        em.createQuery("SELECT o, m, a FROM Groep o JOIN Motivatie m ON o.GBGroepId = m.GBGroepId JOIN Activiteit a ON a.GBGroepId = o.GBGroepId WHERE o.GBGroepId = :id;", Groep.class).setParameter("id", id).getSingleResult();
-        motivaties = new ArrayList<>();
-        motivaties.add(new Motivatie(id));
-        acties = new ArrayList<>();
-        acties.add(new Activiteit(id));
-    }
-
+    
     @Override
     public String toString() {
         return String.format("%s\n%s\n%s", naam, motivaties.get(0).getTekst(), acties.isEmpty() ? "Geen acties" : acties.get(0).getId());

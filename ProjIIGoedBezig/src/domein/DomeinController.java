@@ -63,7 +63,7 @@ public class DomeinController {
     }
 
     public List<Groep> getGroepenByLector() {
-        return lector.getLector().getGroepenByLector();
+        return lector.getGroepen();
     }
 
 }

@@ -7,9 +7,11 @@ package domein;
 
 import Persistentie.LoginUser;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -17,37 +19,40 @@ import javax.persistence.Table;
  *
  * @author BelgoBits
  */
-
 @Entity
 @Table(name = "ContactPersoon")
-public class ContactPersoon implements Serializable{
+public class ContactPersoon implements Serializable {
 
     @Id
     protected int ContactPersoonId;
-    
+
     protected String EmailContactPersoon;
     protected String Functie;
     protected String NaamContactPersoon;
     protected String VoornaamContactPersoon;
-    @OneToOne
-    @JoinColumn(name = "ContactPersoonId")
-    private LoginUser user;
 
     private String Discriminator;
-    
-    public ContactPersoon(){
-        
+
+    @OneToMany
+    @JoinColumn(name = "GBGroepId")
+    private List<Groep> groepen;
+
+    public ContactPersoon() {
+
     }
-    
+
     public int getId() {
         return ContactPersoonId;
     }
 
-    public Lector getLector() {
-        if(Discriminator.equals("lector")){
-            return (Lector)this;
+  /*  public ContactPersoon getLector() {
+        if (Discriminator.equals("Lector")) {
+            return this;
         }
         return null;
+    } */
+
+    public List<Groep> getGroepen() {
+        return groepen;
     }
-    
 }
