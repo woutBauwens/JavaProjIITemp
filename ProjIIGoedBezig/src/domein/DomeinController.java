@@ -51,12 +51,10 @@ public class DomeinController {
         setLector(loginMapper.getLectorAdhvUser(user));
     }
 
-    public String toonMotivatie(String groepsnaam) {
+    public String toonMotivatie(Groep g) {
 
-       Motivatie g = groepMapper.geefMotivatie(groepsnaam);
-        selectedGroep = groepMapper.geefGroep(groepsnaam);
-        selectedGroep.addMotivatie(g);
-        return g.getTekst();
+       return g.getHuidigeMotivatie().getTekst();
+      
     }
 
     public void setFeedback(String response) {
@@ -65,7 +63,7 @@ public class DomeinController {
     }
 
     public List<Groep> getGroepenByLector() {
-        return groepMapper.getGroepenByLector(lector.getId());
+        return lector.getLector().getGroepenByLector();
     }
 
 }

@@ -10,11 +10,13 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -31,11 +33,11 @@ public class MotivatieHistoriekController extends GridPane {
     private TextArea motivatieTxt;
     @FXML
     private TextArea feedbackTxt;
-    
+
     private DomeinController dc;
 
-    public MotivatieHistoriekController(DomeinController dc){
-        this.dc=dc;
+    public MotivatieHistoriekController(DomeinController dc) {
+        this.dc = dc;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MotivatieHistoriek.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -45,17 +47,25 @@ public class MotivatieHistoriekController extends GridPane {
             throw new RuntimeException(ex);
         }
     }
+
     /**
-     * Initializes the controller class.
+     * Initializes the controller class
+     * 
      */
-   
 
     @FXML
     private void ToonDetails(MouseEvent event) {
+        //klikken op 1 van de data in Listview toont Motivatie en historiek
     }
 
     @FXML
     private void TerugNaarGroepsOverzicht(ActionEvent event) {
+        GroepOverzichtController GOC = new GroepOverzichtController(dc);
+        Stage stage = (Stage) (this.getScene().getWindow());
+        Scene scene = new Scene(GOC);
+
+        stage.setScene(scene);
+        stage.show();
     }
-    
+
 }

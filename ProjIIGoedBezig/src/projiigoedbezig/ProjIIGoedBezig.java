@@ -65,8 +65,8 @@ public class ProjIIGoedBezig extends Application {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    LoginUser user = new LoginUser(username.getText(), password.getText());
-                    OverViewScreen(user);
+            //        LoginUser user = new LoginUser(username.getText(), password.getText());
+              //      OverViewScreen(user);
                 } catch (Exception e) {
                     error.setText(e.getMessage());
                 }

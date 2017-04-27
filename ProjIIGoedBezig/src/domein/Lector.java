@@ -8,6 +8,7 @@ package domein;
 import Persistentie.SQLConnection;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Id;
 
 /**
  *
@@ -15,16 +16,13 @@ import javax.persistence.EntityManager;
  */
 public class Lector extends ContactPersoon {
 
+    @Id
+    protected int ContactPersoonId;
     private List<Groep> groepen;
-    private final EntityManager em;
+    //private final EntityManager em;
 
-    public Lector(int id) {
-        em = SQLConnection.getManager();
-        ContactPersoonId = id;
-        groepen = em.createQuery("SELECT g FROM Groep g WHERE g.HoofdLectorContactPersoonId = :lectorId", Groep.class).setParameter("lectorId", id).getResultList();
-        
-    }
-
+    
+    
     public List<Groep> getGroepenByLector() {
         return groepen;
     }

@@ -61,7 +61,7 @@ public class LoginController extends Pane {
             if (dc.checkLogin(userNameTxtField.getText(), passwordTxtField.getText())) {
 
                 GroepOverzichtController GOC = new GroepOverzichtController(dc);
-                LoginUser user = new LoginUser(userNameTxtField.getText(), passwordTxtField.getText());
+                LoginUser user = new LoginUser(dc.getLector());
                 dc.setUser(user);
                 Stage stage = (Stage) (this.getScene().getWindow());
                 Scene scene = new Scene(GOC);

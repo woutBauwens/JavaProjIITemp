@@ -14,10 +14,13 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NoResultException;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import jdk.nashorn.internal.ir.annotations.Ignore;
+import org.eclipse.persistence.annotations.ReadOnly;
 
 /**
  *
@@ -32,51 +35,41 @@ public class LoginUser implements Serializable {
 
     private String password; // voorlopig simpel hashing later
 
-    @Transient
-    private final EntityManager em;
-
-    @Transient
-    private Lector lector;
+    @OneToOne
+    @JoinColumn(name = "USERID")
+    private ContactPersoon lector;
 
     //@NamedQuery(name = "LectorByEmail", query = "SELECT c FROM ContactPersoon c WHERE c.Discriminator = 'Lector' AND c.EmailContactPersoon = :email;")
     protected LoginUser() {
-        em = SQLConnection.getManager();
     }
 
-    public LoginUser(String email, String password) throws Exception {
-        this();
-        try {
-          //  this = em.createQuery("SELECT c from LoginUser c WHERE c.UserId = :id", LoginUser.class).setParameter("id",lector.getId()).getSingleResult().;
-            lector = new Lector(
-                    em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email",
-                             ContactPersoon.class).setParameter("email", email).getSingleResult().getId());
-        } catch (Exception ex) {
-            throw new Exception("Ongeldige Login");
-
-        }
+    public LoginUser(ContactPersoon lector){
+        this.lector = lector;
+    }
+    
+    public void login(){
         UserId = lector.getId();
         validate(password);
-        //  dc.setUser(lector);//subj to change
     }
-
+    
     private void validate(String p) {
         String pass;
         try {
-            pass = em.createQuery("SELECT u.password FROM LoginUser u WHERE u.UserId = :id").setParameter("id", UserId).getSingleResult().toString();
+       //     pass = em.createQuery("SELECT u.password FROM LoginUser u WHERE u.UserId = :id").setParameter("id", UserId).getSingleResult().toString();
         } catch (Exception e) {
             throw new IllegalArgumentException("De gebruiker is nog niet geregistreerd");
         }
-
+/*
         if (p.equals(pass)) {
             password = p;
         } else {
             throw new IllegalArgumentException("Het paswoord komt niet overeen met het email adresss.");
-        }
+        } */
 
     }
 
     public List<Groep> getGroepen() {
-        return lector.getGroepenByLector();
+        return lector.getLector().getGroepenByLector();
     }
 
     public String getPassword() {

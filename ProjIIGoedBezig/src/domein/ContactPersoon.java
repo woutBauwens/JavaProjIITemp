@@ -5,9 +5,12 @@
  */
 package domein;
 
+import Persistentie.LoginUser;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -26,8 +29,12 @@ public class ContactPersoon implements Serializable{
     protected String Functie;
     protected String NaamContactPersoon;
     protected String VoornaamContactPersoon;
-    
+    @OneToOne
+    @JoinColumn(name = "ContactPersoonId")
+    private LoginUser user;
 
+    private String Discriminator;
+    
     public ContactPersoon(){
         
     }
@@ -35,4 +42,12 @@ public class ContactPersoon implements Serializable{
     public int getId() {
         return ContactPersoonId;
     }
+
+    public Lector getLector() {
+        if(Discriminator.equals("lector")){
+            return (Lector)this;
+        }
+        return null;
+    }
+    
 }

@@ -87,7 +87,7 @@ public class GroepOverzichtController extends GridPane {
         List<Groep> groepen = dc.getGroepenByLector();
         for (Groep g : groepen) {
             if (g.getNaam().equals(groepListView.getSelectionModel().getSelectedItem())) {
-                motivatieTxtArea.setText(dc.toonMotivatie(g.getNaam()));
+                motivatieTxtArea.setText(dc.toonMotivatie(g));
             }
         }
         if (!dc.getSelectedGroep().isVerstuurd() || dc.getSelectedGroep().isGoedgekeurd()) {
