@@ -40,8 +40,6 @@ public class GroepOverzichtController extends GridPane {
     @FXML
     private ListView<String> groepListView;
     @FXML
-    private Button historiekBtn;
-    @FXML
     private Button goedkeurenBtn;
     @FXML
     private Button afkeurenBtn;
@@ -49,6 +47,12 @@ public class GroepOverzichtController extends GridPane {
     private TextArea motivatieTxtArea;
     @FXML
     private Label motivatieStatusLbl;
+    @FXML
+    private Button motivatie;
+    @FXML
+    private TextArea historiekTxtArea;
+    @FXML
+    private TextArea feedbackTxtArea;
 
     public GroepOverzichtController(DomeinController dc) {
         this.dc = dc;
@@ -124,7 +128,6 @@ public class GroepOverzichtController extends GridPane {
         stage.show();
     }
 
-    @FXML
     private void HistoriekTonen(ActionEvent event) {
         MotivatieHistoriekController MHC = new MotivatieHistoriekController(dc);
 
@@ -170,6 +173,10 @@ public class GroepOverzichtController extends GridPane {
         goedkeurenBtn.setDisable(true);
         afkeurenBtn.setDisable(true);
         //method keur mag geen feedback meegeven
+    }
+
+    @FXML
+    private void motivatieTonen(ActionEvent event) {
     }
 
 }
