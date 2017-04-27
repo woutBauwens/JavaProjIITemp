@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1008.0" type="GridPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GroepOverzichtController">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1008.0" type="GridPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="160.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="665.0" minWidth="10.0" prefWidth="439.0" />
@@ -31,11 +31,11 @@
         </rowConstraints>
          <children>
             <Button fx:id="actiesBtn" mnemonicParsing="false" onAction="#actiesTonen" text="Acties" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Label fx:id="motivatieStatusLbl" prefHeight="21.0" prefWidth="197.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Label fx:id="motivatieStatusLbl" prefHeight="21.0" prefWidth="197.0" GridPane.halignment="CENTER" />
             <Button fx:id="motivatie" mnemonicParsing="false" onAction="#motivatieTonen" text="Motivatie" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <ListView fx:id="groepListView" onMouseClicked="#KiesGroep" prefHeight="315.0" prefWidth="240.0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+      <ListView fx:id="groepListView" onMouseClicked="#kiesGroep" prefHeight="315.0" prefWidth="240.0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
       <GridPane prefHeight="54.0" prefWidth="385.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

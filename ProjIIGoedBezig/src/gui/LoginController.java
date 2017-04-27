@@ -6,6 +6,7 @@
 package gui;
 
 import Persistentie.LoginUser;
+import domein.ContactPersoon;
 import domein.DomeinController;
 import domein.Lector;
 import java.io.IOException;
@@ -21,6 +22,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import repository.LoginDao;
+import repository.LoginDaoJpa;
 
 /**
  * FXML Controller class
@@ -38,10 +41,7 @@ public class LoginController extends Pane {
     @FXML
     private Label errorLbl;
 
-    private final DomeinController dc;
-
-    public LoginController(DomeinController dc) {
-        this.dc = dc;
+    public LoginController() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -58,20 +58,21 @@ public class LoginController extends Pane {
         String email = userNameTxtField.getText();
         String pass = passwordTxtField.getText();
         try {
-            if (dc.checkLogin(userNameTxtField.getText(), passwordTxtField.getText())) {
+         //   if (dc.checkLogin(userNameTxtField.getText(), passwordTxtField.getText())) {
 
-                GroepOverzichtController GOC = new GroepOverzichtController(dc);
-                LoginUser user = new LoginUser(dc.getLector());
-                dc.setUser(user);
+         //       LoginUser user = new LoginUser(userNameTxtField.getText(), passwordTxtField.getText());
+                LoginDao ldao = new LoginDaoJpa(LoginUser.class);
+                ContactPersoon lector = ldao.CheckLogin(userNameTxtField.getText(), passwordTxtField.getText());
+                GroepOverzichtController GOC = new GroepOverzichtController(lector.getGroepen());
                 Stage stage = (Stage) (this.getScene().getWindow());
                 Scene scene = new Scene(GOC);
 
                 stage.setScene(scene);
                 stage.show();
 
-            } else {
+         /*   } else {
                 throw new Exception("Ongeldige Login");
-            }
+            } */
             //  LoginUser user = new LoginUser(userNameTxtField.getText(), passwordTxtField.getText());
 
             //OverViewScreen(user);//controller volgende scherm

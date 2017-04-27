@@ -45,6 +45,10 @@ public class LoginUser implements Serializable {
         this.lector = lector;
     }
     
+    public LoginUser(String email, String password){
+        this.password = password;
+    }
+    
     public void login(){
         validate(password);
     }

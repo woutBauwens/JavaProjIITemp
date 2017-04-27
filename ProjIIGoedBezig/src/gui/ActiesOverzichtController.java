@@ -53,9 +53,9 @@ public class ActiesOverzichtController extends AnchorPane {
     /**
      * Initializes the controller class.
      */
-    public ActiesOverzichtController(DomeinController dc) {
-        this.dc = dc;
-        Groep g = dc.getSelectedGroep();
+    public ActiesOverzichtController(Groep g) {
+      //  this.dc = dc;
+     //   Groep g = dc.getSelectedGroep();
         List<Activiteit> acties = g.getActies();
         List<String> actienamen = new ArrayList<>();
         acties.forEach((v) -> {

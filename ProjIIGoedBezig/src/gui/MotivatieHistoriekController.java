@@ -6,7 +6,10 @@
 package gui;
 
 import domein.DomeinController;
+import domein.Groep;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -60,7 +63,7 @@ public class MotivatieHistoriekController extends GridPane {
 
     @FXML
     private void TerugNaarGroepsOverzicht(ActionEvent event) {
-        GroepOverzichtController GOC = new GroepOverzichtController(dc);
+        GroepOverzichtController GOC = new GroepOverzichtController(new ArrayList<Groep>());
         Stage stage = (Stage) (this.getScene().getWindow());
         Scene scene = new Scene(GOC);
 
