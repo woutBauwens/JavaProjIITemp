@@ -29,9 +29,6 @@ public class ContactPersoon implements Serializable{
     protected String Functie;
     protected String NaamContactPersoon;
     protected String VoornaamContactPersoon;
-    @OneToOne
-    @JoinColumn(name = "ContactPersoonId")
-    private LoginUser user;
 
     private String Discriminator;
     

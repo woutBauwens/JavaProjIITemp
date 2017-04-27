@@ -30,13 +30,11 @@ import org.eclipse.persistence.annotations.ReadOnly;
 @Table(name = "JavaUser")
 public class LoginUser implements Serializable {
 
-    @Id
-    private int UserId;
-
     private String password; // voorlopig simpel hashing later
 
+    @Id
     @OneToOne
-    @JoinColumn(name = "USERID")
+    @JoinColumn(name = "UserId")
     private ContactPersoon lector;
 
     //@NamedQuery(name = "LectorByEmail", query = "SELECT c FROM ContactPersoon c WHERE c.Discriminator = 'Lector' AND c.EmailContactPersoon = :email;")
@@ -48,7 +46,6 @@ public class LoginUser implements Serializable {
     }
     
     public void login(){
-        UserId = lector.getId();
         validate(password);
     }
     
@@ -77,7 +74,7 @@ public class LoginUser implements Serializable {
     }
 
     public int getUserId() {
-        return UserId;
+        return lector.getId();
     }
     
     
