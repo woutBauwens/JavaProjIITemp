@@ -66,7 +66,7 @@ public class LoginUser implements Serializable {
     }
 
     public List<Groep> getGroepen() {
-        return lector.getLector().getGroepenByLector();
+        return lector.getGroepen();
     }
 
     public String getPassword() {
