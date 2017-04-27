@@ -26,10 +26,8 @@ import javax.persistence.Transient;
 public class Groep implements Serializable {
 
     @Id
-    @ManyToOne
-    @JoinColumn(name = "ContactPersoonId")
-    private ContactPersoon GBGroepId;
-    @OneToMany
+    private int GBGroepId;
+    @OneToMany(mappedBy = "GBGroepId")
     private List<Motivatie> motivaties;
     @OneToMany(mappedBy = "GBGroepId")
     private List<Activiteit> acties;
@@ -37,11 +35,13 @@ public class Groep implements Serializable {
     private boolean MotivatieIsGoedgekeurd;
     private String naam;
 
-    private int HoofdLectorContactPersoonId;
+    @ManyToOne
+    @JoinColumn(name = "HoofdLectorContactPersoonId")
+    private ContactPersoon HoofdLectorContactPersoonId;
 
     protected Groep() {
     }
-    
+
     @Override
     public String toString() {
         return String.format("%s\n%s\n%s", naam, motivaties.get(0).getTekst(), acties.isEmpty() ? "Geen acties" : acties.get(0).getId());
@@ -54,30 +54,30 @@ public class Groep implements Serializable {
     public boolean isVerstuurd() {
         return motivaties.get(0).isVerstuurd();
     }
-    
-    public void keur(String feedback, boolean b){
+
+    public void keur(String feedback, boolean b) {
         motivaties.get(0).setFeedback(feedback);
         MotivatieIsGoedgekeurd = b;
-    
+
     }
-    
-    public String getNaam(){
+
+    public String getNaam() {
         return naam;
     }
-    
-    public Motivatie getHuidigeMotivatie(){
-        if(isVerstuurd())
+
+    public Motivatie getHuidigeMotivatie() {
+        if (isVerstuurd()) {
             return motivaties.get(0);
-        return null; 
+        }
+        return null;
     }
 
     public List<Activiteit> getActies() {
         return acties;
     }
-    
-    public void addMotivatie(Motivatie m){
+
+    public void addMotivatie(Motivatie m) {
         motivaties.add(m);
     }
-    
-    
+
 }

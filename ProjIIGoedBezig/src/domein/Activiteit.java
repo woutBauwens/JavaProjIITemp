@@ -34,7 +34,7 @@ public class Activiteit implements Serializable {
     private String titel;
     private String omschrijving;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date uitvoeringsdatum;
+    private Date UitvoeringsDate;
 
     public int getId() {
         return ActiviteitId;
@@ -48,11 +48,6 @@ public class Activiteit implements Serializable {
 
     }
 
-    public Activiteit(int id) {
-        // GBGroepId = id;
-        SQLConnection.getManager().createQuery("SELECT a FROM dbo.Activiteit a WHERE a.GBGroepId = :id;", Activiteit.class).setParameter("id", id).getResultList();
-    }
-
     public String getTitel() {
         return titel;
     }
@@ -62,7 +57,7 @@ public class Activiteit implements Serializable {
     }
 
     public Date getUitvoeringsdatum() {
-        return uitvoeringsdatum;
+        return UitvoeringsDate;
     }
 
 }
