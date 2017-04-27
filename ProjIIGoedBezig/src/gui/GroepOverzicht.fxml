@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="609.0" type="GridPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1008.0" type="GridPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GroepOverzichtController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="219.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="408.0" minWidth="10.0" prefWidth="381.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="160.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="665.0" minWidth="10.0" prefWidth="439.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="665.0" minWidth="10.0" prefWidth="430.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="127.0" minHeight="0.0" prefHeight="59.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="315.0" minHeight="10.0" prefHeight="284.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="127.0" minHeight="0.0" prefHeight="104.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="352.0" minHeight="10.0" prefHeight="293.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="352.0" minHeight="10.0" prefHeight="299.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <GridPane prefHeight="72.0" prefWidth="385.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
@@ -23,42 +26,38 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="53.0" minHeight="2.0" prefHeight="48.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="logOutBtn" mnemonicParsing="false" onAction="#LogOut" text="Log out" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-            <Button fx:id="actiesBtn" mnemonicParsing="false" onAction="#ActiesTonen" text="Acties" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button fx:id="actiesBtn" mnemonicParsing="false" onAction="#actiesTonen" text="Acties" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <Label fx:id="motivatieStatusLbl" prefHeight="21.0" prefWidth="197.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button fx:id="motivatie" mnemonicParsing="false" onAction="#motivatieTonen" text="Motivatie" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <GridPane>
+      <ListView fx:id="groepListView" onMouseClicked="#KiesGroep" prefHeight="315.0" prefWidth="240.0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+      <GridPane prefHeight="54.0" prefWidth="385.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-      </GridPane>
-      <ListView fx:id="groepListView" onMouseClicked="#KiesGroep" prefHeight="267.0" prefWidth="124.0" GridPane.rowIndex="1" />
-      <GridPane prefHeight="54.0" prefWidth="385.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="historiekBtn" mnemonicParsing="false" onAction="#HistoriekTonen" text="Historiek" GridPane.halignment="CENTER" />
-            <Button fx:id="goedkeurenBtn" mnemonicParsing="false" onAction="#KeurMotivatieGoed" text="Goedkeuren" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Button fx:id="afkeurenBtn" mnemonicParsing="false" onAction="#KeurMotivatieAf" text="Afkeuren" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button fx:id="goedkeurenBtn" mnemonicParsing="false" onAction="#keurMotivatieGoed" text="Goedkeuren" GridPane.halignment="CENTER" />
+            <Button fx:id="afkeurenBtn" mnemonicParsing="false" onAction="#keurMotivatieAf" text="Afkeuren" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
-      <TextArea fx:id="motivatieTxtArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextArea fx:id="motivatieTxtArea" prefHeight="346.0" prefWidth="677.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextArea fx:id="historiekTxtArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+      <TextArea fx:id="feedbackTxtArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label text="Groepen" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+      <Label text="Historiek" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+      <Button fx:id="logOutBtn" mnemonicParsing="false" onAction="#logOut" text="Log out" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+         <GridPane.margin>
+            <Insets bottom="50.0" right="20.0" />
+         </GridPane.margin>
+      </Button>
    </children>
 </fx:root>

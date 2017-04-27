@@ -40,8 +40,6 @@ public class GroepOverzichtController extends GridPane {
     @FXML
     private ListView<String> groepListView;
     @FXML
-    private Button historiekBtn;
-    @FXML
     private Button goedkeurenBtn;
     @FXML
     private Button afkeurenBtn;
@@ -49,6 +47,12 @@ public class GroepOverzichtController extends GridPane {
     private TextArea motivatieTxtArea;
     @FXML
     private Label motivatieStatusLbl;
+    @FXML
+    private Button motivatie;
+    @FXML
+    private TextArea historiekTxtArea;
+    @FXML
+    private TextArea feedbackTxtArea;
 
     public GroepOverzichtController(DomeinController dc) {
         this.dc = dc;
@@ -65,18 +69,6 @@ public class GroepOverzichtController extends GridPane {
         groepListView.setItems(FXCollections.observableArrayList(groepsnamen));
         motivatieStatusLbl.setVisible(false);
         //for loop
-    }
-
-    @FXML
-    private void LogOut(ActionEvent event) {
-        DomeinController dc = new DomeinController();//lege domeincontroller om mee te geven aan loginscherm
-        LoginController loginC = new LoginController(dc);
-
-        Stage stage = (Stage) (this.getScene().getWindow());
-        Scene scene = new Scene(loginC);
-
-        stage.setScene(scene);
-        stage.show();
     }
 
     @FXML
@@ -100,11 +92,11 @@ public class GroepOverzichtController extends GridPane {
                 motivatieStatusLbl.setVisible(true);
                 motivatieStatusLbl.setText("Motivatie Goedgekeurd");
             } else {
-                
+
                 motivatieStatusLbl.setVisible(true);
                 motivatieStatusLbl.setText("Motivatie Afgekeurd");
-                if(dc.getSelectedGroep().getHuidigeMotivatie().getFeedback().equals(null)){
-                          motivatieStatusLbl.setText("Motivatie nog niet gekeurd");
+                if (dc.getSelectedGroep().getHuidigeMotivatie().getFeedback().equals(null)) {
+                    motivatieStatusLbl.setText("Motivatie nog niet gekeurd");
                 }
             }
         }
@@ -113,18 +105,6 @@ public class GroepOverzichtController extends GridPane {
         //  }
     }
 
-    @FXML
-    private void ActiesTonen(ActionEvent event) {
-        ActiesOverzichtController AOC = new ActiesOverzichtController(dc);
-
-        Stage stage = (Stage) (this.getScene().getWindow());
-        Scene scene = new Scene(AOC);
-
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
     private void HistoriekTonen(ActionEvent event) {
         MotivatieHistoriekController MHC = new MotivatieHistoriekController(dc);
 
@@ -150,7 +130,6 @@ public class GroepOverzichtController extends GridPane {
                 });
     }
 
-    @FXML
     private void KeurMotivatieGoed(ActionEvent event) {
 
         dc.getSelectedGroep().keur("", true);
@@ -161,7 +140,6 @@ public class GroepOverzichtController extends GridPane {
         //method keur mag geen feedback meegeven
     }
 
-    @FXML
     private void KeurMotivatieAf(ActionEvent event) {
         FeedBackSchrijven(event);
         dc.getSelectedGroep().keur("", false);
@@ -170,6 +148,41 @@ public class GroepOverzichtController extends GridPane {
         goedkeurenBtn.setDisable(true);
         afkeurenBtn.setDisable(true);
         //method keur mag geen feedback meegeven
+    }
+
+    @FXML
+    private void motivatieTonen(ActionEvent event) {
+    }
+
+    @FXML
+    private void actiesTonen(ActionEvent event) {
+        ActiesOverzichtController AOC = new ActiesOverzichtController(dc);
+
+        Stage stage = (Stage) (this.getScene().getWindow());
+        Scene scene = new Scene(AOC);
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void keurMotivatieGoed(ActionEvent event) {
+    }
+
+    @FXML
+    private void keurMotivatieAf(ActionEvent event) {
+    }
+
+    @FXML
+    private void logOut(ActionEvent event) {
+        DomeinController dc = new DomeinController();//lege domeincontroller om mee te geven aan loginscherm
+        LoginController loginC = new LoginController(dc);
+
+        Stage stage = (Stage) (this.getScene().getWindow());
+        Scene scene = new Scene(loginC);
+
+        stage.setScene(scene);
+        stage.show();
     }
 
 }
