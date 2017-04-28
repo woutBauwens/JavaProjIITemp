@@ -5,6 +5,7 @@
  */
 package gui;
 
+import domein.Activiteit;
 import domein.Groep;
 import domein.GroepController;
 import domein.InlogController;
@@ -60,13 +61,13 @@ public class GroepOverzichtController extends GridPane {
     @FXML
     private Tab actiesTab;
     @FXML
-    private ListView<?> actiesTonen;
-    @FXML
     private Button keurActieGoed;
     @FXML
     private TextArea actieDetailTxtArea;
     @FXML
     private Button keurActieAfBtn;
+    @FXML
+    private ListView<String> actiesListView;
 
     public GroepOverzichtController(GroepController gc) {
         this.gc = gc;
@@ -188,6 +189,15 @@ public class GroepOverzichtController extends GridPane {
     }
 
     private void toonActies() {
+        List<Activiteit> acties = gc.getSelectedGroep().getActies();
+        List<String> actienamen = new ArrayList<>();
+        for(Activiteit a : acties){
+            actienamen.add(a.getTitel());
+        }
+//        acties.forEach((v) -> {
+//            actienamen.add(v.getTitel());
+//        });
+        actiesListView.setItems(FXCollections.observableArrayList(actienamen));
     }
 
     private void toonMotivatieHistoriek() {
@@ -202,6 +212,10 @@ public class GroepOverzichtController extends GridPane {
         }
         //  motivaties.stream().forEach(m -> historiek.append(m.toString()).append("%n"));
         historiekTxtArea.setText(historiek.toString());
+    }
+
+    @FXML
+    private void toonActieDetail(MouseEvent event) {
     }
 
 }

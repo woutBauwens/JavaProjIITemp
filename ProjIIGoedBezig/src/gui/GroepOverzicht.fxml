@@ -99,7 +99,7 @@
                       <RowConstraints maxHeight="206.0" minHeight="0.0" prefHeight="26.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ListView fx:id="actiesTonen" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" />
+                        <ListView fx:id="actiesListView" onMouseClicked="#toonActieDetail" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" />
                         <Button fx:id="keurActieGoed" mnemonicParsing="false" onAction="#keurActieGoed" text="Goedkeuren" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                         <Button fx:id="keurActieAfBtn" mnemonicParsing="false" onAction="#keurActieAf" text="Afkeuren" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                         <TextArea fx:id="actieDetailTxtArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
