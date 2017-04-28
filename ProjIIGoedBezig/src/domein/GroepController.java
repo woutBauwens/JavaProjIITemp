@@ -62,4 +62,37 @@ public class GroepController {
     public void update() {
         groepRepo.update(selectedGroep);
     }
+
+    public String toonDetailActie(String titelActie) {
+        List<Activiteit> acties = selectedGroep.getActies();
+        for (Activiteit a : acties) {
+            if (a.getTitel().equals(titelActie)) {
+                return a.toString();
+            }
+        }
+        return null;
+    }
+
+    public void setFeedbackActie(String titelActie, String feedback) {
+        Activiteit a = getActie(titelActie);
+        a.setFeedback(feedback);
+
+    }
+
+    public void keurActie(boolean b, String titel) {
+        Activiteit a = getActie(titel);
+        a.setGoedgekeurd(b);
+    }
+
+    private Activiteit getActie(String titel) {
+
+        List<Activiteit> acties = getSelectedGroep().getActies();
+        for (Activiteit a : acties) {
+            if (a.getTitel().equals(titel)) {
+
+                return a;
+            }
+        }
+        return null;
+    }
 }

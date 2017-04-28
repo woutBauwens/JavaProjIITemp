@@ -36,6 +36,9 @@ public class Activiteit implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date UitvoeringsDate;
 
+    private String feedback;
+    private boolean isGoedgekeurd;
+
     public int getId() {
         return ActiviteitId;
     }
@@ -58,6 +61,29 @@ public class Activiteit implements Serializable {
 
     public Date getUitvoeringsdatum() {
         return UitvoeringsDate;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder b = new StringBuilder();
+        if (UitvoeringsDate != null) {
+            b.append(String.format("Datum:%n%s%n", UitvoeringsDate));
+        }
+        return b.append(String.format("Titel:%n%s%nOmschrijving:%n%s%n", titel, omschrijving)).toString();
+
+    }
+
+    public String getFeedback() {
+        //  return feedback;
+        return "huzzah it works";
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    public void setGoedgekeurd(boolean b) {
+        isGoedgekeurd = b;
     }
 
 }

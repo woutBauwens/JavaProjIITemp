@@ -59,7 +59,7 @@
       </Button>
       <TabPane prefHeight="664.0" prefWidth="432.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowSpan="3">
         <tabs>
-          <Tab fx:id="motievatieTab" text="Motivatie">
+          <Tab fx:id="motievatieTab" onSelectionChanged="#toonMotivatieHistoriek" text="Motivatie">
                <content>
                   <GridPane>
                     <columnConstraints>
@@ -86,7 +86,7 @@
                   </GridPane>
                </content>
             </Tab>
-          <Tab fx:id="actiesTab" text="Acties">
+          <Tab fx:id="actiesTab" onSelectionChanged="#toonActieHistoriek" text="Acties">
                <content>
                   <GridPane>
                     <columnConstraints>
