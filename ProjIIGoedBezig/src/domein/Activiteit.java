@@ -69,13 +69,17 @@ public class Activiteit implements Serializable {
         if (UitvoeringsDate != null) {
             b.append(String.format("Datum:%n%s%n", UitvoeringsDate));
         }
-        return b.append(String.format("Titel:%n%s%nOmschrijving:%n%s%n", titel, omschrijving)).toString();
-
+        
+        b.append(String.format("Titel:%n%s%nOmschrijving:%n%s%n", titel, omschrijving));
+        if (feedback!= null){
+            b.append(String.format("Feedback:%n%s%n", feedback));
+        }
+        return b.toString();
     }
 
     public String getFeedback() {
         //  return feedback;
-        return "huzzah it works";
+        return feedback;
     }
 
     public void setFeedback(String feedback) {
@@ -84,6 +88,10 @@ public class Activiteit implements Serializable {
 
     public void setGoedgekeurd(boolean b) {
         isGoedgekeurd = b;
+    }
+    
+    public boolean getGoedgekeurd(){
+        return isGoedgekeurd;
     }
 
 }

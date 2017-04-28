@@ -12,6 +12,7 @@ import domein.InlogController;
 import domein.Motivatie;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -48,7 +49,6 @@ public class GroepOverzichtController extends GridPane {
     private Button afkeurenBtn;
     @FXML
     private TextArea motivatieTxtArea;
-    @FXML
     private Label motivatieStatusLbl;
     @FXML
     private TextArea historiekTxtArea;
@@ -68,6 +68,8 @@ public class GroepOverzichtController extends GridPane {
     private Button keurActieAfBtn;
     @FXML
     private ListView<String> actiesListView;
+    @FXML
+    private Label errorLbl;
 
     public GroepOverzichtController(GroepController gc) {
         this.gc = gc;
@@ -85,44 +87,31 @@ public class GroepOverzichtController extends GridPane {
             groepsnamen.add(g.getNaam());
         }
         groepListView.setItems(FXCollections.observableArrayList(groepsnamen));
-        motivatieStatusLbl.setVisible(false);
+        errorLbl.setVisible(false);
         //for loop
     }
-//
-//    private Motivatie getHuidigeMotivatie() {
-//        String groep = groepListView.getSelectionModel().getSelectedItem();
-//        return getHuidigeMotivatie(groep);
-//    }
-//
-//    private Motivatie getHuidigeMotivatie(String groep) {
-//        return gc.getSelectedGroep().getHuidigeMotivatie();
-//    }
+
 
     @FXML
     private void keurMotivatieGoed(ActionEvent event) {
-        gc.keur(true);
-        gc.setFeedback(feedbackTxtArea.getText());
-        motivatieStatusLbl.setVisible(true);
-        motivatieStatusLbl.setText("Motivatie Goedgekeurd");
-        goedkeurenBtn.setDisable(true);
-        afkeurenBtn.setDisable(true);
-        feedbackTxtArea.setEditable(false);
-        gc.update();
-        //method keur mag geen feedback meegeven
-
+        verwerkMotivatieKeuring(true);
     }
 
     @FXML
     private void keurMotivatieAf(ActionEvent event) {
-        gc.keur(false);
+        verwerkMotivatieKeuring(false);
+    }
+
+    private void verwerkMotivatieKeuring(boolean b) {
+        gc.keur(b);
         gc.setFeedback(feedbackTxtArea.getText());
         motivatieStatusLbl.setVisible(true);
-        motivatieStatusLbl.setText("Motivatie Afgekeurd");
+        motivatieStatusLbl.setText(b ? "Motivatie Goedgekeurd" : "Motivatie Afgekeurd");
         goedkeurenBtn.setDisable(true);
         afkeurenBtn.setDisable(true);
         feedbackTxtArea.setEditable(false);
         gc.update();
-        //method keur mag geen feedback meegeven
+        toonMotivatieHistoriek();
     }
 
     @FXML
@@ -139,9 +128,11 @@ public class GroepOverzichtController extends GridPane {
 
     @FXML
     private void kiesGroep(MouseEvent event) {
+       
         toonMotivatie();
         toonActies();
         toonMotivatieHistoriek();
+    
     }
 
     private void toonMotivatie() {
@@ -183,6 +174,7 @@ public class GroepOverzichtController extends GridPane {
     @FXML
     private void keurActieAf(ActionEvent event) {
         geefFeedbackWindow(false);
+        actieDetailTxtArea.clear();
     }
 
     @FXML
@@ -191,6 +183,7 @@ public class GroepOverzichtController extends GridPane {
     }
 
     private void geefFeedbackWindow(boolean b) {
+     
         String titel = actiesListView.getSelectionModel().getSelectedItem();
 
         TextInputDialog dialog = new TextInputDialog();
@@ -205,18 +198,24 @@ public class GroepOverzichtController extends GridPane {
                         gc.keurActie(b, titel);//actie goedgekeurd instellen => nog aanmaken in DB
                     }
                 });
+        toonActies();
+        toonActieHistoriek();
+        if(b)//als actie goedgekeurd wordt de detailview refreshen, anders niet
+        toonActieDetail();
         gc.update();
+    
+
     }
 
     private void toonActies() {
+
         List<Activiteit> acties = gc.getSelectedGroep().getActies();
         List<String> actienamen = new ArrayList<>();
         for (Activiteit a : acties) {
-            actienamen.add(a.getTitel());
+            if (a.getGoedgekeurd() || a.getFeedback()==null) {
+                actienamen.add(a.getTitel());
+            }
         }
-//        acties.forEach((v) -> {
-//            actienamen.add(v.getTitel());
-//        });
         actiesListView.setItems(FXCollections.observableArrayList(actienamen));
     }
 
@@ -237,26 +236,41 @@ public class GroepOverzichtController extends GridPane {
     }
 
     @FXML
-    private void toonActieDetail(MouseEvent event) {
+    private void toonActieDetail() {
         //date, titel, omschr.
         actieDetailTxtArea.setEditable(false);
         actieDetailTxtArea.setText(gc.toonDetailActie(actiesListView.getSelectionModel().getSelectedItem()));
+        List<Activiteit> acties = gc.getSelectedGroep().getActies();
+        for (Activiteit a : acties) {
+            if (a.getTitel().equals(actiesListView.getSelectionModel().getSelectedItem())) {
+                if (a.getFeedback() != null) {
+                    keurActieAfBtn.setDisable(true);
+                    keurActieGoed.setDisable(true);
+                } else {
+                    keurActieAfBtn.setDisable(false);
+                    keurActieGoed.setDisable(false);
+                }
+            }
+        }
+
     }
 
     @FXML
-    private void toonActieHistoriek(Event event) {
+    private void toonActieHistoriek() {
+      
         historiekTxtArea.setEditable(false);
         historiekTxtArea.setWrapText(true);
         List<Activiteit> acties = gc.getSelectedGroep().getActies();
         StringBuilder historiek = new StringBuilder();
         for (Activiteit a : acties) {
-            if (a.getFeedback() != null) {
+            if (a.getFeedback() != null && !a.getGoedgekeurd()) {
                 historiek.append(a.toString()).append("\n");
             }
 // voor activiteit column feedback in databse + 
         }
 
         historiekTxtArea.setText(historiek.toString());
+   
     }
 
 }
