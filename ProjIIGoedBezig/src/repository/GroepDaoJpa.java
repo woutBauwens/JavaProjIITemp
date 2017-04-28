@@ -14,8 +14,8 @@ import domein.Groep;
  */
 public class GroepDaoJpa extends GenericDaoJpa<Groep>{
 
-    public GroepDaoJpa(Class<Groep> type) {
-        super(type);
+    public GroepDaoJpa() {
+        super(Groep.class);
     }
     
     

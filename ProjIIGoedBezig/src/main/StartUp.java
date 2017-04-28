@@ -6,16 +6,13 @@
 package main;
 
 import Persistentie.SQLConnection;
-import domein.DomeinController;
+import domein.InlogController;
 import gui.LoginController;
 import java.sql.SQLException;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import repository.LoginDaoJpa;
 
 /**
  *
@@ -27,8 +24,8 @@ public class StartUp extends Application {
     @Override
     public void start(Stage primaryStage) {
         connect();
-        DomeinController dc = new DomeinController();
-        LoginController root = new LoginController();
+         InlogController dc = new InlogController(new LoginDaoJpa());
+       LoginController root = new LoginController(dc);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Log in:");

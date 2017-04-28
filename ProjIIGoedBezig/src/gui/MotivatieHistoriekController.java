@@ -63,12 +63,12 @@ public class MotivatieHistoriekController extends GridPane {
 
     @FXML
     private void TerugNaarGroepsOverzicht(ActionEvent event) {
-        GroepOverzichtController GOC = new GroepOverzichtController(new ArrayList<Groep>());
-        Stage stage = (Stage) (this.getScene().getWindow());
-        Scene scene = new Scene(GOC);
-
-        stage.setScene(scene);
-        stage.show();
+//        GroepOverzichtController GOC = new GroepOverzichtController(new ArrayList<Groep>());
+//        Stage stage = (Stage) (this.getScene().getWindow());
+//        Scene scene = new Scene(GOC);
+//
+//        stage.setScene(scene);
+//        stage.show();
     }
 
 }

@@ -5,8 +5,9 @@
  */
 package gui;
 
-import domein.DomeinController;
 import domein.Groep;
+import domein.GroepController;
+import domein.InlogController;
 import domein.Motivatie;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,9 +23,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import repository.LoginDaoJpa;
 
 /**
  * FXML Controller class
@@ -54,9 +55,12 @@ public class GroepOverzichtController extends GridPane {
     private TextArea historiekTxtArea;
     @FXML
     private TextArea feedbackTxtArea;
+    
+    private GroepController gc;
 
-    public GroepOverzichtController(List<Groep> groepen) {
-        this.groepen = groepen;
+    public GroepOverzichtController(GroepController gc) {
+        this.gc = gc;
+        this.groepen = gc.getGroepenByLector();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GroepOverzicht.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -160,8 +164,8 @@ public class GroepOverzichtController extends GridPane {
 
     @FXML
     private void logOut(ActionEvent event) {
-        DomeinController dc = new DomeinController();//lege domeincontroller om mee te geven aan loginscherm
-        LoginController loginC = new LoginController();
+        InlogController dc = new InlogController(new LoginDaoJpa());//lege domeincontroller om mee te geven aan loginscherm
+        LoginController loginC = new LoginController(dc);
 
         Stage stage = (Stage) (this.getScene().getWindow());
         Scene scene = new Scene(loginC);

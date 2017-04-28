@@ -14,8 +14,8 @@ import domein.ContactPersoon;
  */
 public class LoginDaoJpa extends GenericDaoJpa<LoginUser> implements LoginDao {
 
-    public LoginDaoJpa(Class<LoginUser> type) {
-        super(type);
+    public LoginDaoJpa() {
+        super(LoginUser.class);
     }
 
     @Override

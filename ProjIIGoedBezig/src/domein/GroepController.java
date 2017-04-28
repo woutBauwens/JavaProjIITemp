@@ -18,6 +18,11 @@ public class GroepController {
     private Groep selectedGroep;
     private GroepDaoJpa groepRepo;
 
+    public GroepController(GroepDaoJpa jp,ContactPersoon lector) {
+        groepRepo = jp;
+        this.lector = lector;
+    }
+
     public List<Groep> getGroepenByLector() {
         return lector.getGroepen();
     }
