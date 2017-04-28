@@ -14,12 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
@@ -38,8 +40,6 @@ public class GroepOverzichtController extends GridPane {
     @FXML
     private Button logOutBtn;
     @FXML
-    private Button actiesBtn;
-    @FXML
     private ListView<String> groepListView;
     @FXML
     private Button goedkeurenBtn;
@@ -50,13 +50,23 @@ public class GroepOverzichtController extends GridPane {
     @FXML
     private Label motivatieStatusLbl;
     @FXML
-    private Button motivatie;
-    @FXML
     private TextArea historiekTxtArea;
     @FXML
     private TextArea feedbackTxtArea;
-    
+
     private GroepController gc;
+    @FXML
+    private Tab motievatieTab;
+    @FXML
+    private Tab actiesTab;
+    @FXML
+    private ListView<?> actiesTonen;
+    @FXML
+    private Button keurActieGoed;
+    @FXML
+    private TextArea actieDetailTxtArea;
+    @FXML
+    private Button keurActieAfBtn;
 
     public GroepOverzichtController(GroepController gc) {
         this.gc = gc;
@@ -77,90 +87,40 @@ public class GroepOverzichtController extends GridPane {
         motivatieStatusLbl.setVisible(false);
         //for loop
     }
-
-    private Motivatie getHuidigeMotivatie() {
-        String groep = groepListView.getSelectionModel().getSelectedItem();
-        return getHuidigeMotivatie(groep);
-    }
-
-    private Motivatie getHuidigeMotivatie(String groep) {
-        return getHuidigeGroep(groep).getHuidigeMotivatie();
-    }
-
-    private Groep getHuidigeGroep() {
-        return getHuidigeGroep(groepListView.getSelectionModel().getSelectedItem());
-    }
-
-    private Groep getHuidigeGroep(String groep) {
-        for (Groep g : groepen) {
-            if (g.getNaam().equals(groep)) {
-                return g;
-            }
-        }
-        return null;
-        //    return groepen.stream().filter(g -> g.getNaam().equals(groep)).findAny().get();
-    }
-
-    private void HistoriekTonen(ActionEvent event) {
-        MotivatieHistoriekController MHC = new MotivatieHistoriekController(null);
-
-        Stage stage = (Stage) (this.getScene().getWindow());
-        Scene scene = new Scene(MHC);
-
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    private void FeedBackSchrijven(ActionEvent event) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Feedback");
-        dialog.setHeaderText("Geef je feedback op de motivatie");
-        dialog.setContentText("Feedback");
-
-        dialog.showAndWait()
-                .ifPresent(response -> {
-                    if (!response.isEmpty()) {
-                        //dc logica feedback toevoegen + persisteren
-                        getHuidigeMotivatie(response);
-                    }
-                });
-    }
-
-    @FXML
-    private void motivatieTonen(ActionEvent event) {
-        //na listview acties, terug motivatie tonen van selected group =>kiesgroepaanroepen
-        //dus pane met listview acties => pane met txtfields motivatie => content setten
-    }
-
-    @FXML
-    private void actiesTonen(ActionEvent event) {
-        ActiesOverzichtController AOC = new ActiesOverzichtController(null);
-
-        Stage stage = (Stage) (this.getScene().getWindow());
-        Scene scene = new Scene(AOC);
-
-        stage.setScene(scene);
-        stage.show();
-    }
+//
+//    private Motivatie getHuidigeMotivatie() {
+//        String groep = groepListView.getSelectionModel().getSelectedItem();
+//        return getHuidigeMotivatie(groep);
+//    }
+//
+//    private Motivatie getHuidigeMotivatie(String groep) {
+//        return gc.getSelectedGroep().getHuidigeMotivatie();
+//    }
 
     @FXML
     private void keurMotivatieGoed(ActionEvent event) {
-        getHuidigeGroep().keur("", true);
+        gc.keur(true);
+        gc.setFeedback(feedbackTxtArea.getText());
         motivatieStatusLbl.setVisible(true);
         motivatieStatusLbl.setText("Motivatie Goedgekeurd");
         goedkeurenBtn.setDisable(true);
         afkeurenBtn.setDisable(true);
+        feedbackTxtArea.setDisable(true);
+        gc.update();
         //method keur mag geen feedback meegeven
 
     }
 
     @FXML
     private void keurMotivatieAf(ActionEvent event) {
-        //    dc.getSelectedGroep().keur("", false);
+        gc.keur(false);
+        gc.setFeedback(feedbackTxtArea.getText());
         motivatieStatusLbl.setVisible(true);
         motivatieStatusLbl.setText("Motivatie Afgekeurd");
         goedkeurenBtn.setDisable(true);
         afkeurenBtn.setDisable(true);
+        feedbackTxtArea.setDisable(true);
+        gc.update();
         //method keur mag geen feedback meegeven
     }
 
@@ -178,36 +138,70 @@ public class GroepOverzichtController extends GridPane {
 
     @FXML
     private void kiesGroep(MouseEvent event) {
+        toonMotivatie();
+        toonActies();
+        toonMotivatieHistoriek();
+    }
+
+    private void toonMotivatie() {
         motivatieTxtArea.setWrapText(true);
         motivatieTxtArea.setDisable(true); //motivatie field uneditable maken
-        groepen.stream().filter((g) -> (g.getNaam().equals(groepListView.getSelectionModel().getSelectedItem()))).forEachOrdered((g) -> {
-            motivatieTxtArea.setText(g.getHuidigeMotivatie().getTekst());
-        });
-        if (getHuidigeGroep().isVerstuurd() || getHuidigeGroep().isGoedgekeurd()) {
+        gc.setSelectedGroep(groepListView.getSelectionModel().getSelectedItem());
+        Groep g = gc.getSelectedGroep();
+        motivatieTxtArea.setText(gc.toonMotivatie());
+//        groepen.stream().filter((g) -> (g.getNaam().equals(groepListView.getSelectionModel().getSelectedItem()))).forEachOrdered((g) -> {
+//            motivatieTxtArea.setText(g.getHuidigeMotivatie().getTekst());
+//        });
+        if (!g.isVerstuurd() || g.isGoedgekeurd() || g.getHuidigeMotivatie().getFeedback() != null) {
             goedkeurenBtn.setDisable(true);
             afkeurenBtn.setDisable(true);
-                                motivatieTxtArea.setText(getHuidigeMotivatie().getTekst());
+            motivatieTxtArea.setText(gc.toonMotivatie());
 
         } else {
             goedkeurenBtn.setDisable(false);
             afkeurenBtn.setDisable(false);
-            if (getHuidigeGroep().isGoedgekeurd()) {
+            if (g.isGoedgekeurd()) {
                 motivatieStatusLbl.setVisible(true);
                 motivatieStatusLbl.setText("Motivatie Goedgekeurd");
             } else {
 
                 motivatieStatusLbl.setVisible(true);
                 motivatieStatusLbl.setText("Motivatie Afgekeurd");
-                if (getHuidigeMotivatie() == null) {
+                if (g.getHuidigeMotivatie() == null) {
                     motivatieStatusLbl.setText("Motivatie is nog niet ingediend");
                 } else {
-                    if (getHuidigeMotivatie().getFeedback() == null) {
+                    if (g.getHuidigeMotivatie().getFeedback() == null) {
                         motivatieStatusLbl.setText("Motivatie nog niet gekeurd");
                     }
-                    motivatieTxtArea.setText(getHuidigeMotivatie().getTekst());
+                    motivatieTxtArea.setText(gc.toonMotivatie());
                 }
             }
         }
+    }
+
+    @FXML
+    private void keurActieAf(ActionEvent event) {
+    }
+
+    @FXML
+    private void keurActieGoed(ActionEvent event) {
+    }
+
+    private void toonActies() {
+    }
+
+    private void toonMotivatieHistoriek() {
+        historiekTxtArea.setWrapText(true);
+        List<Motivatie> motivaties = gc.getSelectedGroep().getMotivaties();
+        StringBuilder historiek = new StringBuilder();
+
+        for (Motivatie m : motivaties) {
+            if (m.isVerstuurd() && m.getFeedback() != null) {
+                historiek.append(m.toString()).append("\n");
+            }
+        }
+        //  motivaties.stream().forEach(m -> historiek.append(m.toString()).append("%n"));
+        historiekTxtArea.setText(historiek.toString());
     }
 
 }

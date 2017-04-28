@@ -18,7 +18,7 @@ public class GroepController {
     private Groep selectedGroep;
     private GroepDaoJpa groepRepo;
 
-    public GroepController(GroepDaoJpa jp,ContactPersoon lector) {
+    public GroepController(GroepDaoJpa jp, ContactPersoon lector) {
         groepRepo = jp;
         this.lector = lector;
     }
@@ -29,16 +29,37 @@ public class GroepController {
 
     public void setFeedback(String response) {
         selectedGroep.getHuidigeMotivatie().setFeedback(response);
-        groepRepo.update(selectedGroep);
+
     }
 
-    public String toonMotivatie(Groep g) {
-        selectedGroep = g;
-        return g.getHuidigeMotivatie().getTekst();
+    public void keur(boolean keuring) {
+        selectedGroep.setKeuring(keuring);
+
+    }
+
+    public String toonMotivatie() {
+
+        return selectedGroep.getHuidigeMotivatie().getTekst();
+
+    }
+
+    public void setSelectedGroep(String naam) {
+
+        List<Groep> groepen = lector.getGroepen();
+        for (Groep g : groepen) {
+            if (g.getNaam().equals(naam)) {
+                selectedGroep = g;
+            }
+
+        }
 
     }
 
     public Groep getSelectedGroep() {
         return selectedGroep;
+    }
+
+    public void update() {
+        groepRepo.update(selectedGroep);
     }
 }

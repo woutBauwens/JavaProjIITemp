@@ -14,8 +14,8 @@
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="665.0" minWidth="10.0" prefWidth="430.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="127.0" minHeight="0.0" prefHeight="104.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="352.0" minHeight="10.0" prefHeight="293.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="127.0" minHeight="0.0" prefHeight="68.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="355.0" minHeight="10.0" prefHeight="353.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="352.0" minHeight="10.0" prefHeight="299.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
   </rowConstraints>
@@ -30,9 +30,7 @@
           <RowConstraints maxHeight="53.0" minHeight="2.0" prefHeight="48.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="actiesBtn" mnemonicParsing="false" onAction="#actiesTonen" text="Acties" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Label fx:id="motivatieStatusLbl" prefHeight="21.0" prefWidth="197.0" GridPane.halignment="CENTER" />
-            <Button fx:id="motivatie" mnemonicParsing="false" onAction="#motivatieTonen" text="Motivatie" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Label fx:id="motivatieStatusLbl" prefHeight="21.0" prefWidth="197.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
       <ListView fx:id="groepListView" onMouseClicked="#kiesGroep" prefHeight="315.0" prefWidth="240.0" GridPane.rowIndex="1" GridPane.rowSpan="2" />
@@ -44,20 +42,74 @@
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <Button fx:id="goedkeurenBtn" mnemonicParsing="false" onAction="#keurMotivatieGoed" text="Goedkeuren" GridPane.halignment="CENTER" />
-            <Button fx:id="afkeurenBtn" mnemonicParsing="false" onAction="#keurMotivatieAf" text="Afkeuren" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-         </children>
       </GridPane>
-      <TextArea fx:id="motivatieTxtArea" prefHeight="346.0" prefWidth="677.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <TextArea fx:id="historiekTxtArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
-      <TextArea fx:id="feedbackTxtArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Label text="Groepen" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-      <Label text="Historiek" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+      <Label text="Groepen" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+         <padding>
+            <Insets bottom="5.0" />
+         </padding></Label>
+      <Label text="Historiek" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+         <padding>
+            <Insets bottom="5.0" />
+         </padding></Label>
       <Button fx:id="logOutBtn" mnemonicParsing="false" onAction="#logOut" text="Log out" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
          <GridPane.margin>
-            <Insets bottom="50.0" right="20.0" />
+            <Insets bottom="20.0" right="15.0" />
          </GridPane.margin>
       </Button>
+      <TabPane prefHeight="664.0" prefWidth="432.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowSpan="3">
+        <tabs>
+          <Tab fx:id="motievatieTab" text="Motivatie">
+               <content>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="217.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="215.0" minWidth="10.0" prefWidth="215.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="368.0" minHeight="10.0" prefHeight="319.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="536.0" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="202.0" minHeight="0.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TextArea fx:id="feedbackTxtArea" prefHeight="285.0" prefWidth="432.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin></TextArea>
+                        <TextArea fx:id="motivatieTxtArea" prefHeight="325.0" prefWidth="284.0" GridPane.columnSpan="2">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin></TextArea>
+                        <Button fx:id="goedkeurenBtn" mnemonicParsing="false" onAction="#keurMotivatieGoed" text="Goedkeuren" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button fx:id="afkeurenBtn" mnemonicParsing="false" onAction="#keurMotivatieAf" text="Afkeuren" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+               </content>
+            </Tab>
+          <Tab fx:id="actiesTab" text="Acties">
+               <content>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="347.0" minHeight="10.0" prefHeight="321.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="582.0" minHeight="10.0" prefHeight="299.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="206.0" minHeight="0.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ListView fx:id="actiesTonen" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" />
+                        <Button fx:id="keurActieGoed" mnemonicParsing="false" onAction="#keurActieGoed" text="Goedkeuren" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button fx:id="keurActieAfBtn" mnemonicParsing="false" onAction="#keurActieAf" text="Afkeuren" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <TextArea fx:id="actieDetailTxtArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </content></Tab>
+        </tabs>
+         <GridPane.margin>
+            <Insets top="35.0" />
+         </GridPane.margin>
+      </TabPane>
    </children>
 </fx:root>

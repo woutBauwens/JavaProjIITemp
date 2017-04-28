@@ -78,6 +78,9 @@ public class Motivatie implements Serializable {
         return MotivatieId;
     }
 
-  
+  @Override
+  public String toString(){
+      return String.format("Motivatie:%n%s%n%nFeedback:%n%s%n",MotivatieTekst,Feedback);
+  }
 
 }

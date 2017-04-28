@@ -57,7 +57,7 @@ public class Groep implements Serializable {
 
     public void keur(String feedback, boolean b) {
         motivaties.get(0).setFeedback(feedback);
-        MotivatieIsGoedgekeurd = b;
+      
 
     }
 
@@ -78,6 +78,13 @@ public class Groep implements Serializable {
 
     public void addMotivatie(Motivatie m) {
         motivaties.add(m);
+    }
+
+    void setKeuring(boolean keuring) {
+          MotivatieIsGoedgekeurd = keuring;}
+    
+    public List<Motivatie> getMotivaties(){
+        return motivaties;
     }
 
 }
