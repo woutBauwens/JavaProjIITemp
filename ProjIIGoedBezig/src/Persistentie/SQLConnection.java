@@ -17,7 +17,8 @@ import util.JPAUtil;
 public class SQLConnection {
     
     private static Connection con;
-    private final String url = "jdbc:sqlserver://127.0.0.1:1433;DatabaseName=GBDB;user=Login;password=1234";
+    private final String url = "jdbc:sqlserver://127.0.0.1:1433;databaseName=GBDB;user=Login;password=1234";
+
     private static EntityManager em;
 
     
