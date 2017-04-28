@@ -128,6 +128,8 @@ public class GroepOverzichtController extends GridPane {
 
     @FXML
     private void motivatieTonen(ActionEvent event) {
+        //na listview acties, terug motivatie tonen van selected group =>kiesgroepaanroepen
+        //dus pane met listview acties => pane met txtfields motivatie => content setten
     }
 
     @FXML

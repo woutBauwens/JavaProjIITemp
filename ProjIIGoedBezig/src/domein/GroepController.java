@@ -33,7 +33,7 @@ public class GroepController {
     }
 
     public String toonMotivatie(Groep g) {
-
+        selectedGroep = g;
         return g.getHuidigeMotivatie().getTekst();
 
     }
