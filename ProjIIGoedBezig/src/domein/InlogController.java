@@ -12,10 +12,15 @@ import repository.LoginDaoJpa;
  *
  * @author Jonas
  */
-public class LoginController {
+public class InlogController {
 
     private ContactPersoon lector;
     private LoginDaoJpa loginRepo;
+    
+        public InlogController(LoginDaoJpa jp) {
+        loginRepo = jp;
+    }
+
 
     public boolean checkLogin(String email, String password) throws Exception {
         lector = loginRepo.CheckLogin(email, password);

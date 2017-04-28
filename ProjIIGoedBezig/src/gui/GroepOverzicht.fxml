@@ -31,7 +31,7 @@
         </rowConstraints>
          <children>
             <Button fx:id="actiesBtn" mnemonicParsing="false" onAction="#actiesTonen" text="Acties" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Label fx:id="motivatieStatusLbl" prefHeight="21.0" prefWidth="197.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Label fx:id="motivatieStatusLbl" prefHeight="21.0" prefWidth="197.0" GridPane.halignment="CENTER" />
             <Button fx:id="motivatie" mnemonicParsing="false" onAction="#motivatieTonen" text="Motivatie" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
          </children>
       </GridPane>
