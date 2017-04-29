@@ -30,6 +30,7 @@ public class ContactPersoon implements Serializable {
     protected String Functie;
     protected String NaamContactPersoon;
     protected String VoornaamContactPersoon;
+    protected int OrganisatieId;
 
     private String Discriminator;
 
@@ -53,5 +54,13 @@ public class ContactPersoon implements Serializable {
 
     public List<Groep> getGroepen() {
         return groepen;
+    }
+    
+    public boolean isLector(){
+        return Discriminator.equals("Lector");
+    }
+    
+    public String passwordExtention(){
+        return String.valueOf(OrganisatieId) + String.valueOf(VoornaamContactPersoon.toLowerCase().charAt(0) + NaamContactPersoon.toLowerCase().charAt(0)) + String.valueOf(VoornaamContactPersoon.toLowerCase().charAt(0)) + String.valueOf(NaamContactPersoon.toLowerCase().charAt(0));
     }
 }

@@ -5,13 +5,13 @@
  */
 package repository;
 
-import domein.ContactPersoon;
-
 /**
  *
- * @author Jonas
+ * @author BelgoBits
  */
-public interface LoginDao {
-    
-    public ContactPersoon CheckLogin(String email, String password) throws Exception ;
+public interface PasswordDao {
+
+    public boolean hasPassword(int lectorId) throws Exception;
+
+    public void generatePassword(int lectorId, String value) throws Exception;
 }

@@ -27,6 +27,7 @@ public class SQLConnection {
         con = DriverManager.getConnection(url);
         em = JPAUtil.getEntityManagerFactory().createEntityManager();
         System.out.println("You are now connected to the server.");
+     //   PasswordGenerator.generate();
     }
     
     public static Connection getConnection() throws SQLException, ClassNotFoundException{
