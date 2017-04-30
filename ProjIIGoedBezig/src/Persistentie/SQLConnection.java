@@ -6,8 +6,11 @@
 package Persistentie;
 
 
+import domein.Activiteit;
 import java.sql.*;
 import javax.persistence.EntityManager;
+import repository.GenericDao;
+import repository.GenericDaoJpa;
 import util.JPAUtil;
 
 /** 
@@ -39,5 +42,12 @@ public class SQLConnection {
     
     public static EntityManager getManager(){
         return em;
+    }
+    
+    private void update(){
+        while(true){
+        //    em.wait(100);
+            
+        }
     }
 }

@@ -19,17 +19,11 @@ public class PasswordDaoJpa extends GenericDaoJpa<LoginUser> implements Password
     }
 
     @Override
-    public boolean hasPassword(ContactPersoon lector) throws Exception {
+    public boolean needsPassword(ContactPersoon lector) throws Exception {
         try {
             if (lector.isLector()) {
-                LoginUser index = em.createQuery("SELECT u from LoginUser u WHERE u.lector = :id",
-                        LoginUser.class).setParameter("id", lector).getSingleResult();
                 LoginUser u = em.find(LoginUser.class, lector.getId());
-                if (index != null && u != null) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return u == null;
             } else {
                 return false;
             }

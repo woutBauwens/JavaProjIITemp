@@ -26,7 +26,7 @@ public class PasswordGenerator {
         Contacten.forEach((c) -> {
             try {
                 ContactPersoon contact = (ContactPersoon) c;
-                if (!passEntities.hasPassword(contact)) {
+                if (passEntities.needsPassword(contact)) {
                     users.insert(new LoginUser(contact, String.valueOf(contact.getId()) + contact.passwordExtention()));
                 }
             } catch (Exception e) {

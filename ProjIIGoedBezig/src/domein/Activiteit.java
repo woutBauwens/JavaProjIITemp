@@ -5,8 +5,9 @@
  */
 package domein;
 
-import Persistentie.SQLConnection;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,7 +49,6 @@ public class Activiteit implements Serializable {
     }
 
     protected Activiteit() {
-
     }
 
     public String getTitel() {
@@ -66,13 +66,13 @@ public class Activiteit implements Serializable {
     @Override
     public String toString() {
         StringBuilder b = new StringBuilder();
+        b.append(String.format("%s%n", titel));
         if (UitvoeringsDate != null) {
-            b.append(String.format("Datum:%n%s%n", UitvoeringsDate));
+            b.append(String.format("%s%n", DateFormat.getInstance().format(UitvoeringsDate)));
         }
-        
-        b.append(String.format("Titel:%n%s%nOmschrijving:%n%s%n", titel, omschrijving));
-        if (feedback!= null){
-            b.append(String.format("Feedback:%n%s%n", feedback));
+        b.append(String.format("%nOmschrijving:%n%s%n", omschrijving));
+        if (feedback != null) {
+            b.append(String.format("%n%n%s%nFeedback:%n%s%n", isGoedgekeurd ? "Goedgekeurd" : "Afgekeurd", feedback));
         }
         return b.toString();
     }
@@ -89,9 +89,8 @@ public class Activiteit implements Serializable {
     public void setGoedgekeurd(boolean b) {
         isGoedgekeurd = b;
     }
-    
-    public boolean getGoedgekeurd(){
+
+    public boolean getGoedgekeurd() {
         return isGoedgekeurd;
     }
-
 }

@@ -13,7 +13,7 @@ import domein.ContactPersoon;
  */
 public interface PasswordDao {
 
-    public boolean hasPassword(ContactPersoon lector) throws Exception;
+    public boolean needsPassword(ContactPersoon lector) throws Exception;
 
     public void generatePassword(int lectorId, String value) throws Exception;
 }

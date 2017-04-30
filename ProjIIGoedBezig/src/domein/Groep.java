@@ -66,10 +66,10 @@ public class Groep implements Serializable {
     }
 
     public Motivatie getHuidigeMotivatie() {
-        if (isVerstuurd()) {
+       // if (isVerstuurd()) {
             return motivaties.get(0);
-        }
-        return null;
+      //  }
+      //  return null;
     }
 
     public List<Activiteit> getActies() {

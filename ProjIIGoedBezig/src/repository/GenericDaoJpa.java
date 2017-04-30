@@ -50,12 +50,18 @@ public class GenericDaoJpa<T> implements GenericDao<T> {
 
     @Override
     public void insert(T object) {
-     //   em.persist(object);
         em.getTransaction().begin();
         em.persist(object);
         em.getTransaction().commit();
     }
 
+   /* @Override    -werkt niet geimplementeerd in .NET
+    public void addColumn(String table, String column){
+        em.getTransaction().begin();
+        em.createNativeQuery("ALTER TABLE " + table + " ADD " + column + " VARCHAR(50)");
+        em.getTransaction().commit();
+    } */
+    
     @Override
     public boolean exists(Long id) {
         T entity = em.find(type, id);
