@@ -20,13 +20,14 @@ import repository.PasswordDaoJpa;
 public class PasswordGenerator {
     public static void generate() {
         GenericDao entities = new GenericDaoJpa(ContactPersoon.class);
+        GenericDao users = new GenericDaoJpa(LoginUser.class);
         PasswordDao passEntities = new PasswordDaoJpa();
         List Contacten = entities.findAll();
         Contacten.forEach((c) -> {
             try {
                 ContactPersoon contact = (ContactPersoon) c;
-                if (contact.isLector() && !passEntities.hasPassword(contact.getId())) {
-                    passEntities.generatePassword(contact.getId(), contact.passwordExtention());
+                if (!passEntities.hasPassword(contact)) {
+                    users.insert(new LoginUser(contact, String.valueOf(contact.getId()) + contact.passwordExtention()));
                 }
             } catch (Exception e) {
 

@@ -5,13 +5,15 @@
  */
 package repository;
 
+import domein.ContactPersoon;
+
 /**
  *
  * @author BelgoBits
  */
 public interface PasswordDao {
 
-    public boolean hasPassword(int lectorId) throws Exception;
+    public boolean hasPassword(ContactPersoon lector) throws Exception;
 
     public void generatePassword(int lectorId, String value) throws Exception;
 }

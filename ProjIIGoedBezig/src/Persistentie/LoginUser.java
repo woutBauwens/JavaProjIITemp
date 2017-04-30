@@ -45,7 +45,8 @@ public class LoginUser implements Serializable {
         this.lector = lector;
     }
     
-    public LoginUser(String email, String password){
+    public LoginUser(ContactPersoon lector, String password){
+        this(lector);
         this.password = password;
     }
     
