@@ -61,7 +61,7 @@
             <Insets bottom="20.0" right="15.0" />
          </GridPane.margin>
       </Button>
-      <TabPane prefHeight="664.0" prefWidth="432.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowSpan="3">
+      <TabPane fx:id="tabPane" prefHeight="664.0" prefWidth="432.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowSpan="3">
         <tabs>
           <Tab fx:id="motievatieTab" onSelectionChanged="#toonMotivatieHistoriek" text="Motivatie">
                <content>

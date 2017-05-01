@@ -39,19 +39,19 @@ public class GroepController {
     }
 
     public String toonMotivatie() {
-        if(selectedGroep.isGoedgekeurd()){
-            Motivatie goedgekeurd = selectedGroep.getMotivaties().get(selectedGroep.getMotivaties().size()-1);
-            return String.format("De motivatie is goedgekeurd.%n%n%s%nFeedback:%n%s", goedgekeurd.getTekst(), goedgekeurd.getFeedback()); 
-        }
-        if (selectedGroep.getHuidigeMotivatie().isVerstuurd()) {
-            return selectedGroep.getHuidigeMotivatie().getTekst();
-        } else {
-            try {
-                return selectedGroep.getMotivaties().stream().findFirst().filter(m -> m.isVerstuurd()).orElseThrow(NullPointerException::new).getTekst();
-            } catch (NullPointerException nullex) {
-                return "Nog geen motivatie verstuurd";
-            }
-        }
+//        if(selectedGroep.isGoedgekeurd()){
+//            Motivatie goedgekeurd = selectedGroep.getMotivaties().get(selectedGroep.getMotivaties().size()-1);
+//            return String.format("De motivatie is goedgekeurd.%n%n%s%nFeedback:%n%s", goedgekeurd.getTekst(), goedgekeurd.getFeedback()); 
+//        }
+//        if (selectedGroep.getHuidigeMotivatie().isVerstuurd()) {
+        return selectedGroep.getHuidigeMotivatie().getTekst();
+//        } else {
+//            try {
+//                return selectedGroep.getMotivaties().stream().findFirst().filter(m -> m.isVerstuurd()).orElseThrow(NullPointerException::new).getTekst();
+//            } catch (NullPointerException nullex) {
+//                return "Nog geen motivatie verstuurd";
+//            }
+//        }
     }
 
     public boolean isMotivatieVerstuurd() {
@@ -112,5 +112,16 @@ public class GroepController {
             }
         }
         return null;
+    }
+
+    public String getActieHistoriek() {
+        List<Activiteit> acties = selectedGroep.getActies();
+        StringBuilder historiek = new StringBuilder();
+        for (Activiteit a : acties) {
+            if (a.getFeedback() != null && !a.getGoedgekeurd()) {
+                historiek.append(a.toString()).append("\n");
+            }
+        }
+        return historiek.toString();
     }
 }

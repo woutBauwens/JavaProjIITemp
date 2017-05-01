@@ -6,7 +6,6 @@
 package Persistentie;
 
 import domein.ContactPersoon;
-import domein.DomeinController;
 import domein.Groep;
 import domein.Lector;
 import java.io.Serializable;

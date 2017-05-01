@@ -24,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
@@ -70,6 +71,8 @@ public class GroepOverzichtController extends GridPane {
     private ListView<String> actiesListView;
     @FXML
     private Label errorLbl;
+    @FXML
+    private TabPane tabPane;
 
     public GroepOverzichtController(GroepController gc) {
         this.gc = gc;
@@ -88,6 +91,7 @@ public class GroepOverzichtController extends GridPane {
         }
         groepListView.setItems(FXCollections.observableArrayList(groepsnamen));
         errorLbl.setVisible(false);
+        historiekTxtArea.clear();
         //for loop
     }
 
@@ -104,8 +108,8 @@ public class GroepOverzichtController extends GridPane {
     private void verwerkMotivatieKeuring(boolean b) {
         gc.keur(b);
         gc.setFeedback(feedbackTxtArea.getText());
-        motivatieStatusLbl.setVisible(true);
-        motivatieStatusLbl.setText(b ? "Motivatie Goedgekeurd" : "Motivatie Afgekeurd");
+//        motivatieStatusLbl.setVisible(true);
+//        motivatieStatusLbl.setText(b ? "Motivatie Goedgekeurd" : "Motivatie Afgekeurd");
         goedkeurenBtn.setDisable(true);
         afkeurenBtn.setDisable(true);
         feedbackTxtArea.setEditable(false);
@@ -130,7 +134,10 @@ public class GroepOverzichtController extends GridPane {
 
         toonMotivatie();
         toonActies();
+        if(tabPane.getSelectionModel().getSelectedIndex()==0)
         toonMotivatieHistoriek();
+        if(tabPane.getSelectionModel().getSelectedIndex()==1)
+            toonActieHistoriek();
 
     }
 
@@ -146,38 +153,40 @@ public class GroepOverzichtController extends GridPane {
         if (!g.isVerstuurd() || g.isGoedgekeurd() || g.getHuidigeMotivatie().getFeedback() != null) {
             goedkeurenBtn.setDisable(true);
             afkeurenBtn.setDisable(true);
-            String mot = gc.toonMotivatie();
-            if(mot.contains("Feedback:")){
-                motivatieTxtArea.setText(mot.substring(0, mot.indexOf("Feedback:")));
-                feedbackTxtArea.setText(mot.substring(mot.indexOf("Feedback:")));
-            } else {
-                motivatieTxtArea.setText(mot);
-            }
+            feedbackTxtArea.setEditable(false);
+//            String mot = gc.toonMotivatie();
+//            if(mot.contains("Feedback:")){
+//                motivatieTxtArea.setText(mot.substring(0, mot.indexOf("Feedback:")));
+//                feedbackTxtArea.setText(mot.substring(mot.indexOf("Feedback:")));
+//            } else {
+//                motivatieTxtArea.setText(mot);
+//            }
 
         } else {
             goedkeurenBtn.setDisable(false);
             afkeurenBtn.setDisable(false);
-            if (g.isGoedgekeurd()) {
-                motivatieStatusLbl.setVisible(true);
-                motivatieStatusLbl.setText("Motivatie Goedgekeurd");
-            } else {
+             feedbackTxtArea.setEditable(true);
+//            if (g.isGoedgekeurd()) {
+////                motivatieStatusLbl.setVisible(true);
+////                motivatieStatusLbl.setText("Motivatie Goedgekeurd");
+//            } else {
 
-                motivatieStatusLbl.setVisible(true);
-                motivatieStatusLbl.setText("Motivatie Afgekeurd");
-                if (g.getHuidigeMotivatie() == null) {
-                    motivatieStatusLbl.setText("Motivatie is nog niet ingediend");
-                } else {
-                    if (g.getHuidigeMotivatie().getFeedback() == null) {
-                        motivatieStatusLbl.setText("Motivatie nog niet gekeurd");
-                    }
-                    String mot = gc.toonMotivatie();
-                    String mottext = (mot.substring(0, mot.indexOf("Feedback:")));
-                    String feedtext = (mot.substring(mot.indexOf("Feedback:")));
-
-                    motivatieTxtArea.setText(mottext);
-                    feedbackTxtArea.setText(feedtext);
-                }
-            }
+//                motivatieStatusLbl.setVisible(true);
+//                motivatieStatusLbl.setText("Motivatie Afgekeurd");
+//                if (g.getHuidigeMotivatie() == null) {
+////                    motivatieStatusLbl.setText("Motivatie is nog niet ingediend");
+//                } else {
+//                    if ( g.getHuidigeMotivatie().getFeedback() == null) {
+////                        motivatieStatusLbl.setText("Motivatie nog niet gekeurd");
+//                    }
+//                    String mot = gc.toonMotivatie();
+//                    String mottext = (mot.substring(0, mot.indexOf("Feedback:")));
+//                    String feedtext = (mot.substring(mot.indexOf("Feedback:")));
+//
+                    motivatieTxtArea.setText(g.getHuidigeMotivatie().getTekst());
+                  //  feedbackTxtArea.setText(feedtext);
+//                }
+//            }
         }
     }
 
@@ -204,8 +213,8 @@ public class GroepOverzichtController extends GridPane {
         dialog.showAndWait()
                 .ifPresent(response -> {
                     if (!response.isEmpty()) {
-                        gc.setFeedbackActie(titel, response);//feedback in DB aanmaken - lege string moet de feedback zijn uit popup
-                        gc.keurActie(b, titel);//actie goedgekeurd instellen => nog aanmaken in DB
+                        gc.setFeedbackActie(titel, response);
+                        gc.keurActie(b, titel);
                     }
                 });
         toonActies();
@@ -271,16 +280,16 @@ public class GroepOverzichtController extends GridPane {
 
         historiekTxtArea.setEditable(false);
         historiekTxtArea.setWrapText(true);
-        List<Activiteit> acties = gc.getSelectedGroep().getActies();
-        StringBuilder historiek = new StringBuilder();
-        for (Activiteit a : acties) {
-            if (a.getFeedback() != null && !a.getGoedgekeurd()) {
-                historiek.append(a.toString()).append("\n");
-            }
-// voor activiteit column feedback in databse + 
-        }
+//        List<Activiteit> acties = gc.getSelectedGroep().getActies();
+//        StringBuilder historiek = new StringBuilder();
+//        for (Activiteit a : acties) {
+//            if (a.getFeedback() != null && !a.getGoedgekeurd()) {
+//                historiek.append(a.toString()).append("\n");
+//            }
+//// voor activiteit column feedback in databse + 
+//        }
 
-        historiekTxtArea.setText(historiek.toString());
+        historiekTxtArea.setText(gc.getActieHistoriek());
 
     }
 
