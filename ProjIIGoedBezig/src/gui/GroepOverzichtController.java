@@ -50,6 +50,7 @@ public class GroepOverzichtController extends GridPane {
     private Button afkeurenBtn;
     @FXML
     private TextArea motivatieTxtArea;
+    @FXML
     private Label motivatieStatusLbl;
     @FXML
     private TextArea historiekTxtArea;
@@ -108,8 +109,8 @@ public class GroepOverzichtController extends GridPane {
     private void verwerkMotivatieKeuring(boolean b) {
         gc.keur(b);
         gc.setFeedback(feedbackTxtArea.getText());
-//        motivatieStatusLbl.setVisible(true);
-//        motivatieStatusLbl.setText(b ? "Motivatie Goedgekeurd" : "Motivatie Afgekeurd");
+        motivatieStatusLbl.setVisible(true);
+        motivatieStatusLbl.setText(b ? "Motivatie Goedgekeurd" : "Motivatie Afgekeurd");
         goedkeurenBtn.setDisable(true);
         afkeurenBtn.setDisable(true);
         feedbackTxtArea.setEditable(false);
@@ -154,6 +155,7 @@ public class GroepOverzichtController extends GridPane {
             goedkeurenBtn.setDisable(true);
             afkeurenBtn.setDisable(true);
             feedbackTxtArea.setEditable(false);
+            motivatieStatusLbl.setText(g.isGoedgekeurd()? "Motivatie goedgekeurd" : "Motivatie afgekeurd");
 //            String mot = gc.toonMotivatie();
 //            if(mot.contains("Feedback:")){
 //                motivatieTxtArea.setText(mot.substring(0, mot.indexOf("Feedback:")));
