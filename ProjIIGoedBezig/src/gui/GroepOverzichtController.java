@@ -114,6 +114,7 @@ public class GroepOverzichtController extends GridPane {
         goedkeurenBtn.setDisable(true);
         afkeurenBtn.setDisable(true);
         feedbackTxtArea.setEditable(false);
+        
         gc.update();
         toonMotivatieHistoriek();
     }
@@ -135,14 +136,18 @@ public class GroepOverzichtController extends GridPane {
 
         toonMotivatie();
         toonActies();
-        if(tabPane.getSelectionModel().getSelectedIndex()==0)
-        toonMotivatieHistoriek();
-        if(tabPane.getSelectionModel().getSelectedIndex()==1)
+        if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
+            toonMotivatieHistoriek();
+        }
+        if (tabPane.getSelectionModel().getSelectedIndex() == 1) {
             toonActieHistoriek();
+        }
 
     }
 
     private void toonMotivatie() {
+        goedkeurenBtn.setDisable(false);
+        afkeurenBtn.setDisable(false);
         motivatieTxtArea.setWrapText(true);
         motivatieTxtArea.setEditable(false); //motivatie field uneditable maken
         gc.setSelectedGroep(groepListView.getSelectionModel().getSelectedItem());
@@ -181,14 +186,33 @@ public class GroepOverzichtController extends GridPane {
 //                    if ( g.getHuidigeMotivatie().getFeedback() == null) {
 ////                        motivatieStatusLbl.setText("Motivatie nog niet gekeurd");
 //                    }
-//                    String mot = gc.toonMotivatie();
-//                    String mottext = (mot.substring(0, mot.indexOf("Feedback:")));
-//                    String feedtext = (mot.substring(mot.indexOf("Feedback:")));
-//
-                    motivatieTxtArea.setText(g.getHuidigeMotivatie().getTekst());
-                  //  feedbackTxtArea.setText(feedtext);
+                //      String mot = gc.toonMotivatie();
+                //      String mottext = (mot.substring(0, mot.indexOf("Feedback:")));
+                //      String feedtext = (mot.substring(mot.indexOf("Feedback:")));
+                motivatieTxtArea.setText(g.getHuidigeMotivatie().getTekst());
+                //  feedbackTxtArea.setText(feedtext);
 //                }
 //            }
+
+                String mot = gc.toonMotivatie();
+                String mottext = (mot.substring(0, mot.indexOf("Feedback:")));
+                String feedtext = (mot.substring(mot.indexOf("Feedback:")));
+
+                motivatieTxtArea.setText(mottext);
+                feedbackTxtArea.setText(feedtext);
+            }
+        } else {
+            goedkeurenBtn.setDisable(true);
+            afkeurenBtn.setDisable(true);
+            feedbackTxtArea.setEditable(false);
+            String mot = gc.toonMotivatie();
+            if (mot.contains("Feedback:")) {
+                motivatieTxtArea.setText(mot.substring(0, mot.indexOf("Feedback:")));
+                feedbackTxtArea.setText(mot.substring(mot.indexOf("Feedback:")));
+            } else {
+                motivatieTxtArea.setText(mot);
+            }
+
         }
     }
 
