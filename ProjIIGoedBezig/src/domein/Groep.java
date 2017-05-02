@@ -66,18 +66,11 @@ public class Groep implements Serializable {
     }
 
     public Motivatie getHuidigeMotivatie() {
-       // if (isVerstuurd()) {
             return motivaties.get(0);
-      //  }
-      //  return null;
     }
 
     public List<Activiteit> getActies() {
         return acties;
-    }
-
-    public void addMotivatie(Motivatie m) {
-        motivaties.add(m);
     }
 
     void setKeuring(boolean keuring) {

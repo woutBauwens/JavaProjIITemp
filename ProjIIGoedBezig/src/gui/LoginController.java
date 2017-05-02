@@ -55,6 +55,7 @@ public class LoginController extends Pane {
                 GroepController gc = new GroepController(new GroepDaoJpa(),lector);
                 GroepOverzichtController GOC = new GroepOverzichtController(gc);
                 Stage stage = (Stage) (this.getScene().getWindow());
+                stage.setTitle("Groepsoverzicht: ");
                 Scene scene = new Scene(GOC);
 
                 stage.setScene(scene);
