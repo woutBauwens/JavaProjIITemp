@@ -26,6 +26,13 @@ public class GenericDaoJpa<T> implements GenericDao<T> {
     public static void rollbackTransaction() {
         em.getTransaction().rollback();
     }
+    
+    @Override
+    public void persist(T object){
+        em.getTransaction().begin();
+        em.persist(object);
+        em.getTransaction().commit();
+    }
 
     @Override
     public List<T> findAll() {
@@ -67,5 +74,4 @@ public class GenericDaoJpa<T> implements GenericDao<T> {
         T entity = em.find(type, id);
         return entity != null;
     } 
-    
 }

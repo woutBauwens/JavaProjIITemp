@@ -5,10 +5,15 @@
  */
 package main;
 
+import Persistentie.ConnectionReceiver;
 import Persistentie.SQLConnection;
 import domein.InlogController;
 import gui.LoginController;
 import java.sql.SQLException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -20,12 +25,11 @@ import repository.LoginDaoJpa;
  */
 public class StartUp extends Application {
 
-    
     @Override
     public void start(Stage primaryStage) {
         connect();
-         InlogController dc = new InlogController(new LoginDaoJpa());
-       LoginController root = new LoginController(dc);
+        InlogController dc = new InlogController(new LoginDaoJpa());
+        LoginController root = new LoginController(dc);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Log in:");
@@ -42,10 +46,15 @@ public class StartUp extends Application {
     private void connect() {
         try {
             SQLConnection.getConnection();
+            ConnectionReceiver receiver = new ConnectionReceiver();
+            ExecutorService pool = Executors.newFixedThreadPool(1);
+            pool.execute(receiver);
         } catch (SQLException e) {
             System.err.println("Could not connect to the server: \n" + e.getMessage());
         } catch (ClassNotFoundException e) {
             System.err.println(e.toString());
+        } catch (Exception ex) {
+            Logger.getLogger(StartUp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

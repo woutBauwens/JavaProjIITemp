@@ -113,6 +113,7 @@ public class GroepOverzichtController extends GridPane {
         goedkeurenBtn.setDisable(true);
         afkeurenBtn.setDisable(true);
         feedbackTxtArea.setEditable(false);
+        
         gc.update();
         toonMotivatieHistoriek();
     }
@@ -134,14 +135,18 @@ public class GroepOverzichtController extends GridPane {
 
         toonMotivatie();
         toonActies();
-        if(tabPane.getSelectionModel().getSelectedIndex()==0)
-        toonMotivatieHistoriek();
-        if(tabPane.getSelectionModel().getSelectedIndex()==1)
+        if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
+            toonMotivatieHistoriek();
+        }
+        if (tabPane.getSelectionModel().getSelectedIndex() == 1) {
             toonActieHistoriek();
+        }
 
     }
 
     private void toonMotivatie() {
+        goedkeurenBtn.setDisable(false);
+        afkeurenBtn.setDisable(false);
         motivatieTxtArea.setWrapText(true);
         motivatieTxtArea.setEditable(false); //motivatie field uneditable maken
         gc.setSelectedGroep(groepListView.getSelectionModel().getSelectedItem());
@@ -150,22 +155,11 @@ public class GroepOverzichtController extends GridPane {
 //        groepen.stream().filter((g) -> (g.getNaam().equals(groepListView.getSelectionModel().getSelectedItem()))).forEachOrdered((g) -> {
 //            motivatieTxtArea.setText(g.getHuidigeMotivatie().getTekst());
 //        });
-        if (!g.isVerstuurd() || g.isGoedgekeurd() || g.getHuidigeMotivatie().getFeedback() != null) {
-            goedkeurenBtn.setDisable(true);
-            afkeurenBtn.setDisable(true);
-            feedbackTxtArea.setEditable(false);
-//            String mot = gc.toonMotivatie();
-//            if(mot.contains("Feedback:")){
-//                motivatieTxtArea.setText(mot.substring(0, mot.indexOf("Feedback:")));
-//                feedbackTxtArea.setText(mot.substring(mot.indexOf("Feedback:")));
-//            } else {
-//                motivatieTxtArea.setText(mot);
-//            }
-
-        } else {
-            goedkeurenBtn.setDisable(false);
-            afkeurenBtn.setDisable(false);
-             feedbackTxtArea.setEditable(true);
+        if (g.isVerstuurd() && !g.isGoedgekeurd()) {
+            feedbackTxtArea.setEditable(true);
+            if (!feedbackTxtArea.getText().trim().equals("")) {
+                goedkeurenBtn.setDisable(false);
+                afkeurenBtn.setDisable(false);
 //            if (g.isGoedgekeurd()) {
 ////                motivatieStatusLbl.setVisible(true);
 ////                motivatieStatusLbl.setText("Motivatie Goedgekeurd");
@@ -179,14 +173,33 @@ public class GroepOverzichtController extends GridPane {
 //                    if ( g.getHuidigeMotivatie().getFeedback() == null) {
 ////                        motivatieStatusLbl.setText("Motivatie nog niet gekeurd");
 //                    }
-//                    String mot = gc.toonMotivatie();
-//                    String mottext = (mot.substring(0, mot.indexOf("Feedback:")));
-//                    String feedtext = (mot.substring(mot.indexOf("Feedback:")));
-//
-                    motivatieTxtArea.setText(g.getHuidigeMotivatie().getTekst());
-                  //  feedbackTxtArea.setText(feedtext);
+                //      String mot = gc.toonMotivatie();
+                //      String mottext = (mot.substring(0, mot.indexOf("Feedback:")));
+                //      String feedtext = (mot.substring(mot.indexOf("Feedback:")));
+                motivatieTxtArea.setText(g.getHuidigeMotivatie().getTekst());
+                //  feedbackTxtArea.setText(feedtext);
 //                }
 //            }
+
+                String mot = gc.toonMotivatie();
+                String mottext = (mot.substring(0, mot.indexOf("Feedback:")));
+                String feedtext = (mot.substring(mot.indexOf("Feedback:")));
+
+                motivatieTxtArea.setText(mottext);
+                feedbackTxtArea.setText(feedtext);
+            }
+        } else {
+            goedkeurenBtn.setDisable(true);
+            afkeurenBtn.setDisable(true);
+            feedbackTxtArea.setEditable(false);
+            String mot = gc.toonMotivatie();
+            if (mot.contains("Feedback:")) {
+                motivatieTxtArea.setText(mot.substring(0, mot.indexOf("Feedback:")));
+                feedbackTxtArea.setText(mot.substring(mot.indexOf("Feedback:")));
+            } else {
+                motivatieTxtArea.setText(mot);
+            }
+
         }
     }
 

@@ -5,8 +5,11 @@
  */
 package domein;
 
+import Persistentie.SQLConnection;
 import java.util.List;
 import java.util.function.Supplier;
+import repository.GenericDao;
+import repository.GenericDaoJpa;
 import repository.GroepDaoJpa;
 
 /**
@@ -39,19 +42,19 @@ public class GroepController {
     }
 
     public String toonMotivatie() {
-//        if(selectedGroep.isGoedgekeurd()){
-//            Motivatie goedgekeurd = selectedGroep.getMotivaties().get(selectedGroep.getMotivaties().size()-1);
-//            return String.format("De motivatie is goedgekeurd.%n%n%s%nFeedback:%n%s", goedgekeurd.getTekst(), goedgekeurd.getFeedback()); 
-//        }
-//        if (selectedGroep.getHuidigeMotivatie().isVerstuurd()) {
+        if(selectedGroep.isGoedgekeurd()){
+            Motivatie goedgekeurd = selectedGroep.getMotivaties().get(selectedGroep.getMotivaties().size()-1);
+            return String.format("De motivatie is goedgekeurd.%n%n%s%nFeedback:%n%s", goedgekeurd.getTekst(), goedgekeurd.getFeedback()); 
+        }
+        if (selectedGroep.getHuidigeMotivatie().isVerstuurd()) {
         return selectedGroep.getHuidigeMotivatie().getTekst();
-//        } else {
-//            try {
-//                return selectedGroep.getMotivaties().stream().findFirst().filter(m -> m.isVerstuurd()).orElseThrow(NullPointerException::new).getTekst();
-//            } catch (NullPointerException nullex) {
-//                return "Nog geen motivatie verstuurd";
-//            }
-//        }
+        } else {
+            try {
+                return selectedGroep.getMotivaties().stream().findFirst().filter(m -> m.isVerstuurd()).orElseThrow(NullPointerException::new).getTekst();
+            } catch (NullPointerException nullex) {
+                return "Nog geen motivatie verstuurd";
+            }
+        }
     }
 
     public boolean isMotivatieVerstuurd() {
@@ -79,6 +82,8 @@ public class GroepController {
 
     public void update() {
         groepRepo.update(selectedGroep);
+        GenericDao entity = new GenericDaoJpa(Groep.class);
+        entity.persist(selectedGroep);
     }
 
     public String toonDetailActie(String titelActie) {

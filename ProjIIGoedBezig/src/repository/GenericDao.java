@@ -9,5 +9,6 @@ public interface GenericDao<T> {
     public void delete(T object);
     public void insert(T object);
     public boolean exists(Long id);
+    public void persist(T object);
  //   public void addColumn(String table, String column);
 }

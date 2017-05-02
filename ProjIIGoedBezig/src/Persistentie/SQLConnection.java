@@ -5,49 +5,49 @@
  */
 package Persistentie;
 
-
 import domein.Activiteit;
+import domein.Motivatie;
 import java.sql.*;
 import javax.persistence.EntityManager;
 import repository.GenericDao;
 import repository.GenericDaoJpa;
 import util.JPAUtil;
 
-/** 
+/**
  *
  * @author BelgoBits
  */
 public class SQLConnection {
-    
+
     private static Connection con;
     private final String url = "jdbc:sqlserver://127.0.0.1:1433;databaseName=GBDB;user=Login;password=1234";
 
     private static EntityManager em;
 
-    
-    private SQLConnection() throws SQLException, ClassNotFoundException{
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        con = DriverManager.getConnection(url);
-        em = JPAUtil.getEntityManagerFactory().createEntityManager();
+    protected SQLConnection() throws SQLException, ClassNotFoundException {
+        connect();
         System.out.println("You are now connected to the server.");
         PasswordGenerator.generate();
     }
-    
-    public static Connection getConnection() throws SQLException, ClassNotFoundException{
-        if(con == null)
+
+    public static Connection getConnection() throws SQLException, ClassNotFoundException {
+        if (con == null) {
             new SQLConnection();
-        
+        }
+
         return con;
     }
-    
-    public static EntityManager getManager(){
+
+    public static EntityManager getManager() {
         return em;
     }
-    
-    private void update(){
-        while(true){
-        //    em.wait(100);
-            
-        }
+
+    protected void connect() throws SQLException, ClassNotFoundException {
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        con = DriverManager.getConnection(url);
+        em = JPAUtil.getEntityManagerFactory().createEntityManager();
+//        em.getTransaction().begin();
+//        em.merge(this);
+//        em.getTransaction().commit();
     }
 }
