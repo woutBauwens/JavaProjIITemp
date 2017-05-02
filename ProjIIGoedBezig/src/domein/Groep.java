@@ -75,6 +75,10 @@ public class Groep implements Serializable {
         return acties;
     }
 
+    public void addMotivatie(Motivatie m) {
+        motivaties.add(m);
+    }
+
     void setKeuring(boolean keuring) {
           MotivatieIsGoedgekeurd = keuring;}
     

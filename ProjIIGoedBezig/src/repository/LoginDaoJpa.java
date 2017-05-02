@@ -35,5 +35,4 @@ public class LoginDaoJpa extends GenericDaoJpa<LoginUser> implements LoginDao {
         //return user.getPassword().equals(password);//true or false
         return contact;
     }
-
 }
