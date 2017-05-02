@@ -115,9 +115,9 @@ public class GroepController {
     }
 
     public Groep getSelectedGroep() {
-        if (selectedGroep == null) {
-            return lector.getGroepen().get(0);
-        }
+//        if (selectedGroep == null) {
+//            return lector.getGroepen().get(0);
+//        }
         return selectedGroep;
     }
 
@@ -164,7 +164,7 @@ public class GroepController {
         List<Activiteit> acties = selectedGroep.getActies();
         StringBuilder historiek = new StringBuilder();
         for (Activiteit a : acties) {
-            if (a.getFeedback() != null && !a.getGoedgekeurd()) {
+            if (a.getFeedback() != null) {
                 historiek.append(a.toString()).append("\n");
             }
         }

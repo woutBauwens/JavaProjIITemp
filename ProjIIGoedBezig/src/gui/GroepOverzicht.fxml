@@ -31,7 +31,7 @@
           <RowConstraints maxHeight="53.0" minHeight="2.0" prefHeight="48.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="errorLbl" prefHeight="28.0" prefWidth="361.0" textFill="#ff3806" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+            <Label fx:id="motivatieStatusLbl" prefHeight="30.0" prefWidth="331.0" textAlignment="CENTER" textFill="#141414" GridPane.columnSpan="2" GridPane.halignment="CENTER">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font></Label>
@@ -115,5 +115,16 @@
             <Insets top="35.0" />
          </GridPane.margin>
       </TabPane>
+      <Label fx:id="errorLbl" prefHeight="21.0" prefWidth="319.0" textFill="#f80707" GridPane.columnIndex="2">
+         <GridPane.margin>
+            <Insets bottom="20.0" left="5.0" />
+         </GridPane.margin>
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </fx:root>
