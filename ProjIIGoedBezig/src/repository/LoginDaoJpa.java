@@ -26,7 +26,7 @@ public class LoginDaoJpa extends GenericDaoJpa<LoginUser> implements LoginDao {
                     ContactPersoon.class).setParameter("email", email).getSingleResult().getId();
             contact= em.find(ContactPersoon.class, index);
         } catch (Exception ex) {
-            return null; //gooit nullpointerexception for some reason
+           throw new Exception("Ongeldige Login");
 
         }
        // LoginUser user = em.find(LoginUser.class, contact.getId());
