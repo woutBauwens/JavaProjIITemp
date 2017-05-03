@@ -25,6 +25,7 @@ import repository.LoginDaoJpa;
  */
 public class StartUp extends Application {
 
+    
     @Override
     public void start(Stage primaryStage) {
         connect();
@@ -46,9 +47,6 @@ public class StartUp extends Application {
     private void connect() {
         try {
             SQLConnection.getConnection();
-            ConnectionReceiver receiver = new ConnectionReceiver();
-            ExecutorService pool = Executors.newFixedThreadPool(1);
-            pool.execute(receiver);
         } catch (SQLException e) {
             System.err.println("Could not connect to the server: \n" + e.getMessage());
         } catch (ClassNotFoundException e) {

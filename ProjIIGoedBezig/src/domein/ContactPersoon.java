@@ -8,6 +8,7 @@ package domein;
 import Persistentie.LoginUser;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -34,7 +35,7 @@ public class ContactPersoon implements Serializable {
 
     private String Discriminator;
 
-    @OneToMany(mappedBy = "HoofdLectorContactPersoonId")
+    @OneToMany(mappedBy = "HoofdLectorContactPersoonId", cascade = CascadeType.REFRESH)
     private List<Groep> groepen;
 
     public ContactPersoon() {

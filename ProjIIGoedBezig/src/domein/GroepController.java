@@ -5,9 +5,15 @@
  */
 package domein;
 
+import Persistentie.ConnectionReceiver;
 import Persistentie.SQLConnection;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Supplier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Application;
 import repository.GenericDao;
 import repository.GenericDaoJpa;
 import repository.GroepDaoJpa;
@@ -23,8 +29,45 @@ public class GroepController {
     private GroepDaoJpa groepRepo;
 
     public GroepController(GroepDaoJpa jp, ContactPersoon lector) {
-        groepRepo = jp;
-        this.lector = lector;
+        try {
+            groepRepo = jp;
+            this.lector = lector;
+            ConnectionReceiver receiver = new ConnectionReceiver(this);
+            ExecutorService pool = Executors.newFixedThreadPool(1);
+            pool.execute(receiver);
+        } catch (Exception ex) {
+            Logger.getLogger(GroepController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public ContactPersoon getLector() {
+        return lector;
+    }
+
+    public void setLector(ContactPersoon lector) {
+        if (this.lector != null && !this.lector.equals(lector)) {
+            this.lector = lector;
+            System.out.println("Er zijn nieuwe meldingen.");
+        }
+    }
+
+    public void setGroep(Groep g) {
+        if (selectedGroep != null) {
+            lector.getGroepen().remove(lector.getGroepen().indexOf(selectedGroep));
+            lector.getGroepen().add(g);
+        }
+    }
+
+    public void setObject(Object o) {
+        if (o instanceof Lector) {
+            lector = (Lector) o;
+        } else if (o instanceof Groep) {
+            selectedGroep = (Groep) o;
+        }
+    }
+
+    public void updateLector() {
+        lector = SQLConnection.refreshLector(lector);
     }
 
     public List<Groep> getGroepenByLector() {
@@ -42,12 +85,12 @@ public class GroepController {
     }
 
     public String toonMotivatie() {
-        if(selectedGroep.isGoedgekeurd()){
-            Motivatie goedgekeurd = selectedGroep.getMotivaties().get(selectedGroep.getMotivaties().size()-1);
-            return String.format("De motivatie is goedgekeurd.%n%n%s%nFeedback:%n%s", goedgekeurd.getTekst(), goedgekeurd.getFeedback()); 
+        if (selectedGroep.isGoedgekeurd()) {
+            Motivatie goedgekeurd = selectedGroep.getMotivaties().get(selectedGroep.getMotivaties().size() - 1);
+            return String.format("De motivatie is goedgekeurd.%n%n%s", goedgekeurd.toString());
         }
         if (selectedGroep.getHuidigeMotivatie().isVerstuurd()) {
-        return selectedGroep.getHuidigeMotivatie().getTekst();
+            return selectedGroep.getHuidigeMotivatie().getTekst();
         } else {
             try {
                 return selectedGroep.getMotivaties().stream().findFirst().filter(m -> m.isVerstuurd()).orElseThrow(NullPointerException::new).getTekst();

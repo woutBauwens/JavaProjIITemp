@@ -52,7 +52,7 @@ public class LoginController extends Pane {
             if (dc.checkLogin(userNameTxtField.getText(), passwordTxtField.getText())) {
 
                 ContactPersoon lector = dc.getLector();
-                GroepController gc = new GroepController(new GroepDaoJpa(),lector);
+                GroepController gc = new GroepController(new GroepDaoJpa(), lector);
                 GroepOverzichtController GOC = new GroepOverzichtController(gc);
                 Stage stage = (Stage) (this.getScene().getWindow());
                 stage.setTitle("Groepsoverzicht: ");
@@ -62,9 +62,11 @@ public class LoginController extends Pane {
                 stage.show();
 
             } else {
-                throw new Exception("Ongeldige Login");
+                throw new Exception("Het paswoord komt niet overeen met het email adress");
             }
 
+        } catch (NullPointerException n) {
+            errorLbl.setText("U heeft een ongeldig email adress ingevuld.");
         } catch (Exception e) {
             errorLbl.setText(e.getMessage());
         }

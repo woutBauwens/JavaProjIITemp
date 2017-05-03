@@ -10,8 +10,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.transformation.SortedList;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -27,13 +31,15 @@ public class Groep implements Serializable {
 
     @Id
     private int GBGroepId;
-    @OneToMany(mappedBy = "GBGroepId")
+    @OneToMany(mappedBy = "GBGroepId", cascade = CascadeType.REFRESH)
     private List<Motivatie> motivaties;
-    @OneToMany(mappedBy = "GBGroepId")
+    @OneToMany(mappedBy = "GBGroepId", cascade = CascadeType.REFRESH)
     private List<Activiteit> acties;
 
     private boolean MotivatieIsGoedgekeurd;
     private String naam;
+    
+    private String CurrentState;
 
     @ManyToOne
     @JoinColumn(name = "HoofdLectorContactPersoonId")
@@ -41,7 +47,7 @@ public class Groep implements Serializable {
 
     protected Groep() {
     }
-
+    
     @Override
     public String toString() {
         return String.format("%s\n%s\n%s", naam, motivaties.get(0).getTekst(), acties.isEmpty() ? "Geen acties" : acties.get(0).getId());
@@ -57,7 +63,7 @@ public class Groep implements Serializable {
 
     public void keur(String feedback, boolean b) {
         motivaties.get(0).setFeedback(feedback);
-      
+       
 
     }
 
@@ -73,8 +79,15 @@ public class Groep implements Serializable {
         return acties;
     }
 
+    public void addMotivatie(Motivatie m) {
+        motivaties.add(m);
+    }
+
     void setKeuring(boolean keuring) {
-          MotivatieIsGoedgekeurd = keuring;}
+          MotivatieIsGoedgekeurd = keuring;
+          if(!keuring)
+              CurrentState = "empty";
+    }
     
     public List<Motivatie> getMotivaties(){
         return motivaties;

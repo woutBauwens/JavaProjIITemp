@@ -5,6 +5,7 @@
  */
 package Persistentie;
 
+import domein.GroepController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,16 +16,18 @@ import java.util.logging.Logger;
  */
 public class ConnectionReceiver extends SQLConnection implements Runnable {
 
-    public ConnectionReceiver() throws Exception {
-
+    public ConnectionReceiver(GroepController gc) throws Exception {
+        this.gc = gc;
     }
+
+    GroepController gc;
 
     @Override
     public void run() {
         while (true) {
             try {
-                Thread.sleep(1000);
-                connect();
+                Thread.sleep(10000);
+                gc.setLector(refresh(gc.getLector()));                
             } catch (ClassNotFoundException | SQLException | InterruptedException ex) {
                 Logger.getLogger(SQLConnection.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("Connecting to server.");

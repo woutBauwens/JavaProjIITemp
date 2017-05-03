@@ -7,6 +7,7 @@ package repository;
 
 import Persistentie.LoginUser;
 import domein.ContactPersoon;
+import java.util.List;
 
 /**
  *
@@ -14,26 +15,46 @@ import domein.ContactPersoon;
  */
 public class LoginDaoJpa extends GenericDaoJpa<LoginUser> implements LoginDao {
 
+    private static ContactPersoon lector;
+
     public LoginDaoJpa() {
         super(LoginUser.class);
     }
 
     @Override
     public ContactPersoon CheckLogin(String email, String password) throws Exception {
-        ContactPersoon contact;
         try {
             int index = em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email",
                     ContactPersoon.class).setParameter("email", email).getSingleResult().getId();
-            contact= em.find(ContactPersoon.class, index);
+            lector = em.find(ContactPersoon.class, index);
         } catch (Exception ex) {
            throw new Exception("Ongeldige Login");
 
         }
-       // LoginUser user = em.find(LoginUser.class, contact.getId());
+        
+//        try {
+//                List<ContactPersoon> lectorMMapped = em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email",
+//                        ContactPersoon.class).setParameter("email", email).getResultList();
+//                int index = em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email",
+//                        ContactPersoon.class).setParameter("email", email).getResultList().get(0).getId();
+//                lector = em.find(ContactPersoon.class, index);
+//                for(ContactPersoon c: lectorMMapped){
+//                    lector.getGroepen().addAll(c.getGroepen());
+//                }
+//            } catch (Exception e) {
+//                return null; //gooit nullpointerexception for some reason
+//            }
+            // LoginUser user = em.find(LoginUser.class, contact.getId());
 //        LoginUser user = em.createQuery("SELECT u FROM LoginUser u WHERE u.UserId = :id",
 //                LoginUser.class).setParameter("id", index).getSingleResult();
-        //return user.getPassword().equals(password);//true or false
-        return contact;
+            //return user.getPassword().equals(password);//true or false
+            return lector;
     }
 
+    public static ContactPersoon refresh() {
+        em.getTransaction().begin();
+        em.refresh(em.find(lector.getClass(), lector.getId()));
+        em.getTransaction().commit();
+        return em.find(lector.getClass(), lector.getId());
+    }
 }

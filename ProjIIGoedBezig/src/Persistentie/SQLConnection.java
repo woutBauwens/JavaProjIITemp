@@ -6,11 +6,17 @@
 package Persistentie;
 
 import domein.Activiteit;
+import domein.ContactPersoon;
+import domein.Groep;
+import domein.Lector;
 import domein.Motivatie;
 import java.sql.*;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import repository.GenericDao;
 import repository.GenericDaoJpa;
+import repository.LoginDao;
+import repository.LoginDaoJpa;
 import util.JPAUtil;
 
 /**
@@ -20,6 +26,11 @@ import util.JPAUtil;
 public class SQLConnection {
 
     private static Connection con;
+
+    public static ContactPersoon refreshLector(ContactPersoon lector) {
+        em.refresh(lector);
+        return lector;
+    }
     private final String url = "jdbc:sqlserver://127.0.0.1:1433;databaseName=GBDB;user=Login;password=1234";
 
     private static EntityManager em;
@@ -42,12 +53,18 @@ public class SQLConnection {
         return em;
     }
 
-    protected void connect() throws SQLException, ClassNotFoundException {
+    private void connect() throws SQLException, ClassNotFoundException {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         con = DriverManager.getConnection(url);
         em = JPAUtil.getEntityManagerFactory().createEntityManager();
-//        em.getTransaction().begin();
-//        em.merge(this);
-//        em.getTransaction().commit();
+    }
+
+    protected ContactPersoon refresh(ContactPersoon lector) throws SQLException, ClassNotFoundException {
+        try {
+            return LoginDaoJpa.refresh();
+        } catch (Exception e) {
+            connect();
+            return lector;
+        }
     }
 }
