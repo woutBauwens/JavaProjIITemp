@@ -26,7 +26,7 @@ public class ConnectionReceiver extends SQLConnection implements Runnable {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(10000);
                 gc.setLector(refresh(gc.getLector()));                
             } catch (ClassNotFoundException | SQLException | InterruptedException ex) {
                 Logger.getLogger(SQLConnection.class.getName()).log(Level.SEVERE, null, ex);

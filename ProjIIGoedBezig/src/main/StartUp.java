@@ -47,7 +47,6 @@ public class StartUp extends Application {
     private void connect() {
         try {
             SQLConnection.getConnection();
-            
         } catch (SQLException e) {
             System.err.println("Could not connect to the server: \n" + e.getMessage());
         } catch (ClassNotFoundException e) {

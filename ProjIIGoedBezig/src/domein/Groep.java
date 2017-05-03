@@ -14,6 +14,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -36,9 +38,11 @@ public class Groep implements Serializable {
 
     private boolean MotivatieIsGoedgekeurd;
     private String naam;
+    
+    private String CurrentState;
 
     @ManyToOne
-    @JoinColumn(name = "HoofdLectorContactPersoonId", updatable = true)
+    @JoinColumn(name = "HoofdLectorContactPersoonId")
     private ContactPersoon HoofdLectorContactPersoonId;
 
     protected Groep() {
@@ -59,7 +63,7 @@ public class Groep implements Serializable {
 
     public void keur(String feedback, boolean b) {
         motivaties.get(0).setFeedback(feedback);
-      
+       
 
     }
 
@@ -80,7 +84,10 @@ public class Groep implements Serializable {
     }
 
     void setKeuring(boolean keuring) {
-          MotivatieIsGoedgekeurd = keuring;}
+          MotivatieIsGoedgekeurd = keuring;
+          if(!keuring)
+              CurrentState = "empty";
+    }
     
     public List<Motivatie> getMotivaties(){
         return motivaties;

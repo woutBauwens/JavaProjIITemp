@@ -7,28 +7,33 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class GenericDaoJpa<T> implements GenericDao<T> {
+
     private static final String PU_NAME = "GoedBezig";
     protected static final EntityManager em = SQLConnection.getManager();
     private final Class<T> type;
-    
+
     public GenericDaoJpa(Class<T> type) {
         this.type = type;
     }
+
     public static void closePersistency() {
         em.close();
     }
+
     public static void startTransaction() {
         em.getTransaction().begin();
     }
+
     public static void commitTransaction() {
         em.getTransaction().commit();
     }
+
     public static void rollbackTransaction() {
         em.getTransaction().rollback();
     }
-    
+
     @Override
-    public void persist(T object){
+    public void persist(T object) {
         em.getTransaction().begin();
         em.persist(object);
         em.getTransaction().commit();
@@ -62,16 +67,15 @@ public class GenericDaoJpa<T> implements GenericDao<T> {
         em.getTransaction().commit();
     }
 
-   /* @Override    -werkt niet geimplementeerd in .NET
+    /* @Override    -werkt niet geimplementeerd in .NET
     public void addColumn(String table, String column){
         em.getTransaction().begin();
         em.createNativeQuery("ALTER TABLE " + table + " ADD " + column + " VARCHAR(50)");
         em.getTransaction().commit();
     } */
-    
     @Override
     public boolean exists(Long id) {
         T entity = em.find(type, id);
         return entity != null;
-    } 
+    }
 }

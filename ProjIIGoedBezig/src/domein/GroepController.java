@@ -45,8 +45,10 @@ public class GroepController {
     }
 
     public void setLector(ContactPersoon lector) {
-        this.lector = lector;
-        System.out.println(lector.getGroepen().get(0).isVerstuurd());
+        if (this.lector != null && !this.lector.equals(lector)) {
+            this.lector = lector;
+            System.out.println("Er zijn nieuwe meldingen.");
+        }
     }
 
     public void setGroep(Groep g) {
@@ -85,7 +87,7 @@ public class GroepController {
     public String toonMotivatie() {
         if (selectedGroep.isGoedgekeurd()) {
             Motivatie goedgekeurd = selectedGroep.getMotivaties().get(selectedGroep.getMotivaties().size() - 1);
-            return String.format("De motivatie is goedgekeurd.%n%n%s%nFeedback:%n%s", goedgekeurd.getTekst(), goedgekeurd.getFeedback());
+            return String.format("De motivatie is goedgekeurd.%n%n%s", goedgekeurd.toString());
         }
         if (selectedGroep.getHuidigeMotivatie().isVerstuurd()) {
             return selectedGroep.getHuidigeMotivatie().getTekst();

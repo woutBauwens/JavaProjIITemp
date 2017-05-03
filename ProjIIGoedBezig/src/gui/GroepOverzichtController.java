@@ -21,6 +21,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
@@ -29,7 +32,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import repository.LoginDaoJpa;
 
 /**
@@ -75,9 +80,12 @@ public class GroepOverzichtController extends GridPane {
     @FXML
     private TabPane tabPane;
 
+    private StringBuilder historiek;
+
     public GroepOverzichtController(GroepController gc) {
         this.gc = gc;
         this.groepen = gc.getGroepenByLector();
+        historiek = new StringBuilder();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GroepOverzicht.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -118,6 +126,7 @@ public class GroepOverzichtController extends GridPane {
         feedbackTxtArea.setEditable(false);
 
         gc.update();
+        setMotivatieHistoriek();
         toonMotivatieHistoriek();
     }
 
@@ -127,6 +136,7 @@ public class GroepOverzichtController extends GridPane {
         LoginController loginC = new LoginController(dc);
 
         Stage stage = (Stage) (this.getScene().getWindow());
+        stage.setTitle("Login: ");
         Scene scene = new Scene(loginC);
 
         stage.setScene(scene);
@@ -163,17 +173,16 @@ public class GroepOverzichtController extends GridPane {
             gc.setSelectedGroep(groepListView.getSelectionModel().getSelectedItem());
             Groep groep = gc.getSelectedGroep();
             motivatieTxtArea.setText(gc.toonMotivatie());
-            if (!groep.isVerstuurd() || groep.isGoedgekeurd() || groep.getHuidigeMotivatie().getFeedback() != null) {
-                goedkeurenBtn.setDisable(true);
-                afkeurenBtn.setDisable(true);
-                feedbackTxtArea.setEditable(false);
-                motivatieStatusLbl.setText(groep.isGoedgekeurd() ? "Motivatie goedgekeurd" : "Motivatie afgekeurd");
-            } else {
+            if (groep.isVerstuurd() && !groep.isGoedgekeurd()) {// || groep.getHuidigeMotivatie().getFeedback() != null) {
                 goedkeurenBtn.setDisable(false);
                 afkeurenBtn.setDisable(false);
                 feedbackTxtArea.setEditable(true);
                 motivatieTxtArea.setText(groep.getHuidigeMotivatie().getTekst());
-
+            } else {
+                goedkeurenBtn.setDisable(true);
+                afkeurenBtn.setDisable(true);
+                feedbackTxtArea.setEditable(false);
+                motivatieStatusLbl.setText(groep.isGoedgekeurd() ? "Motivatie goedgekeurd" : "Motivatie afgekeurd");
             }
         }
     }
@@ -181,13 +190,11 @@ public class GroepOverzichtController extends GridPane {
     @FXML
     private void keurActieAf(ActionEvent event) {
         geefFeedbackWindow(false);
-
     }
 
     @FXML
     private void keurActieGoed(ActionEvent event) {
         geefFeedbackWindow(true);
-
     }
 
     private void geefFeedbackWindow(boolean b) {
@@ -198,15 +205,17 @@ public class GroepOverzichtController extends GridPane {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Geef Feedback voor de Actie");
         dialog.setHeaderText("Feedback:");
-        dialog.setContentText("Feedback:");
-
+        dialog.getEditor().visibleProperty().set(false);
+        TextArea ta = new TextArea();
+        dialog.getDialogPane().setContent(ta);
+        
         dialog.showAndWait()
                 .ifPresent(response -> {
-                    if (!response.isEmpty()) {
-                        gc.setFeedbackActie(titel, response);
+                    if (!ta.getText().isEmpty()) {
+                        gc.setFeedbackActie(titel, ta.getText());
                         gc.keurActie(b, titel);
                     } else {
-                        gc.setFeedbackActie(titel,"Geen feedback");
+                        gc.setFeedbackActie(titel, "Geen feedback");
                         gc.keurActie(b, titel);
                     }
                 });
@@ -241,15 +250,21 @@ public class GroepOverzichtController extends GridPane {
         if (gc.getSelectedGroep() != null) {
             historiekTxtArea.setEditable(false);
             historiekTxtArea.setWrapText(true);
-            List<Motivatie> motivaties = gc.getSelectedGroep().getMotivaties();
-            StringBuilder historiek = new StringBuilder();
 
-            for (Motivatie m : motivaties) {
-                if (m.isVerstuurd() && m.getFeedback() != null) {
-                    historiek.append(m.toString()).append("\n");
-                }
-            }
             historiekTxtArea.setText(historiek.toString());
+        }
+    }
+
+    private void setMotivatieHistoriek() {
+        List<Motivatie> motivaties = gc.getSelectedGroep().getMotivaties();
+        //     StringBuilder historiek = new StringBuilder();
+
+        for (Motivatie m : motivaties) {
+            if (m.isVerstuurd() && m.getFeedback() != null) {
+                StringBuilder mot = new StringBuilder(m.toString());
+                historiek = mot.append("\n" + historiek);
+                //    historiek.append(m.toString()).append("\n");
+            }
         }
     }
 

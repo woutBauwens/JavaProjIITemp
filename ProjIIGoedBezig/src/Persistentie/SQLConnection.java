@@ -61,10 +61,7 @@ public class SQLConnection {
 
     protected ContactPersoon refresh(ContactPersoon lector) throws SQLException, ClassNotFoundException {
         try {
-            em.getTransaction().begin();
-            em.refresh(em.find(lector.getClass(), lector.getId()));
-            em.getTransaction().commit();
-            return em.find(lector.getClass(), lector.getId());
+            return LoginDaoJpa.refresh();
         } catch (Exception e) {
             connect();
             return lector;
