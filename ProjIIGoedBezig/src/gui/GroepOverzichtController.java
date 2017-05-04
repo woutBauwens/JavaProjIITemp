@@ -38,7 +38,7 @@ import repository.LoginDaoJpa;
  */
 public class GroepOverzichtController extends GridPane {
 
-    private List<Groep> groepen;
+
     @FXML
     private Button logOutBtn;
     @FXML
@@ -80,7 +80,7 @@ public class GroepOverzichtController extends GridPane {
 
     public GroepOverzichtController(GroepController gc) {
         this.gc = gc;
-        this.groepen = gc.getGroepenByLector();
+        List<Groep> groepen = gc.getGroepenByLector();
         historiek = new StringBuilder();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GroepOverzicht.fxml"));
         loader.setRoot(this);
@@ -91,9 +91,10 @@ public class GroepOverzichtController extends GridPane {
             throw new RuntimeException(ex);
         }
         List<String> groepsnamen = new ArrayList<>();
-        for (Groep g : groepen) {
-            groepsnamen.add(g.getNaam());
-        }
+        groepen.stream().forEach(g-> groepsnamen.add(g.getNaam()) );
+//        for (Groep g : groepen) {
+//            groepsnamen.add(g.getNaam());
+//        }
         LectorLabel.setText(LectorLabel.getText() + gc.getLector().toString());
         groepListView.setItems(FXCollections.observableArrayList(groepsnamen));
         errorLbl.setVisible(false);
