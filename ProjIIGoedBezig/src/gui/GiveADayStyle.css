@@ -1,0 +1,104 @@
+.root{
+    -fx-background-color: white;
+    -fx-font-family: "Open Sans";
+}
+
+TabPane{
+    -fx-fill: white;
+}
+.tab-pane *.tab-header-background {
+    -fx-background-color: white;
+}
+.tab{
+    -fx-background-color: #77c5d5;
+    -fx-border-color: #77c5d5;
+    -fx-border-radius: 5 5 0 0;
+    -fx-background-radius: 5 5 0 0;
+}
+.tab .text{
+    -fx-fill:  white;
+}
+.tab:selected{
+    -fx-background-color: #00a79d;
+    -fx-border-color: #00a79d;
+}
+
+TextField, TextArea, ComboBox, CheckComboBox, CheckBox, DatePicker, RadioButton{
+    -fx-focus-color: #77c5d5;
+}
+RadioButton .dot{
+    -fx-mark-highlight-color: #77c5d5;
+    -fx-mark-color: #77c5d5;
+}
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #77c5d5;
+}
+.combo-box-popup .list-cell:selected {
+    -fx-background-color: #77c5d5;
+}
+.date-picker-popup > * > .date-cell:hover{
+    -fx-background-color: #77c5d5;
+}
+.date-picker-popup > * > .selected {
+    -fx-background-color: #77c5d5;
+}
+PasswordField{
+    -fx-focus-color: #77c5d5;
+}
+Button{
+    -fx-background-color: #00a79d;
+    -fx-border-color: #00a79d;
+    -fx-text-fill: white;
+    -fx-border-radius: 5 5 5 5;
+    -fx-background-radius: 5 5 5 5;
+}
+Button:hover{
+    -fx-background-color: #00746d;
+    -fx-border-color: #006a63;
+}
+.cancel{
+    -fx-background-color: #e24146;
+    -fx-border-color: #e24146;
+    -fx-text-fill: white;
+}
+.cancel:hover{
+    -fx-background-color: #c92830;
+    -fx-text-fill: white;
+}
+#tblMateriaal, #tblReservatie, #tblFirma,#tblPersoneel, #lstOverzicht{
+    -fx-border-color: #77c5d5;
+    -fx-focus-color: transparent;
+}
+.table-row-cell:selected {
+    -fx-background-color: #77c5d5;  
+}
+.table-row-cell:selected .text{
+    -fx-fill: white;  
+}
+.list-view .list-cell:selected{
+    -fx-background-color: #77c5d5; 
+}
+.header{
+    -fx-background-color: white;
+    -fx-background-image: url("logo_giveaday-01.png");
+    -fx-background-repeat: no-repeat;
+}
+.login{
+    -fx-background-image: url("logo_giveaday-01.png");
+    -fx-background-position: top center;
+    -fx-background-repeat: no-repeat;  
+    -fx-background-color: white;
+}
+.aanmelden{
+    -fx-alignment: center;  
+}
+.email{
+    -fx-text-fill: #77c5d5;
+}
+.error{
+    -fx-text-fill: red;
+}
+.details{
+    -fx-border-width: 1px;
+    -fx-border-color: #77c5d5;
+}

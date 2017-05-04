@@ -7,6 +7,7 @@ package domein;
 
 import persistentiee.SQLConnection;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -80,7 +81,7 @@ public class Motivatie implements Serializable {
 
   @Override
   public String toString(){
-      return String.format("Motivatie:%n%s%n%n%s%n",MotivatieTekst,Feedback==null?"": "Feedback: \n" + Feedback);
+      return String.format("%s%nMotivatie:%n%s%n%n%s%n-------------------------------------------------------------%n",DateFormat.getInstance().format(Date), MotivatieTekst, Feedback==null?"": "Feedback: \n" + Feedback);
   }
 
 }

@@ -32,6 +32,7 @@ public class StartUp extends Application {
         InlogController dc = new InlogController(new LoginDaoJpa());
         LoginController root = new LoginController(dc);
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("/gui/GiveADayStyle.css"); 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Log in:");
         primaryStage.show();

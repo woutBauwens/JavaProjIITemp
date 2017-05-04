@@ -51,14 +51,14 @@ public class LoginController extends Pane {
     private void LogIn(ActionEvent event) {
         try {
             if (dc.checkLogin(userNameTxtField.getText(), passwordTxtField.getText())) {
-
                 ContactPersoon lector = dc.getLector();
                 GroepController gc = new GroepController(new GenericDaoJpa(Groep.class), lector);
                 GroepOverzichtController GOC = new GroepOverzichtController(gc);
                 Stage stage = (Stage) (this.getScene().getWindow());
                 stage.setTitle("Groepsoverzicht: ");
                 Scene scene = new Scene(GOC);
-
+                scene.getStylesheets().add("/gui/GiveADayStyle.css");
+                
                 stage.setScene(scene);
                 stage.show();
 

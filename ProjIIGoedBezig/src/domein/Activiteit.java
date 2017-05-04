@@ -72,7 +72,7 @@ public class Activiteit implements Serializable {
         }
         b.append(String.format("%nOmschrijving:%n%s%n", omschrijving));
         if (feedback != null) {
-            b.append(String.format("%n%n%s%nFeedback:%n%s%n", isGoedgekeurd ? "Goedgekeurd" : "Afgekeurd", feedback));
+            b.append(String.format("%n%n%s%nFeedback:%n%s%n-------------------------------------------------------------%n", isGoedgekeurd ? "Goedgekeurd" : "Afgekeurd", feedback));
         }
         return b.toString();
     }
