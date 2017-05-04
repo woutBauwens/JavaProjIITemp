@@ -79,6 +79,8 @@ public class GroepOverzichtController extends GridPane {
     private Label errorLbl;
     @FXML
     private TabPane tabPane;
+    @FXML
+    private Label LectorLabel;
 
     private StringBuilder historiek;
 
@@ -98,6 +100,7 @@ public class GroepOverzichtController extends GridPane {
         for (Groep g : groepen) {
             groepsnamen.add(g.getNaam());
         }
+        LectorLabel.setText(LectorLabel.getText() + gc.getLector().toString());
         groepListView.setItems(FXCollections.observableArrayList(groepsnamen));
         errorLbl.setVisible(false);
 
@@ -138,6 +141,7 @@ public class GroepOverzichtController extends GridPane {
         Stage stage = (Stage) (this.getScene().getWindow());
         stage.setTitle("Login: ");
         Scene scene = new Scene(loginC);
+        scene.getStylesheets().add("/gui/GiveADayStyle.css");
 
         stage.setScene(scene);
         stage.show();
@@ -208,7 +212,7 @@ public class GroepOverzichtController extends GridPane {
         dialog.getEditor().visibleProperty().set(false);
         TextArea ta = new TextArea();
         dialog.getDialogPane().setContent(ta);
-        
+
         dialog.showAndWait()
                 .ifPresent(response -> {
                     if (!ta.getText().isEmpty()) {

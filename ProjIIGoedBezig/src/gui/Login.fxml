@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -7,13 +9,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="489.0" type="Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="374.0" prefWidth="489.0" styleClass="login" type="Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="userNameTxtField" layoutX="113.0" layoutY="35.0" prefHeight="25.0" prefWidth="210.0" />
-      <Button fx:id="logInButton" layoutX="113.0" layoutY="141.0" mnemonicParsing="false" onAction="#LogIn" text="Log In" />
-      <Text layoutX="35.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
-      <Text layoutX="35.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password: " />
-      <Label fx:id="errorLbl" layoutX="113.0" layoutY="180.0" prefHeight="25.0" prefWidth="360.0" />
-      <PasswordField fx:id="passwordTxtField" layoutX="113.0" layoutY="90.0" prefHeight="25.0" prefWidth="210.0" />
+      <TextField fx:id="userNameTxtField" layoutX="139.0" layoutY="181.0" prefHeight="25.0" prefWidth="251.0" />
+      <Button fx:id="logInButton" layoutX="139.0" layoutY="299.0" mnemonicParsing="false" onAction="#LogIn" prefHeight="27.0" prefWidth="73.0" text="Log In" />
+      <Text layoutX="59.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:">
+         <effect>
+            <Bloom />
+         </effect></Text>
+      <Text layoutX="59.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Paswoord: ">
+         <effect>
+            <Bloom />
+         </effect></Text>
+      <Label fx:id="errorLbl" layoutX="115.0" layoutY="335.0" prefHeight="25.0" prefWidth="360.0" />
+      <PasswordField fx:id="passwordTxtField" layoutX="139.0" layoutY="240.0" prefHeight="25.0" prefWidth="251.0" />
    </children>
+   <effect>
+      <Glow />
+   </effect>
 </fx:root>
