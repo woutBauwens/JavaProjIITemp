@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package persistentiee;
+package persistentie;
 
 import domein.ContactPersoon;
 import java.util.ArrayList;

@@ -5,7 +5,7 @@
  */
 package repository;
 
-import persistentiee.LoginUser;
+import persistentie.LoginUser;
 import domein.ContactPersoon;
 
 /**

@@ -5,8 +5,8 @@
  */
 package domein;
 
-import persistentiee.ConnectionReceiver;
-import persistentiee.SQLConnection;
+import persistentie.ConnectionReceiver;
+import persistentie.SQLConnection;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
