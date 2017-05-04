@@ -5,7 +5,7 @@
  */
 package domein;
 
-import Persistentie.LoginUser;
+import persistentiee.LoginUser;
 import repository.LoginDaoJpa;
 
 /**

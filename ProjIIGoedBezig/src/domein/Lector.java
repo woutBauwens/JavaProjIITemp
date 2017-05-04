@@ -5,7 +5,7 @@
  */
 package domein;
 
-import Persistentie.SQLConnection;
+import persistentiee.SQLConnection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;

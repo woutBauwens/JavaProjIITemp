@@ -12,18 +12,14 @@ import domein.InlogController;
 import domein.Motivatie;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
@@ -32,9 +28,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import repository.LoginDaoJpa;
 
 /**
@@ -208,7 +202,7 @@ public class GroepOverzichtController extends GridPane {
         dialog.getEditor().visibleProperty().set(false);
         TextArea ta = new TextArea();
         dialog.getDialogPane().setContent(ta);
-        
+
         dialog.showAndWait()
                 .ifPresent(response -> {
                     if (!ta.getText().isEmpty()) {
@@ -234,13 +228,14 @@ public class GroepOverzichtController extends GridPane {
 
             List<Activiteit> acties = gc.getSelectedGroep().getActies();
             List<String> actienamen = new ArrayList<>();
-            for (Activiteit a : acties) {
-                if (a.getFeedback() == null) {
-                    actienamen.add(a.getTitel());
+            acties.stream().filter(a -> a.getFeedback() == null).forEach(a -> actienamen.add(a.getTitel()));
+//            for (Activiteit a : acties) {
+//                if (a.getFeedback() == null) {
+//                    actienamen.add(a.getTitel());
+//
+//                }
 
-                }
-
-            }
+            //          }
             actiesListView.setItems(FXCollections.observableArrayList(actienamen));
         }
     }
@@ -257,15 +252,22 @@ public class GroepOverzichtController extends GridPane {
 
     private void setMotivatieHistoriek() {
         List<Motivatie> motivaties = gc.getSelectedGroep().getMotivaties();
-        //     StringBuilder historiek = new StringBuilder();
+        Collections.reverse(motivaties);
+        //list gereversed ipv telkens historiek te overschrijven en er opnieuw aan te plakken, same effect?
 
-        for (Motivatie m : motivaties) {
-            if (m.isVerstuurd() && m.getFeedback() != null) {
-                StringBuilder mot = new StringBuilder(m.toString());
-                historiek = mot.append("\n" + historiek);
-                //    historiek.append(m.toString()).append("\n");
-            }
-        }
+        //     StringBuilder historiek = new StringBuilder();
+        motivaties.stream().filter(m -> m.isVerstuurd() && m.getFeedback() != null)
+                .forEach(m -> historiek.append("\n" + m.toString()));
+
+        //als motivatie versturd is en geen feedback heeft => motivatie in historiek weergeven
+//        
+//        for (Motivatie m : motivaties) {
+//            if (m.isVerstuurd() && m.getFeedback() != null) {
+//                StringBuilder mot = new StringBuilder(m.toString());
+//                historiek = mot.append("\n" + historiek);
+//                //    historiek.append(m.toString()).append("\n");
+//            }
+//        }
     }
 
     @FXML
@@ -277,17 +279,30 @@ public class GroepOverzichtController extends GridPane {
             actieDetailTxtArea.setEditable(false);
             actieDetailTxtArea.setText(gc.toonDetailActie(actie));
             List<Activiteit> acties = gc.getSelectedGroep().getActies();
-            for (Activiteit a : acties) {
-                if (a.getTitel().equals(actie)) {
-                    if (a.getFeedback() != null) {
-                        keurActieAfBtn.setDisable(true);
-                        keurActieGoed.setDisable(true);
-                    } else {
-                        keurActieAfBtn.setDisable(false);
-                        keurActieGoed.setDisable(false);
-                    }
-                }
-            }
+            
+            acties.stream().filter(a -> a.getTitel().equals(actie))
+                    .forEach(a -> {
+                        if (a.getFeedback() != null) {
+                            keurActieAfBtn.setDisable(true);
+                            keurActieGoed.setDisable(true);
+                        } else {
+                            keurActieAfBtn.setDisable(false);
+                            keurActieGoed.setDisable(false);
+                        }
+                    });
+            //buttons disablen / enablen afhankelijk van of de actie al gekeurd is geweest(dus voorzien van feedback)
+
+//            for (Activiteit a : acties) {
+//                if (a.getTitel().equals(actie)) {
+//                    if (a.getFeedback() != null) {
+//                        keurActieAfBtn.setDisable(true);
+//                        keurActieGoed.setDisable(true);
+//                    } else {
+//                        keurActieAfBtn.setDisable(false);
+//                        keurActieGoed.setDisable(false);
+//                    }
+//                }
+//            }
         }
     }
 
