@@ -28,19 +28,22 @@ public class LoginDaoJpa extends GenericDaoJpa<LoginUser> implements LoginDao {
                     ContactPersoon.class).setParameter("email", email).getSingleResult().getId();
             lector = em.find(ContactPersoon.class, index);
         } catch (Exception ex) {
-            try {
-                List<ContactPersoon> lectorMMapped = em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email",
-                        ContactPersoon.class).setParameter("email", email).getResultList();
-                int index = em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email",
-                        ContactPersoon.class).setParameter("email", email).getResultList().get(0).getId();
-                lector = em.find(ContactPersoon.class, index);
-                for(ContactPersoon c: lectorMMapped){
-                    lector.getGroepen().addAll(c.getGroepen());
-                }
-            } catch (Exception e) {
-                return null; //gooit nullpointerexception for some reason
-            }
+           throw new Exception("Ongeldige Login");
+
         }
+        
+//        try {
+//                List<ContactPersoon> lectorMMapped = em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email",
+//                        ContactPersoon.class).setParameter("email", email).getResultList();
+//                int index = em.createQuery("SELECT c from ContactPersoon c WHERE c.EmailContactPersoon = :email",
+//                        ContactPersoon.class).setParameter("email", email).getResultList().get(0).getId();
+//                lector = em.find(ContactPersoon.class, index);
+//                for(ContactPersoon c: lectorMMapped){
+//                    lector.getGroepen().addAll(c.getGroepen());
+//                }
+//            } catch (Exception e) {
+//                return null; //gooit nullpointerexception for some reason
+//            }
             // LoginUser user = em.find(LoginUser.class, contact.getId());
 //        LoginUser user = em.createQuery("SELECT u FROM LoginUser u WHERE u.UserId = :id",
 //                LoginUser.class).setParameter("id", index).getSingleResult();

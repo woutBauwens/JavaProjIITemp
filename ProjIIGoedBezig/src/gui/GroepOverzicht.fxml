@@ -54,7 +54,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <TextArea fx:id="historiekTxtArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+      <TextArea fx:id="historiekTxtArea" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fff;" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
       <Label text="Groepen" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
          <padding>
             <Insets bottom="5.0" />
