@@ -8,6 +8,7 @@ package domein;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
@@ -24,7 +25,8 @@ import javax.persistence.Table;
 public class ContactPersoon implements Serializable {
 
     @Id
-    protected int ContactPersoonId;
+    @Column(name = "ContactPersoonId")
+    protected int contactPersoonId;
 
     protected String EmailContactPersoon;
     protected String Functie;
@@ -42,7 +44,7 @@ public class ContactPersoon implements Serializable {
     }
 
     public int getId() {
-        return ContactPersoonId;
+        return contactPersoonId;
     }
 
   /*  public ContactPersoon getLector() {
