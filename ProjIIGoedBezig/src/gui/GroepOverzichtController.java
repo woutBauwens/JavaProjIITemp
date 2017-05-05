@@ -91,10 +91,10 @@ public class GroepOverzichtController extends GridPane {
             throw new RuntimeException(ex);
         }
         List<String> groepsnamen = new ArrayList<>();
-        groepen.stream().forEach(g-> groepsnamen.add(g.getNaam()) );
-//        for (Groep g : groepen) {
-//            groepsnamen.add(g.getNaam());
-//        }
+       // groepen.stream().filter(g-> groepsnamen.add(g.getNaam()) );
+        for (Groep g : groepen) {
+            groepsnamen.add(g.getNaam());
+        } 
         LectorLabel.setText(LectorLabel.getText() + gc.getLector().toString());
         groepListView.setItems(FXCollections.observableArrayList(groepsnamen));
         errorLbl.setVisible(false);

@@ -10,5 +10,6 @@ public interface GenericDao<T> {
     public void insert(T object);
     public boolean exists(Long id);
     public void persist(T object);
+    public List<T> getStates();
  //   public void addColumn(String table, String column);
 }

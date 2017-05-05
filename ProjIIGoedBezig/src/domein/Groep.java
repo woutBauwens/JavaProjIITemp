@@ -5,6 +5,8 @@
  */
 package domein;
 
+import domein.gbGroepStatePattern.GroepStateFactory;
+import domein.gbGroepStatePattern.State;
 import persistentie.SQLConnection;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 
 /**
  *
@@ -38,14 +41,23 @@ public class Groep implements Serializable {
 
     private boolean MotivatieIsGoedgekeurd;
     private String naam;
-    
-    private String CurrentState;
+
+    @Column(name = "CurrentState")
+    private String currentState;
 
     @ManyToOne
     @JoinColumn(name = "HoofdLectorContactPersoonId")
     private ContactPersoon HoofdLectorContactPersoonId;
 
+    @Transient
+    private State state;
+
     protected Groep() {
+    }
+
+    public void initializeState(){
+        GroepStateFactory gsf = new GroepStateFactory();
+        state = gsf.createPlayerFactory(currentState);
     }
     
     @Override
@@ -63,8 +75,6 @@ public class Groep implements Serializable {
 
     public void keur(String feedback, boolean b) {
         motivaties.get(0).setFeedback(feedback);
-       
-
     }
 
     public String getNaam() {
@@ -72,7 +82,7 @@ public class Groep implements Serializable {
     }
 
     public Motivatie getHuidigeMotivatie() {
-            return motivaties.get(0);
+        return motivaties.get(0);
     }
 
     public List<Activiteit> getActies() {
@@ -84,13 +94,13 @@ public class Groep implements Serializable {
     }
 
     void setKeuring(boolean keuring) {
-          MotivatieIsGoedgekeurd = keuring;
-          if(!keuring)
-              CurrentState = "empty";
-    }
-    
-    public List<Motivatie> getMotivaties(){
-        return motivaties;
+        MotivatieIsGoedgekeurd = keuring;
+        if (!keuring) {
+            currentState = "empty";
+        }
     }
 
+    public List<Motivatie> getMotivaties() {
+        return motivaties;
+    }
 }

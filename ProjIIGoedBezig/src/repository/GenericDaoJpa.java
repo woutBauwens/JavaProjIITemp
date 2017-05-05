@@ -1,9 +1,12 @@
 package repository;
 
+import domein.gbGroepStatePattern.State;
+import java.util.ArrayList;
 import persistentie.SQLConnection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
 
 public class GenericDaoJpa<T> implements GenericDao<T> {
@@ -41,7 +44,23 @@ public class GenericDaoJpa<T> implements GenericDao<T> {
 
     @Override
     public List<T> findAll() {
-        return em.createQuery("select entity from " + type.getName() + " entity", type).getResultList();
+        List<T> values = new ArrayList<>();
+        int id = 0;
+        while (true) {
+            T value = get(id);
+            if (value != null) {
+                values.add(value);
+                id++;
+            } else {
+                break;
+            }
+        }
+        return values;
+    }
+
+    @Override
+    public List<T> getStates() {
+        return em.createQuery("SELECT s FROM State s").getResultList();
     }
 
     @Override
