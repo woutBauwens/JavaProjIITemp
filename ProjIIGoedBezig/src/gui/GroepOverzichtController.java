@@ -100,7 +100,7 @@ public class GroepOverzichtController extends GridPane {
         for (Groep g : groepen) {
             groepsnamen.add(g.getNaam());
         }
-        LectorLabel.setText(LectorLabel.getText() + gc.getLector().toString());
+        LectorLabel.setText("Welkom " + gc.getLector().toString());
         groepListView.setItems(FXCollections.observableArrayList(groepsnamen));
         errorLbl.setVisible(false);
 

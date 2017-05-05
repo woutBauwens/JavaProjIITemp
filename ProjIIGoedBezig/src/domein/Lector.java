@@ -15,4 +15,5 @@ import javax.persistence.Id;
  * @author BelgoBits
  */
 public class Lector extends ContactPersoon {
+    
 }

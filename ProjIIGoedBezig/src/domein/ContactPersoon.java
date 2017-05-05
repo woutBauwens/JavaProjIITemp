@@ -64,4 +64,9 @@ public class ContactPersoon implements Serializable {
     public String passwordExtention(){
         return String.valueOf(OrganisatieId1) + String.valueOf(VoornaamContactPersoon.toLowerCase().charAt(0) + NaamContactPersoon.toLowerCase().charAt(0)) + String.valueOf(VoornaamContactPersoon.toLowerCase().charAt(0)) + String.valueOf(NaamContactPersoon.toLowerCase().charAt(0));
     }
+    
+    @Override
+    public String toString(){
+        return VoornaamContactPersoon + " " + NaamContactPersoon;
+    }
 }
