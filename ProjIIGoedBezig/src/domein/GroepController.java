@@ -5,18 +5,18 @@
  */
 package domein;
 
-import Persistentie.ConnectionReceiver;
-import Persistentie.SQLConnection;
+import persistentie.ConnectionReceiver;
+import persistentie.SQLConnection;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.application.Application;
 import repository.GenericDao;
 import repository.GenericDaoJpa;
-import repository.GroepDaoJpa;
 
 /**
  *
@@ -26,9 +26,9 @@ public class GroepController {
 
     private ContactPersoon lector;
     private Groep selectedGroep;
-    private GroepDaoJpa groepRepo;
+    private GenericDao groepRepo;
 
-    public GroepController(GroepDaoJpa jp, ContactPersoon lector) {
+    public GroepController(GenericDao jp, ContactPersoon lector) {
         try {
             groepRepo = jp;
             this.lector = lector;
@@ -107,12 +107,16 @@ public class GroepController {
     public void setSelectedGroep(String naam) {
 
         List<Groep> groepen = lector.getGroepen();
-        for (Groep g : groepen) {
-            if (g.getNaam().equals(naam)) {
-                selectedGroep = g;
-            }
+       selectedGroep = groepen.stream().filter(g->g.getNaam().equals(naam)).findFirst().orElse(null);
+//als findfirst geen resultaat levert => null
 
-        }
+
+//        for (Groep g : groepen) {
+//            if (g.getNaam().equals(naam)) {
+//                selectedGroep = g;
+//            }
+//
+//        }
 
     }
 
@@ -131,12 +135,14 @@ public class GroepController {
 
     public String toonDetailActie(String titelActie) {
         List<Activiteit> acties = selectedGroep.getActies();
-        for (Activiteit a : acties) {
-            if (a.getTitel().equals(titelActie)) {
-                return a.toString();
-            }
-        }
-        return null;
+        Activiteit actie = acties.stream().filter(a->a.getTitel().equals(titelActie)).findFirst().orElse(null);
+        return actie.toString();
+//        for (Activiteit a : acties) {
+//            if (a.getTitel().equals(titelActie)) {
+//                return a.toString();
+//            }
+//        }
+//        return null;
     }
 
     public void setFeedbackActie(String titelActie, String feedback) {
@@ -153,23 +159,30 @@ public class GroepController {
     private Activiteit getActie(String titel) {
 
         List<Activiteit> acties = getSelectedGroep().getActies();
-        for (Activiteit a : acties) {
-            if (a.getTitel().equals(titel)) {
-
-                return a;
-            }
-        }
-        return null;
+       return acties.stream().filter(a->a.getTitel().equals(titel)).findFirst().orElse(null);
+        
+        
+//        for (Activiteit a : acties) {
+//            if (a.getTitel().equals(titel)) {
+//
+//                return a;
+//            }
+//        }
+//        return null;
     }
 
     public String getActieHistoriek() {
         List<Activiteit> acties = selectedGroep.getActies();
         StringBuilder historiek = new StringBuilder();
-        for (Activiteit a : acties) {
-            if (a.getFeedback() != null) {
-                historiek.append(a.toString()).append("\n");
-            }
-        }
+        acties.stream().filter(a->a.getFeedback() != null).forEach(a-> historiek.append(a.toString()).append("\n"));
+        //als actie feedback heeft en dus gekeurd is tostring aan historiek toevoegen
+        
+        
+//        for (Activiteit a : acties) {
+//            if (a.getFeedback() != null) {
+//                historiek.append(a.toString()).append("\n");
+//            }
+//        }
         return historiek.toString();
     }
 }

@@ -4,10 +4,10 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>domein.ContactPersoon</class>
     <class>domein.Organisatie</class>
-    <class>Persistentie.LoginUser</class>
     <class>domein.Groep</class>
     <class>domein.Activiteit</class>
     <class>domein.Motivatie</class>
+    <class>persistentie.LoginUser</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://127.0.0.1:1433;databaseName=GBDB"/>
       <property name="javax.persistence.jdbc.user" value="Login"/>

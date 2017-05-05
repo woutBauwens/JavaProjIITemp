@@ -1,6 +1,7 @@
 package gui;
 
 import domein.ContactPersoon;
+import domein.Groep;
 import domein.GroepController;
 
 import domein.InlogController;
@@ -51,7 +52,7 @@ public class LoginController extends Pane {
         try {
             if (dc.checkLogin(userNameTxtField.getText(), passwordTxtField.getText())) {
                 ContactPersoon lector = dc.getLector();
-                GroepController gc = new GroepController(new GroepDaoJpa(), lector);
+                GroepController gc = new GroepController(new GenericDaoJpa(Groep.class), lector);
                 GroepOverzichtController GOC = new GroepOverzichtController(gc);
                 Stage stage = (Stage) (this.getScene().getWindow());
                 stage.setTitle("Groepsoverzicht: ");

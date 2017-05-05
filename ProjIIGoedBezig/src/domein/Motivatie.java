@@ -5,7 +5,7 @@
  */
 package domein;
 
-import Persistentie.SQLConnection;
+import persistentie.SQLConnection;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Date;

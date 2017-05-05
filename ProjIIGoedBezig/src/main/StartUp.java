@@ -5,8 +5,8 @@
  */
 package main;
 
-import Persistentie.ConnectionReceiver;
-import Persistentie.SQLConnection;
+import persistentie.ConnectionReceiver;
+import persistentie.SQLConnection;
 import domein.InlogController;
 import gui.LoginController;
 import java.sql.SQLException;

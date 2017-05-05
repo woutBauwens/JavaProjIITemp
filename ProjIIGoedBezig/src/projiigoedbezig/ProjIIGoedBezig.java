@@ -5,8 +5,8 @@
  */
 package projiigoedbezig;
 
-import Persistentie.LoginUser;
-import Persistentie.SQLConnection;
+import persistentie.LoginUser;
+import persistentie.SQLConnection;
 import domein.Groep;
 import java.sql.SQLException;
 import javafx.application.Application;
