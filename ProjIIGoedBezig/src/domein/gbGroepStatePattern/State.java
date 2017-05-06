@@ -15,25 +15,27 @@ import javax.persistence.Id;
  *
  * @author BelgoBits
  */
-@Entity
-public abstract class State implements Serializable {
-
-    @Id
-    @Column(name = "Name")
-    protected String name;
-    
-    protected State(){}
-    
-    public State(String value){
-        
-    }
-    
-    public String getName(){
-        return name;
-    }
-    
-    public Supplier getSupplier(String name){
-        State s = new EmptyState();
-        return s.getSupplier(name);
-    }
-}
+//@Entity
+//public abstract class State implements Serializable {
+//
+//    @Id
+//    @Column(name = "Name")
+//    protected String name;
+//
+//    protected State() {
+//    }
+//
+//    public State(String value) {
+//        name = value;
+//    }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public Supplier getSupplier(String name) {
+//
+//        State s = new EmptyState();
+//        return s.getSupplier(name);
+//    }
+//}

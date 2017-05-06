@@ -5,25 +5,21 @@
  */
 package domein;
 
-import domein.gbGroepStatePattern.GroepStateFactory;
-import domein.gbGroepStatePattern.State;
-import persistentie.SQLConnection;
+//import domein.gbGroepStatePattern.GroepStateFactory;
+//import domein.gbGroepStatePattern.State;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import javafx.collections.transformation.SortedList;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
-import jdk.nashorn.internal.ir.annotations.Ignore;
+import states.GroepState;
+import states.GroepStateFactory;
+import states.States;
 
 /**
  *
@@ -49,17 +45,18 @@ public class Groep implements Serializable {
     @JoinColumn(name = "HoofdLectorContactPersoonId")
     private ContactPersoon HoofdLectorContactPersoonId;
 
+//    @Transient
+//    private State state;
     @Transient
-    private State state;
+    private GroepState groepState;
 
     protected Groep() {
     }
 
-    public void initializeState(){
-        GroepStateFactory gsf = new GroepStateFactory();
-        state = gsf.createPlayerFactory(currentState);
-    }
-    
+//    public void initializeState() {
+//        GroepStateFactory gsf = new GroepStateFactory();
+//        state = gsf.createPlayerFactory(currentState);
+//    }
     @Override
     public String toString() {
         return String.format("%s\n%s\n%s", naam, motivaties.get(0).getTekst(), acties.isEmpty() ? "Geen acties" : acties.get(0).getId());
@@ -95,12 +92,72 @@ public class Groep implements Serializable {
 
     void setKeuring(boolean keuring) {
         MotivatieIsGoedgekeurd = keuring;
+        groepState.verwerkMotivatieKeuring(keuring);
         if (!keuring) {
-            currentState = "empty";
+            toState("written");
+        } else {
+            toState("approved");
         }
     }
 
     public List<Motivatie> getMotivaties() {
         return motivaties;
     }
+
+    public String getState() {
+        //  groepState = states.GroepStateFactory.createState(currentState, this);
+        return currentState;
+
+    }
+
+    void setFeedback(String response) {
+        getHuidigeMotivatie().setFeedback(response);
+    }
+
+    boolean isMotivatieVerstuurd() {
+        return getHuidigeMotivatie().isVerstuurd();
+    }
+
+    Activiteit getActie(String titelActie) {
+
+        for (Activiteit a : acties) {
+            if (a.getTitel().equals(titelActie)) {
+                return a;
+
+            }
+        }
+        //    return acties.stream().filter(a -> a.getTitel().equals(titelActie)).findFirst().get();
+        return null;
+    }
+
+    public boolean actiesToegankelijk() {
+        return groepState.actiesToegankelijk();
+    }
+
+    public String toonMotivatie() {
+        return groepState.toonMotivatie();
+    }
+
+    public String geefMotivatieStatus() {
+        return groepState.geefMotivatieStatus();
+    }
+
+    public boolean MotivatieKeurbaar() {
+        return getState().toString().equals(States.pending.toString());
+    }
+
+    public void toState(String state) {
+        groepState = GroepStateFactory.createState(state, this);
+        currentState = state;
+    }
+
+    public void actiesgekeurd(String titelActie, String feedback) {
+        groepState.actiesgekeurd(titelActie, feedback);
+    }
+
+    public void setFeedbackActie(String titel, String feedback) {
+        Activiteit a = getActie(titel);
+        a.setFeedback(feedback);
+    }
+
 }
