@@ -1,6 +1,6 @@
 package repository;
 
-import domein.gbGroepStatePattern.State;
+//import domein.gbGroepStatePattern.State;
 import java.util.ArrayList;
 import persistentie.SQLConnection;
 import java.util.List;
@@ -62,6 +62,7 @@ public class GenericDaoJpa<T> implements GenericDao<T> {
     public List<T> getStates() {
         return em.createQuery("SELECT s FROM State s").getResultList();
     }
+    //moet in StateDaoJpa, maar w niet meer gebruikt
 
     @Override
     public T get(int id) {
