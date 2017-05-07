@@ -123,7 +123,7 @@
                         <ListView fx:id="actiesListView" onMouseClicked="#toonActieDetail" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" />
                         <Button fx:id="keurActieGoed" mnemonicParsing="false" onAction="#keurActieGoed" text="Goedkeuren" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                         <Button fx:id="keurActieAfBtn" mnemonicParsing="false" onAction="#keurActieAf" styleClass="cancel" text="Afkeuren" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <TextArea fx:id="actieDetailTxtArea" prefHeight="182.0" prefWidth="432.0" promptText="Vul hier je feedback in" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <TextArea fx:id="actieDetailTxtArea" prefHeight="182.0" prefWidth="432.0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </content>

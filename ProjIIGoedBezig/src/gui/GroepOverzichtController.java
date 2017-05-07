@@ -5,11 +5,13 @@
  */
 package gui;
 
+import domein.ActieController;
 import domein.Activiteit;
 import domein.Groep;
 import domein.GroepController;
 import domein.InlogController;
 import domein.Motivatie;
+import domein.MotivatieController;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,6 +33,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import repository.LoginDaoJpa;
+import states.States;
 
 /**
  * FXML Controller class
@@ -38,7 +41,6 @@ import repository.LoginDaoJpa;
  * @author kenne
  */
 public class GroepOverzichtController extends GridPane {
-
 
     @FXML
     private Button logOutBtn;
@@ -58,6 +60,8 @@ public class GroepOverzichtController extends GridPane {
     private TextArea feedbackTxtArea;
 
     private GroepController gc;
+    private MotivatieController mc;
+    private ActieController ac;
     @FXML
     private Tab motievatieTab;
     @FXML
@@ -77,7 +81,7 @@ public class GroepOverzichtController extends GridPane {
     @FXML
     private Label LectorLabel;
 
-    private StringBuilder historiek;
+    private String historiek;
 
     
     
@@ -92,8 +96,10 @@ public class GroepOverzichtController extends GridPane {
     */
     public GroepOverzichtController(GroepController gc) {
         this.gc = gc;
+        mc = new MotivatieController();
+        ac = new ActieController();
         List<Groep> groepen = gc.getGroepenByLector();
-        historiek = new StringBuilder();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GroepOverzicht.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -107,7 +113,7 @@ public class GroepOverzichtController extends GridPane {
         LectorLabel.setText(LectorLabel.getText() + gc.getLector().toString());
         groepListView.setItems(FXCollections.observableArrayList(groepsnamen));
         errorLbl.setVisible(false);
-
+        actieDetailTxtArea.setEditable(false);
         historiekTxtArea.clear();
         tabPane.setDisable(true);
         //for loop
@@ -124,16 +130,15 @@ public class GroepOverzichtController extends GridPane {
     }
 
     private void verwerkMotivatieKeuring(boolean b) {
-        gc.keur(b);
-        gc.setFeedback(feedbackTxtArea.getText());
+        mc.setKeuring(b);
+        mc.setFeedback(feedbackTxtArea.getText());
         motivatieStatusLbl.setVisible(true);
-        motivatieStatusLbl.setText(b ? "Motivatie Goedgekeurd" : "Motivatie Afgekeurd");
+        motivatieStatusLbl.setText(mc.geefMotivatieStatus());
         goedkeurenBtn.setDisable(true);
         afkeurenBtn.setDisable(true);
         feedbackTxtArea.setEditable(false);
-
+        //eventueel feedback area clearen
         gc.update();
-        setMotivatieHistoriek();
         toonMotivatieHistoriek();
     }
 
@@ -153,7 +158,8 @@ public class GroepOverzichtController extends GridPane {
 
     @FXML
     private void kiesGroep(MouseEvent event) {
-        gc.setSelectedGroep(groepListView.getSelectionModel().getSelectedItem());
+        String selectedgroep = groepListView.getSelectionModel().getSelectedItem();
+        setSelectedGroep(selectedgroep);
         tabPane.setDisable(false);
 
         toonMotivatie();
@@ -164,12 +170,14 @@ public class GroepOverzichtController extends GridPane {
         if (tabPane.getSelectionModel().getSelectedIndex() == 1) {
             toonActieHistoriek();
         }
-        if (!gc.getSelectedGroep().isGoedgekeurd()) {
-            actiesTab.setDisable(true);
-        } else {
-            actiesTab.setDisable(false);
-        }
+        actiesTab.setDisable(gc.actiesToegankelijk());
 
+    }
+
+    private void setSelectedGroep(String groep) {
+        gc.setSelectedGroep(groep);
+        mc.setSelectedGroep(gc.getSelectedGroep());
+        ac.setSelectedGroep(gc.getSelectedGroep());
     }
 
     private void toonMotivatie() {
@@ -178,19 +186,15 @@ public class GroepOverzichtController extends GridPane {
             afkeurenBtn.setDisable(false);
             motivatieTxtArea.setWrapText(true);
             motivatieTxtArea.setEditable(false); //motivatie field uneditable maken
-            gc.setSelectedGroep(groepListView.getSelectionModel().getSelectedItem());
-            Groep groep = gc.getSelectedGroep();
-            motivatieTxtArea.setText(gc.toonMotivatie());
-            if (groep.isVerstuurd() && !groep.isGoedgekeurd()) {// || groep.getHuidigeMotivatie().getFeedback() != null) {
-                goedkeurenBtn.setDisable(false);
-                afkeurenBtn.setDisable(false);
+            motivatieStatusLbl.setText(mc.geefMotivatieStatus());
+            motivatieTxtArea.setText(mc.toonMotivatie());
+            if (gc.MotivatieKeurbaar()) {
                 feedbackTxtArea.setEditable(true);
-                motivatieTxtArea.setText(groep.getHuidigeMotivatie().getTekst());
             } else {
                 goedkeurenBtn.setDisable(true);
                 afkeurenBtn.setDisable(true);
                 feedbackTxtArea.setEditable(false);
-                motivatieStatusLbl.setText(groep.isGoedgekeurd() ? "Motivatie goedgekeurd" : "Motivatie afgekeurd");
+
             }
         }
     }
@@ -220,11 +224,11 @@ public class GroepOverzichtController extends GridPane {
         dialog.showAndWait()
                 .ifPresent(response -> {
                     if (!ta.getText().isEmpty()) {
-                        gc.setFeedbackActie(titel, ta.getText());
-                        gc.keurActie(b, titel);
+                        ac.setFeedbackActie(titel, ta.getText());
+                        ac.keurActie(b, titel);
                     } else {
-                        gc.setFeedbackActie(titel, "Geen feedback");
-                        gc.keurActie(b, titel);
+                        ac.setFeedbackActie(titel, "Geen feedback");
+                        ac.keurActie(b, titel);
                     }
                 });
         toonActies();
@@ -235,22 +239,20 @@ public class GroepOverzichtController extends GridPane {
     }
 
     private void toonActies() {
-        if (gc.getSelectedGroep() != null || gc.getSelectedGroep().isGoedgekeurd()) {
+        if (!gc.actiesToegankelijk()) {
 
             keurActieAfBtn.setDisable(true);
             keurActieGoed.setDisable(true);
 
-            List<Activiteit> acties = gc.getSelectedGroep().getActies();
-            List<String> actienamen = new ArrayList<>();
-            acties.stream().filter(a -> a.getFeedback() == null).forEach(a -> actienamen.add(a.getTitel()));
+//            List<Activiteit> acties = ac.getActies();
+//            List<String> actienamen = new ArrayList<>();
+//            acties.stream().filter(a -> a.getFeedback() == null).forEach(a -> actienamen.add(a.getTitel()));
 //            for (Activiteit a : acties) {
 //                if (a.getFeedback() == null) {
 //                    actienamen.add(a.getTitel());
-//
 //                }
-
             //          }
-            actiesListView.setItems(FXCollections.observableArrayList(actienamen));
+            actiesListView.setItems(FXCollections.observableArrayList(ac.getActieNamenLijst()));
         }
     }
 
@@ -260,29 +262,30 @@ public class GroepOverzichtController extends GridPane {
             historiekTxtArea.setEditable(false);
             historiekTxtArea.setWrapText(true);
 
-            historiekTxtArea.setText(historiek.toString());
+            historiekTxtArea.setText(mc.getMotivaties());
         }
     }
 
-    private void setMotivatieHistoriek() {
-        List<Motivatie> motivaties = gc.getSelectedGroep().getMotivaties();
-        Collections.reverse(motivaties);
-        //list gereversed ipv telkens historiek te overschrijven en er opnieuw aan te plakken, same effect?
-
-        //     StringBuilder historiek = new StringBuilder();
-        motivaties.stream().filter(m -> m.isVerstuurd() && m.getFeedback() != null)
-                .forEach(m -> historiek.append("\n").append(m.toString()));
-
-        //als motivatie versturd is en geen feedback heeft => motivatie in historiek weergeven
-//        
-//        for (Motivatie m : motivaties) {
-//            if (m.isVerstuurd() && m.getFeedback() != null) {
-//                StringBuilder mot = new StringBuilder(m.toString());
-//                historiek = mot.append("\n" + historiek);
-//                //    historiek.append(m.toString()).append("\n");
-//            }
-//        }
-    }
+//    private void setMotivatieHistoriek() {
+////        List<String> motivaties = mc.getMotivaties();
+////        Collections.reverse(motivaties);
+//        //list gereversed ipv telkens historiek te overschrijven en er opnieuw aan te plakken, same effect?
+//
+//        //     StringBuilder historiek = new StringBuilder();
+////        motivaties.stream().filter(m -> m.isVerstuurd() && m.getFeedback() != null)
+////                .forEach(m -> historiek.append("\n" + m.toString()));
+//        historiek = mc.getMotivaties();
+//
+//        //als motivatie versturd is en geen feedback heeft => motivatie in historiek weergeven
+////        
+////        for (Motivatie m : motivaties) {
+////            if (m.isVerstuurd() && m.getFeedback() != null) {
+////                StringBuilder mot = new StringBuilder(m.toString());
+////                historiek = mot.append("\n" + historiek);
+////                //    historiek.append(m.toString()).append("\n");
+////            }
+////        }
+//    }
 
     @FXML
     private void toonActieDetail() {
@@ -291,19 +294,23 @@ public class GroepOverzichtController extends GridPane {
             keurActieAfBtn.setDisable(false);
             keurActieGoed.setDisable(false);
             actieDetailTxtArea.setEditable(false);
-            actieDetailTxtArea.setText(gc.toonDetailActie(actie));
-            List<Activiteit> acties = gc.getSelectedGroep().getActies();
+            actieDetailTxtArea.setText(ac.toonDetailActie(actie));
+//            List<Activiteit> acties = ac.getActies();
+            //state in .net is actiesgoedgekeurd of pending => alles tegelijk goed/afkeuren in .net.
+            //hier alles apart goed of afkeuren => kunnen actiestates niet echt gebruiken...
+            keurActieAfBtn.setDisable(ac.Actiekeurbaar(actie));
+            keurActieGoed.setDisable(ac.Actiekeurbaar(actie));
             
-            acties.stream().filter(a -> a.getTitel().equals(actie))
-                    .forEach(a -> {
-                        if (a.getFeedback() != null) {
-                            keurActieAfBtn.setDisable(true);
-                            keurActieGoed.setDisable(true);
-                        } else {
-                            keurActieAfBtn.setDisable(false);
-                            keurActieGoed.setDisable(false);
-                        }
-                    });
+//            acties.stream().filter(a -> a.getTitel().equals(actie))
+//                    .forEach(a -> {
+//                        if (a.getFeedback() != null) {
+//                            keurActieAfBtn.setDisable(true);
+//                            keurActieGoed.setDisable(true);
+//                        } else {
+//                            keurActieAfBtn.setDisable(false);
+//                            keurActieGoed.setDisable(false);
+//                        }
+//                    });
             //buttons disablen / enablen afhankelijk van of de actie al gekeurd is geweest(dus voorzien van feedback)
 
 //            for (Activiteit a : acties) {
@@ -322,10 +329,10 @@ public class GroepOverzichtController extends GridPane {
 
     @FXML
     private void toonActieHistoriek() {
-        if (gc.getSelectedGroep() != null || gc.getSelectedGroep().isGoedgekeurd()) {
+        if (!gc.actiesToegankelijk()) {
             historiekTxtArea.setEditable(false);
             historiekTxtArea.setWrapText(true);
-            historiekTxtArea.setText(gc.getActieHistoriek());
+            historiekTxtArea.setText(ac.getActieHistoriek());
         }
     }
 
