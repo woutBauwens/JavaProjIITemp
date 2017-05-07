@@ -19,7 +19,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import jdk.nashorn.internal.ir.annotations.Ignore;
-import org.eclipse.persistence.annotations.ReadOnly;
 
 /**
  *

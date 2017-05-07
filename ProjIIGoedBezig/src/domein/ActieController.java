@@ -33,14 +33,14 @@ public class ActieController {
 
     public String toonDetailActie(String titelActie) {
         List<Activiteit> acties = selectedGroep.getActies();
-//        Activiteit actie = acties.stream().filter(a -> a.getTitel().equals(titelActie)).findFirst().get();
-//        return actie.toString();
-        for (Activiteit a : acties) {
+        Activiteit actie = acties.stream().filter(a -> a.getTitel().equals(titelActie)).findFirst().get();
+        return actie.toString();
+   /*     for (Activiteit a : acties) {
             if (a.getTitel().equals(titelActie)) {
                 return a.toString();
             }
         }
-       return null;
+       return null; */
     }
 
     public void setFeedbackActie(String titelActie, String feedback) {
@@ -71,13 +71,11 @@ public class ActieController {
 
     public List<String> getActieNamenLijst() {
         List<String> actienamen = new ArrayList<>();
-     //   selectedGroep.getActies().stream().filter(a -> a.getFeedback() == null).forEach(a -> actienamen.add(a.getTitel()));
+        // selectedGroep.getActies().stream().filter(a -> a.getFeedback() == null).forEach(a -> actienamen.add(a.getTitel());
      List<Activiteit> acties = selectedGroep.getActies();
-     for(Activiteit a : acties){
-         if(a.getFeedback()==null){
-             actienamen.add(a.getTitel());
-         }
-     }
+     acties.stream().filter((a) -> (a.getFeedback()==null)).forEachOrdered((a) -> {
+         actienamen.add(a.getTitel());
+        });
         return actienamen;
     }
 

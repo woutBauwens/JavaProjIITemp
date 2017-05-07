@@ -55,7 +55,7 @@ public class ContactPersoon implements Serializable {
     } */
 
     public List<Groep> getGroepen() {
-        return groepen;
+        return groepen.subList(0, groepen.size());
     }
     
     public boolean isLector(){

@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -96,11 +97,11 @@ public class GroepOverzichtController extends GridPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        List<String> groepsnamen = new ArrayList<>();
+        List<String> groepsnamen = groepen.stream().map(Groep::getNaam).collect(Collectors.toList());
         // groepen.stream().filter(g-> groepsnamen.add(g.getNaam()) );
-        for (Groep g : groepen) {
+     /*   for (Groep g : groepen) {
             groepsnamen.add(g.getNaam());
-        }
+        } */
         LectorLabel.setText(LectorLabel.getText() + gc.getLector().toString());
         groepListView.setItems(FXCollections.observableArrayList(groepsnamen));
         errorLbl.setVisible(false);
