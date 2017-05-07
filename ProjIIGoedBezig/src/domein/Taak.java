@@ -27,7 +27,7 @@ public class Taak implements Serializable {
     private int taakId;
     @JoinColumn(name="ActiviteitId")
     @ManyToOne
-    private Activiteit activiteitd;
+    private Activiteit activiteitId;
     @JoinColumn(name = "WieCursistId")
     @ManyToOne
     private Cursist wie;
@@ -54,7 +54,7 @@ public class Taak implements Serializable {
     }
 
     public Activiteit getActiviteitd() {
-        return activiteitd;
+        return activiteitId;
     }
 
     public Cursist getWie() {
