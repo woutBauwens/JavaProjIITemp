@@ -83,7 +83,7 @@ public class Groep implements Serializable {
     }
 
     public List<Activiteit> getActies() {
-        return acties;
+        return acties.subList(0, acties.size());
     }
 
     public void addMotivatie(Motivatie m) {
@@ -101,7 +101,7 @@ public class Groep implements Serializable {
     }
 
     public List<Motivatie> getMotivaties() {
-        return motivaties;
+        return motivaties.subList(0, motivaties.size());
     }
 
     public String getState() {
@@ -147,7 +147,7 @@ public class Groep implements Serializable {
     }
 
     public boolean MotivatieKeurbaar() {
-        return getState().toString().equals(States.pending.toString());
+        return getState().equals(States.pending.toString());
     }
 
     public void toState(String state) {

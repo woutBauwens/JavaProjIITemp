@@ -110,17 +110,17 @@ public class GroepController {
     public void setSelectedGroep(String naam) {
 
         List<Groep> groepen = lector.getGroepen();
-        //   selectedGroep = groepen.stream().filter(g -> g.getNaam().equals(naam)).findFirst().get();
+        selectedGroep = groepen.stream().filter(g -> g.getNaam().equals(naam)).findFirst().get();
 
 //        selectedGroep.initializeState();
 //als findfirst geen resultaat levert => null
-        for (Groep g : groepen) {
+   /*     for (Groep g : groepen) {
             if (g.getNaam().equals(naam)) {
                 g.toState(g.getState());
                 selectedGroep = g;
             }
 
-        }
+        } */
     }
 
     public Groep getSelectedGroep() {

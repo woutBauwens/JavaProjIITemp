@@ -32,10 +32,9 @@ public class MotivatieController {
     public void setKeuring(boolean keuring) {
         selectedGroep.setKeuring(keuring);
     }
-    
-    
+
     public String toonMotivatie() {
-        
+
         return selectedGroep.toonMotivatie();
 //        if (selectedGroep.isGoedgekeurd() || selectedGroep.getHuidigeMotivatie().isVerstuurd() ) {
 //            Motivatie goedgekeurd = selectedGroep.getHuidigeMotivatie();
@@ -53,28 +52,28 @@ public class MotivatieController {
 //        }
     }
 
-   public boolean isMotivatieVerstuurd() {
+    public boolean isMotivatieVerstuurd() {
         return selectedGroep.isMotivatieVerstuurd();
-   }
+    }
 
     public String getMotivaties() {
         List<Motivatie> motivaties = selectedGroep.getMotivaties();
-                Collections.reverse(motivaties);
+        Collections.reverse(motivaties);
         //list gereversed ipv telkens historiek te overschrijven en er opnieuw aan te plakken, same effect?
 
-            StringBuilder historiek = new StringBuilder();
-//        motivaties.stream().filter(m -> m.isVerstuurd() && m.getFeedback() != null)
-//                .forEach(m -> historiek.append("\n" + m.toString()));
-for(Motivatie m : motivaties){
+        StringBuilder historiek = new StringBuilder();
+        motivaties.stream().filter(m -> m.isVerstuurd() && m.getFeedback() != null)
+                .forEach(m -> historiek.append("\n").append(m.toString()));
+        /*for(Motivatie m : motivaties){
     if(m.isVerstuurd() && m.getFeedback()!= null){
         historiek.append("\n" +m.toString());
+    } 
+} */
+
+        return historiek.toString();
     }
-}
 
-    
-       return historiek.toString(); }
-
-    public String geefMotivatieStatus() {  
+    public String geefMotivatieStatus() {
         return selectedGroep.geefMotivatieStatus();
 //    if(!selectedGroep.getState().toString().equals( States.empty.toString()) 
 //            && !selectedGroep.getState().toString().equals( States.written) 
