@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -78,6 +79,17 @@ public class GroepOverzichtController extends GridPane {
 
     private StringBuilder historiek;
 
+    
+    
+    /*
+        JPA en eclipseLink v2.1 zijn niet compatibel met lambda expressies
+        Dit probleem is opgelost in v2.6 maar deze versie van JPA is niet functioneel met de manier hoe wij met JPA werken.
+        Een manier om dit te omzeilen is door te werken met sublijsten van de volledige lijsten.
+        Omdat er liever met streams gewerkt worden zal er altijd een tussenstab subList(...) tussen de streams zitten.
+        
+        Meer informatie op:
+        http://stackoverflow.com/questions/31939827/why-does-this-stream-return-no-element
+    */
     public GroepOverzichtController(GroepController gc) {
         this.gc = gc;
         List<Groep> groepen = gc.getGroepenByLector();
@@ -90,11 +102,8 @@ public class GroepOverzichtController extends GridPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        List<String> groepsnamen = new ArrayList<>();
-       // groepen.stream().filter(g-> groepsnamen.add(g.getNaam()) );
-        for (Groep g : groepen) {
-            groepsnamen.add(g.getNaam());
-        } 
+        List<String> groepsnamen = groepen.stream().map(Groep::getNaam).collect(Collectors.toList());
+
         LectorLabel.setText(LectorLabel.getText() + gc.getLector().toString());
         groepListView.setItems(FXCollections.observableArrayList(groepsnamen));
         errorLbl.setVisible(false);
@@ -262,7 +271,7 @@ public class GroepOverzichtController extends GridPane {
 
         //     StringBuilder historiek = new StringBuilder();
         motivaties.stream().filter(m -> m.isVerstuurd() && m.getFeedback() != null)
-                .forEach(m -> historiek.append("\n" + m.toString()));
+                .forEach(m -> historiek.append("\n").append(m.toString()));
 
         //als motivatie versturd is en geen feedback heeft => motivatie in historiek weergeven
 //        

@@ -105,12 +105,29 @@ public class GroepController {
     }
 
     public void setSelectedGroep(String naam) {
-
-        List<Groep> groepen = lector.getGroepen();
-       selectedGroep = groepen.stream().filter(g->g.getNaam().equals(naam)).findFirst().orElse(null);
-       selectedGroep.initializeState();
+       /* try {
+            List<Groep> groepen = lector.getGroepen();
+            // werkt ook niet, waarschijnlijk ook JPA. 
+            selectedGroep = groepen.stream().filter(g -> g.getNaam().equals(naam)).findFirst().orElseGet(() -> {
+                for (Groep g : groepen) {
+                    if (g.getNaam().equals(naam)) {
+                        return g;
+                    }
+                }
+                return null;
+            });
+        } catch (Exception e) {*/
+            // lukt niet op andere manier
+            if (selectedGroep == null) {
+                for (Groep g : lector.getGroepen()) {
+                    if (g.getNaam().equals(naam)) {
+                        selectedGroep = g;
+                    }
+                }
+            }
+   //     }
+        selectedGroep.initializeState();
 //als findfirst geen resultaat levert => null
-
 
 //        for (Groep g : groepen) {
 //            if (g.getNaam().equals(naam)) {
@@ -118,7 +135,6 @@ public class GroepController {
 //            }
 //
 //        }
-
     }
 
     public Groep getSelectedGroep() {
@@ -136,7 +152,7 @@ public class GroepController {
 
     public String toonDetailActie(String titelActie) {
         List<Activiteit> acties = selectedGroep.getActies();
-        Activiteit actie = acties.stream().filter(a->a.getTitel().equals(titelActie)).findFirst().orElse(null);
+        Activiteit actie = acties.stream().filter(a -> a.getTitel().equals(titelActie)).findFirst().orElse(null);
         return actie.toString();
 //        for (Activiteit a : acties) {
 //            if (a.getTitel().equals(titelActie)) {
@@ -160,9 +176,8 @@ public class GroepController {
     private Activiteit getActie(String titel) {
 
         List<Activiteit> acties = getSelectedGroep().getActies();
-       return acties.stream().filter(a->a.getTitel().equals(titel)).findFirst().orElse(null);
-        
-        
+        return acties.stream().filter(a -> a.getTitel().equals(titel)).findFirst().orElse(null);
+
 //        for (Activiteit a : acties) {
 //            if (a.getTitel().equals(titel)) {
 //
@@ -175,10 +190,9 @@ public class GroepController {
     public String getActieHistoriek() {
         List<Activiteit> acties = selectedGroep.getActies();
         StringBuilder historiek = new StringBuilder();
-        acties.stream().filter(a->a.getFeedback() != null).forEach(a-> historiek.append(a.toString()).append("\n"));
+        acties.stream().filter(a -> a.getFeedback() != null).forEach(a -> historiek.append(a.toString()).append("\n"));
         //als actie feedback heeft en dus gekeurd is tostring aan historiek toevoegen
-        
-        
+
 //        for (Activiteit a : acties) {
 //            if (a.getFeedback() != null) {
 //                historiek.append(a.toString()).append("\n");
