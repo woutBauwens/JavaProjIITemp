@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import repository.GenericDao;
 
 /**
  *
@@ -17,9 +18,11 @@ import java.util.TreeMap;
 public class DraaiboekOverzichtController {
 
     private Groep selectedGroep;
+    private GenericDao groepRepo;
 
-    public DraaiboekOverzichtController(Groep gr) {
+    public DraaiboekOverzichtController(Groep gr, GenericDao<Groep> groeprepo) {
         selectedGroep = gr;
+        groepRepo = groeprepo;
     }
 
     public Groep getSelectedGroep() {
@@ -53,28 +56,38 @@ public class DraaiboekOverzichtController {
 
     }
 
-    public String getWie(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//    public String getWie(String s) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    public String getWat(String s) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    public String getWanneer(String s) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    public String getRealisatie(String s) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    public String getGroepBijsturing(String s) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    public String getLectorBijsturing(String s) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 
-    public String getWat(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public String getWanneer(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public String getRealisatie(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public String getGroepBijsturing(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public String getLectorBijsturing(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void keurDraaiboek(boolean keuring, String feedback, String actie) {
+       Activiteit activiteit = selectedGroep.getActie(actie);
+       List<Taak> taken = activiteit.getTaken();
+       for(Taak t : taken){
+           t.setIsGoedgekeurd(keuring);
+           t.setLectorBijsturing(feedback);
+           groepRepo.update(selectedGroep);
+       }
     }
 
 }

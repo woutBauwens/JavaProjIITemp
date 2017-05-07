@@ -54,5 +54,12 @@
             <Insets bottom="50.0" right="10.0" />
          </GridPane.margin>
       </Button>
+      <Button fx:id="terugBtn" mnemonicParsing="false" onAction="#naarGroepOverzicht" text="Terug" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+      <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#logOut" text="Log out" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+      <Label fx:id="errorLbl" prefHeight="21.0" prefWidth="255.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets bottom="60.0" />
+         </GridPane.margin>
+      </Label>
    </children>
 </fx:root>

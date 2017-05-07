@@ -42,6 +42,8 @@ public class Taak implements Serializable {
     private String groepBijsturing;
     @Column(name = "LectorBijsturing")
     private String lectorBijsturing;
+    @Column(name="IsGoedgekeurd")
+    private boolean isGoedgekeurd;
 
     protected Taak() {
 
@@ -79,6 +81,13 @@ public class Taak implements Serializable {
         return lectorBijsturing;
     }
     
+    public void setIsGoedgekeurd(boolean keuring){
+        isGoedgekeurd=keuring;
+    }
+    
+    public void setLectorBijsturing(String tekst){
+        lectorBijsturing=tekst;
+    }
     
 
 }
