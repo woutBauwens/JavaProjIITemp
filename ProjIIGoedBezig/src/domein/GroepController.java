@@ -108,7 +108,6 @@ public class GroepController {
 
         List<Groep> groepen = lector.getGroepen();
        selectedGroep = groepen.stream().filter(g->g.getNaam().equals(naam)).findFirst().orElse(null);
-       selectedGroep.initializeState();
 //als findfirst geen resultaat levert => null
 
 
