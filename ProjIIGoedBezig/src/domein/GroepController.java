@@ -6,14 +6,13 @@
 package domein;
 
 import persistentie.ConnectionReceiver;
-import persistentie.SQLConnection;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import repository.CursistDaoJpa;
 import repository.GenericDao;
-import repository.GenericDaoJpa;
 import states.States;
 
 /**
@@ -25,14 +24,17 @@ public class GroepController {
     private ContactPersoon lector;
     private Groep selectedGroep;
     private GenericDao groepRepo;
+    private CursistDaoJpa ledenRepo;
     private ActieController AC;
     private MotivatieController MC;
 
-    public GroepController(GenericDao jp, ContactPersoon lector) {
+    public GroepController(GenericDao groepRepo, CursistDaoJpa ledenRepo, ContactPersoon lector) {
         try {
             AC = new ActieController();
             MC = new MotivatieController();
-            groepRepo = jp;
+
+            this.groepRepo = groepRepo;
+            this.ledenRepo = ledenRepo;
             this.lector = lector;
             ConnectionReceiver receiver = new ConnectionReceiver(this);
             ExecutorService pool = Executors.newFixedThreadPool(1);
@@ -105,14 +107,12 @@ public class GroepController {
 //        return MC.isMotivatieVerstuurd();
 //        // return selectedGroep.getHuidigeMotivatie().isVerstuurd();
 //    }
-
     public void setSelectedGroep(String naam) {
 
         List<Groep> groepen = lector.getGroepen();
-     //   selectedGroep = groepen.stream().filter(g -> g.getNaam().equals(naam)).findFirst().get();
+        //   selectedGroep = groepen.stream().filter(g -> g.getNaam().equals(naam)).findFirst().get();
 
 //        selectedGroep.initializeState();
-
 //als findfirst geen resultaat levert => null
         for (Groep g : groepen) {
             if (g.getNaam().equals(naam)) {
@@ -148,7 +148,6 @@ public class GroepController {
 ////        }
 ////        return null;
 //    }
-
 //    public void setFeedbackActie(String titelActie, String feedback) {
 //        AC.setFeedbackActie(titelActie, feedback);
 ////        Activiteit a = getActie(titelActie);
@@ -161,7 +160,6 @@ public class GroepController {
 ////        Activiteit a = getActie(titel);
 ////        a.setGoedgekeurd(b);
 //    }
-
 //    private Activiteit getActie(String titel) {
 //
 //        List<Activiteit> acties = getSelectedGroep().getActies();
@@ -189,7 +187,6 @@ public class GroepController {
 //////        }
 ////        return historiek.toString();
 //    }
-
     public String getGroepState() {
         return selectedGroep.getState().toString();
     }
@@ -199,8 +196,27 @@ public class GroepController {
     }
 
     public boolean MotivatieKeurbaar() {
-        
+
         return selectedGroep.MotivatieKeurbaar();
 
+    }
+
+    public String toonLeden() {
+        StringBuilder ledenlijst = new StringBuilder();
+        List<Cursist> cursistenlijst = ledenRepo.getCursistenByGroep(selectedGroep.getId());
+        for (Cursist c : cursistenlijst) {
+//            String email = c.getEmail();
+//            String voornaam = email.substring(0, email.indexOf('.'));
+//            String achternaam = email.substring(voornaam.length() + 1,email.indexOf((".", email.indexOf(".") + 1)));
+
+//            ledenlijst.append(String.format("%s %s,%n", voornaam, achternaam));
+            ledenlijst.append(c.getEmail() + "\n");
+
+        }
+        return ledenlijst.toString();
+    }
+
+    public boolean draaiboekBeschikbaar() {
+       return !selectedGroep.getState().equals(States.actiegoedgekeurd.toString());
     }
 }

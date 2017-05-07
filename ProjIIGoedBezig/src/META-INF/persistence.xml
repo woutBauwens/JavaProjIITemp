@@ -8,6 +8,8 @@
     <class>domein.Activiteit</class>
     <class>domein.Motivatie</class>
     <class>persistentie.LoginUser</class>
+    <class>domein.Cursist</class>
+    <class>domein.Taak</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://127.0.0.1:1433;databaseName=GBDB"/>
       <property name="javax.persistence.jdbc.user" value="Login"/>

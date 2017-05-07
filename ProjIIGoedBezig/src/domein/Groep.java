@@ -129,6 +129,10 @@ public class Groep implements Serializable {
         //    return acties.stream().filter(a -> a.getTitel().equals(titelActie)).findFirst().get();
         return null;
     }
+    
+    public int getId(){
+        return GBGroepId;
+    }
 
     public boolean actiesToegankelijk() {
         return groepState.actiesToegankelijk();

@@ -7,6 +7,7 @@ package gui;
 
 import domein.ActieController;
 import domein.Activiteit;
+import domein.DraaiboekOverzichtController;
 import domein.Groep;
 import domein.GroepController;
 import domein.InlogController;
@@ -31,6 +32,8 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import repository.CursistDaoJpa;
+import repository.GenericDaoJpa;
 import repository.LoginDaoJpa;
 import states.States;
 
@@ -81,6 +84,10 @@ public class GroepOverzichtController extends GridPane {
     private Label LectorLabel;
 
     private String historiek;
+    @FXML
+    private TextArea ledenTextArea;
+    @FXML
+    private Button draaiboekBtn;
 
     public GroepOverzichtController(GroepController gc) {
         this.gc = gc;
@@ -107,6 +114,7 @@ public class GroepOverzichtController extends GridPane {
         actieDetailTxtArea.setEditable(false);
         historiekTxtArea.clear();
         tabPane.setDisable(true);
+        ledenTextArea.setEditable(false);
         //for loop
     }
 
@@ -162,6 +170,8 @@ public class GroepOverzichtController extends GridPane {
             toonActieHistoriek();
         }
         actiesTab.setDisable(gc.actiesToegankelijk());
+        ledenTextArea.setText(gc.toonLeden());
+        draaiboekBtn.setDisable(gc.draaiboekBeschikbaar());
 
     }
 
@@ -224,6 +234,7 @@ public class GroepOverzichtController extends GridPane {
                 });
         toonActies();
         toonActieHistoriek();
+        draaiboekBtn.setDisable(gc.draaiboekBeschikbaar());
         gc.update();
         actieDetailTxtArea.clear();
 
@@ -277,7 +288,6 @@ public class GroepOverzichtController extends GridPane {
 ////            }
 ////        }
 //    }
-
     @FXML
     private void toonActieDetail() {
         String actie = actiesListView.getSelectionModel().getSelectedItem();
@@ -291,7 +301,7 @@ public class GroepOverzichtController extends GridPane {
             //hier alles apart goed of afkeuren => kunnen actiestates niet echt gebruiken...
             keurActieAfBtn.setDisable(ac.Actiekeurbaar(actie));
             keurActieGoed.setDisable(ac.Actiekeurbaar(actie));
-            
+
 //            acties.stream().filter(a -> a.getTitel().equals(actie))
 //                    .forEach(a -> {
 //                        if (a.getFeedback() != null) {
@@ -303,7 +313,6 @@ public class GroepOverzichtController extends GridPane {
 //                        }
 //                    });
             //buttons disablen / enablen afhankelijk van of de actie al gekeurd is geweest(dus voorzien van feedback)
-
 //            for (Activiteit a : acties) {
 //                if (a.getTitel().equals(actie)) {
 //                    if (a.getFeedback() != null) {
@@ -327,4 +336,27 @@ public class GroepOverzichtController extends GridPane {
         }
     }
 
+    @FXML
+    private void toonDraaiboek(ActionEvent event) throws Exception {
+
+        try {
+            if (gc.getSelectedGroep() != null) {
+                DraaiboekController dc = new DraaiboekController(new DraaiboekOverzichtController(gc.getSelectedGroep()));
+                Stage stage = (Stage) (this.getScene().getWindow());
+                stage.setTitle("Groepsoverzicht: ");
+                Scene scene = new Scene(dc);
+                scene.getStylesheets().add("/gui/GiveADayStyle.css");
+
+                stage.setScene(scene);
+                stage.show();
+
+            } else {
+                throw new Exception("draaiboek is nog niet beschikbaar");
+            }
+
+        } catch (Exception e) {
+            errorLbl.setText(e.getMessage());
+        }
+
+    }
 }

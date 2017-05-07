@@ -7,13 +7,15 @@ package domein;
 
 import java.io.Serializable;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -31,6 +33,10 @@ public class Activiteit implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "GBGroepId")
     private Groep GBGroepId;
+    
+    @OneToMany(mappedBy = "activiteitId", cascade = CascadeType.REFRESH)
+   @JoinColumn(name="ActiviteitId")
+    private List<Taak> taken;
 
     private String titel;
     private String omschrijving;
@@ -92,5 +98,9 @@ public class Activiteit implements Serializable {
 
     public boolean getGoedgekeurd() {
         return isGoedgekeurd;
+    }
+    
+    public List<Taak> getTaken(){
+        return taken;
     }
 }

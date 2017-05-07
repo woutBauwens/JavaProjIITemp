@@ -52,7 +52,7 @@ public class LoginController extends Pane {
         try {
             if (dc.checkLogin(userNameTxtField.getText(), passwordTxtField.getText())) {
                 ContactPersoon lector = dc.getLector();
-                GroepController gc = new GroepController(new GenericDaoJpa(Groep.class), lector);
+                GroepController gc = new GroepController(new GenericDaoJpa(Groep.class),new CursistDaoJpa(), lector);
                 GroepOverzichtController GOC = new GroepOverzichtController(gc);
                 Stage stage = (Stage) (this.getScene().getWindow());
                 stage.setTitle("Groepsoverzicht: ");
