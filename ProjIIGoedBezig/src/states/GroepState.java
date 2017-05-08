@@ -6,12 +6,11 @@
 package states;
 
 import domein.Groep;
-
 /**
  *
  * @author kenne
  */
-public abstract class GroepState {
+public class GroepState {
 
     protected Groep groep;
 
@@ -31,11 +30,20 @@ public abstract class GroepState {
         return "Motivatie goedgekeurd";
     }
 
-    public void verwerkMotivatieKeuring(boolean keuring){
-    
-    };
+    public void verwerkMotivatieKeuring(boolean keuring) {
+
+    }
+
+    ;
 
     public void actiesgekeurd(String titelActie, String feedback) {
-     };
+    };
+   
+/* public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    } */
 }

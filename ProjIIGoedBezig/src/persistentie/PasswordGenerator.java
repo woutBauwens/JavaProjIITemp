@@ -6,7 +6,6 @@
 package persistentie;
 
 import domein.ContactPersoon;
-import java.util.ArrayList;
 import java.util.List;
 import repository.GenericDao;
 import repository.GenericDaoJpa;

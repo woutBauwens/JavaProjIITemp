@@ -45,7 +45,7 @@ public class GenericDaoJpa<T> implements GenericDao<T> {
     @Override
     public List<T> findAll() {
         List<T> values = new ArrayList<>();
-        int id = 0;
+        int id = 1;
         while (true) {
             T value = get(id);
             if (value != null) {
