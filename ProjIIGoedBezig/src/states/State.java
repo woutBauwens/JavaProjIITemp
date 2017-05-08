@@ -10,7 +10,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
@@ -35,9 +34,12 @@ public class State implements Serializable {
         return state;
     }
     
-    public void setState(String state, Groep g){
-        name = state;
-        this.state = GroepStateFactory.createState(name, g);
+    public void setState(String s, Groep g){
+        this.state = GroepStateFactory.createState(s, g);
+    }
+    
+    public void setState(GroepState s){
+        state = s;
     }
     
     @Override

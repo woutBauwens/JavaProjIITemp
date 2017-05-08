@@ -10,12 +10,15 @@ import domein.Groep;
  *
  * @author kenne
  */
-public class GroepState {
+public abstract class GroepState {
 
     protected Groep groep;
+    
+    protected State state;
 
     public GroepState(Groep gr) {
         groep = gr;
+        state = gr.getCurrentState();
     }
 
     public boolean actiesToegankelijk() {
@@ -30,14 +33,14 @@ public class GroepState {
         return "Motivatie goedgekeurd";
     }
 
-    public void verwerkMotivatieKeuring(boolean keuring) {
-
+    public void verwerkMotivatieKeuring(boolean keuring){
+        
     }
-
-    ;
 
     public void actiesgekeurd(String titelActie, String feedback) {
     };
+    
+    
    
 /* public String getId() {
         return id;

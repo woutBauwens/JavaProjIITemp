@@ -113,6 +113,8 @@ public class GroepController {
         selectedGroep = groepen.stream().filter(g -> g.getNaam().equals(naam)).findFirst().get();
         selectedGroep.toState(selectedGroep.getState());
 
+//        selectedGroep.initializeState();
+//als findfirst geen resultaat levert => null
    /*     for (Groep g : groepen) {
             if (g.getNaam().equals(naam)) {
                 g.toState(g.getState());
@@ -187,7 +189,7 @@ public class GroepController {
 ////        return historiek.toString();
 //    }
     public String getGroepState() {
-        return selectedGroep.getState().toString();
+        return selectedGroep.getState();
     }
 
     public boolean actiesToegankelijk() {
@@ -203,15 +205,14 @@ public class GroepController {
     public String toonLeden() {
         StringBuilder ledenlijst = new StringBuilder();
         List<Cursist> cursistenlijst = ledenRepo.getCursistenByGroep(selectedGroep.getId());
-        for (Cursist c : cursistenlijst) {
-//            String email = c.getEmail();
+        cursistenlijst.forEach((c) -> {
+            //            String email = c.getEmail();
 //            String voornaam = email.substring(0, email.indexOf('.'));
 //            String achternaam = email.substring(voornaam.length() + 1,email.indexOf((".", email.indexOf(".") + 1)));
 
 //            ledenlijst.append(String.format("%s %s,%n", voornaam, achternaam));
-            ledenlijst.append(c.getEmail() + "\n");
-
-        }
+ledenlijst.append(c.getEmail()).append("\n");
+        });
         return ledenlijst.toString();
     }
 
