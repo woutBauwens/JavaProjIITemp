@@ -34,8 +34,8 @@ public class State implements Serializable {
         return state;
     }
     
-    public void setState(String s){
-        this.state = GroepStateFactory.createState(s, state.groep);
+    public void setState(String s, Groep g){
+        this.state = GroepStateFactory.createState(s, g);
     }
     
     public void setState(GroepState s){

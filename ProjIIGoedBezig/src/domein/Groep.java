@@ -49,8 +49,8 @@ public class Groep implements Serializable {
 
 //    @Transient
 //    private State state;
-    @Transient
-    private GroepState groepState;
+//    @Transient
+//    private GroepState groepState;
 
     protected Groep() {
     }
@@ -136,28 +136,28 @@ public class Groep implements Serializable {
     }
 
     public boolean actiesToegankelijk() {
-        return groepState.actiesToegankelijk();
+        return currentState.getCurrentState().actiesToegankelijk();
     }
 
     public String toonMotivatie() {
-        return groepState.toonMotivatie();
+        return currentState.getCurrentState().toonMotivatie();
     }
 
     public String geefMotivatieStatus() {
-        return groepState.geefMotivatieStatus();
+        return currentState.getCurrentState().geefMotivatieStatus();
     }
 
     public boolean MotivatieKeurbaar() {
-        return getState().toString().equals(States.pending.toString());
+        return getState().equals(States.pending.toString());
     }
 
     public void toState(String state) {
-        currentState.setState(state);
+        currentState.setState(state, this);
     //    currentState = state;
     }
 
     public void actiesgekeurd(String titelActie, String feedback) {
-        groepState.actiesgekeurd(titelActie, feedback);
+        currentState.getCurrentState().actiesgekeurd(titelActie, feedback);
     }
 
     public void setFeedbackActie(String titel, String feedback) {
