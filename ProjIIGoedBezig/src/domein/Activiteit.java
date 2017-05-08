@@ -34,7 +34,7 @@ public class Activiteit implements Serializable {
     @JoinColumn(name = "GBGroepId")
     private Groep GBGroepId;
     
-    @OneToMany(mappedBy = "activiteitId", cascade = CascadeType.REFRESH)
+   @OneToMany(mappedBy = "activiteitId", cascade = CascadeType.REFRESH)
    @JoinColumn(name="ActiviteitId")
     private List<Taak> taken;
 

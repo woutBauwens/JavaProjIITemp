@@ -6,7 +6,7 @@
 package gui;
 
 import domein.ContactPersoon;
-import domein.DraaiboekOverzichtController;
+import domein.DraaiboekController;
 import domein.Groep;
 import domein.GroepController;
 import domein.InlogController;
@@ -39,9 +39,9 @@ import repository.LoginDaoJpa;
  *
  * @author kenne
  */
-public class DraaiboekController extends GridPane {
+public class DraaiboekOverzichtController extends GridPane {
 
-    private DraaiboekOverzichtController dc;
+    private DraaiboekController dc;
     @FXML
     private ListView<String> actiesListview;
     @FXML
@@ -74,19 +74,19 @@ public class DraaiboekController extends GridPane {
     /**
      * Initializes the controller class.
      */
-    public DraaiboekController(DraaiboekOverzichtController dc) {
+    public DraaiboekOverzichtController(DraaiboekController dc) {
         this.dc = dc;
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("GroepOverzicht.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Draaiboek.fxml"));
         loader.setRoot(this);
         loader.setController(this);
 
-        vulViewOp();
         try {
             loader.load();
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+        vulViewOp();
     }
 
     @FXML

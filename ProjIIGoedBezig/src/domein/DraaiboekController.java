@@ -15,12 +15,12 @@ import repository.GenericDao;
  *
  * @author kenne
  */
-public class DraaiboekOverzichtController {
+public class DraaiboekController {
 
     private Groep selectedGroep;
     private GenericDao groepRepo;
 
-    public DraaiboekOverzichtController(Groep gr, GenericDao<Groep> groeprepo) {
+    public DraaiboekController(Groep gr, GenericDao<Groep> groeprepo) {
         selectedGroep = gr;
         groepRepo = groeprepo;
     }
@@ -44,14 +44,15 @@ public class DraaiboekOverzichtController {
         Map<Integer, List<String>> takenMap = new TreeMap<>();
         for (Taak t : taken) {
             List<String> taakValues = new ArrayList<>();
-            taakValues.add(t.getWie().getEmail());
+            //   taakValues.add(t.getWie().getEmail());
+            taakValues.add("AAAAAH");
             taakValues.add(t.getWat());
             taakValues.add(t.getWanneer().toString());
             taakValues.add(t.getRealisatie());
             taakValues.add(t.getGroepBijsturing());
             taakValues.add(t.getLectorBijsturing());
             takenMap.put(t.getTaakId(), taakValues);
-        }
+        };
         return takenMap;
 
     }
@@ -79,15 +80,14 @@ public class DraaiboekOverzichtController {
 //    public String getLectorBijsturing(String s) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
-
     public void keurDraaiboek(boolean keuring, String feedback, String actie) {
-       Activiteit activiteit = selectedGroep.getActie(actie);
-       List<Taak> taken = activiteit.getTaken();
-       for(Taak t : taken){
-           t.setIsGoedgekeurd(keuring);
-           t.setLectorBijsturing(feedback);
-           groepRepo.update(selectedGroep);
-       }
+        Activiteit activiteit = selectedGroep.getActie(actie);
+        List<Taak> taken = activiteit.getTaken();
+        for (Taak t : taken) {
+            t.setIsGoedgekeurd(keuring);
+            t.setLectorBijsturing(feedback);
+            groepRepo.update(selectedGroep);
+        }
     }
 
 }
