@@ -39,7 +39,7 @@ public class Groep implements Serializable {
     private boolean MotivatieIsGoedgekeurd;
     private String naam;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "CurrentState")
     private State currentState;
 
@@ -94,11 +94,10 @@ public class Groep implements Serializable {
     public void setKeuring(boolean keuring) {
         MotivatieIsGoedgekeurd = keuring;
         currentState.getState(this).verwerkMotivatieKeuring(keuring);
-        if (!keuring) {
-            toState("written");
-        } else {
-            toState("approved");
-        }
+    }
+    
+    public State getCurrentState(){
+        return currentState;
     }
 
     public List<Motivatie> getMotivaties() {
@@ -152,7 +151,7 @@ public class Groep implements Serializable {
     }
 
     public void toState(String state) {
-        currentState.setState(state, this);
+        currentState.setState(state);
     //    currentState = state;
     }
 

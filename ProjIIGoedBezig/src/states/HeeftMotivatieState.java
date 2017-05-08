@@ -12,18 +12,28 @@ import domein.Groep;
  * @author kenne
  */
 public class HeeftMotivatieState extends GroepState {
-    
+
     public HeeftMotivatieState(Groep gr) {
         super(gr);
     }
-    
-        @Override
-    public String toString(){
+
+    @Override
+    public String toString() {
         return States.written.toString();
     }
-    
-        @Override
-        public String geefMotivatieStatus() {
+
+    @Override
+    public String geefMotivatieStatus() {
         return "Motivatie nog niet verstuurd";
+    }
+
+    @Override
+    public void verwerkMotivatieKeuring(boolean keuring) {
+        if(keuring){
+            state.setState(new MotivatieGoedgekeurdState(groep));
+        } else {
+            state.setState(new GeenMotivatieState(groep));
         }
+    }
+
 }
