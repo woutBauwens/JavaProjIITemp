@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import states.GroepState;
 import states.GroepStateFactory;
+import states.State;
 import states.States;
 
 /**
@@ -106,7 +107,7 @@ public class Groep implements Serializable {
 
     public String getState() {
         //  groepState = states.GroepStateFactory.createState(currentState, this);
-        return currentState;
+        return currentState.toString();
 
     }
 
