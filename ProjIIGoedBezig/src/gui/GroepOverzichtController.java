@@ -7,7 +7,7 @@ package gui;
 
 import domein.ActieController;
 import domein.Activiteit;
-import domein.DraaiboekOverzichtController;
+import domein.DraaiboekController;
 import domein.Groep;
 import domein.GroepController;
 import domein.InlogController;
@@ -116,6 +116,7 @@ public class GroepOverzichtController extends GridPane {
         historiekTxtArea.clear();
         tabPane.setDisable(true);
         ledenTextArea.setEditable(false);
+        draaiboekBtn.setDisable(true);
         //for loop
     }
 
@@ -257,6 +258,9 @@ public class GroepOverzichtController extends GridPane {
             //          }
             actiesListView.setItems(FXCollections.observableArrayList(ac.getActieNamenLijst()));
         }
+        
+            draaiboekBtn.setDisable(gc.draaiboekBeschikbaar());
+        
     }
 
     @FXML
@@ -342,9 +346,9 @@ public class GroepOverzichtController extends GridPane {
 
         try {
             if (gc.getSelectedGroep() != null) {
-                DraaiboekController dc = new DraaiboekController(new DraaiboekOverzichtController(gc.getSelectedGroep(), new GenericDaoJpa(Groep.class)));
+                DraaiboekOverzichtController dc = new DraaiboekOverzichtController(new DraaiboekController(gc.getSelectedGroep(), new GenericDaoJpa(Groep.class)));
                 Stage stage = (Stage) (this.getScene().getWindow());
-                stage.setTitle("Groepsoverzicht: ");
+                stage.setTitle("Draaiboek: ");
                 Scene scene = new Scene(dc);
                 scene.getStylesheets().add("/gui/GiveADayStyle.css");
 

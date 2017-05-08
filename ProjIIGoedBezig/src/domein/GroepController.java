@@ -111,9 +111,8 @@ public class GroepController {
 
         List<Groep> groepen = lector.getGroepen();
         selectedGroep = groepen.stream().filter(g -> g.getNaam().equals(naam)).findFirst().get();
+        selectedGroep.toState(selectedGroep.getState());
 
-//        selectedGroep.initializeState();
-//als findfirst geen resultaat levert => null
    /*     for (Groep g : groepen) {
             if (g.getNaam().equals(naam)) {
                 g.toState(g.getState());
@@ -219,4 +218,5 @@ public class GroepController {
     public boolean draaiboekBeschikbaar() {
        return !selectedGroep.getState().equals(States.actiegoedgekeurd.toString());
     }
+
 }

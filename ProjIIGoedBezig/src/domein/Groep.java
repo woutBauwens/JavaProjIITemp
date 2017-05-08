@@ -19,7 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import states.GroepState;
 import states.GroepStateFactory;
-import states.State;
 import states.States;
 
 /**
@@ -39,9 +38,8 @@ public class Groep implements Serializable {
     private boolean MotivatieIsGoedgekeurd;
     private String naam;
 
-    @ManyToOne
-    @JoinColumn(name = "CurrentState")
-    private State currentState;
+    @Column(name = "CurrentState")
+    private String currentState;
 
     @ManyToOne
     @JoinColumn(name = "HoofdLectorContactPersoonId")
@@ -49,8 +47,9 @@ public class Groep implements Serializable {
 
 //    @Transient
 //    private State state;
-    //   @Transient
-    //   private GroepState groepState;
+    @Transient
+    private GroepState groepState;
+
     protected Groep() {
     }
 
@@ -84,16 +83,16 @@ public class Groep implements Serializable {
     }
 
     public List<Activiteit> getActies() {
-        return acties.subList(0, acties.size());
+        return acties;
     }
 
     public void addMotivatie(Motivatie m) {
         motivaties.add(m);
     }
 
-    public void setKeuring(boolean keuring) {
+    void setKeuring(boolean keuring) {
         MotivatieIsGoedgekeurd = keuring;
-        currentState.getState(this).verwerkMotivatieKeuring(keuring);
+        groepState.verwerkMotivatieKeuring(keuring);
         if (!keuring) {
             toState("written");
         } else {
@@ -102,12 +101,12 @@ public class Groep implements Serializable {
     }
 
     public List<Motivatie> getMotivaties() {
-        return motivaties.subList(0, motivaties.size());
+        return motivaties;
     }
 
     public String getState() {
-      //  currentState = states.GroepStateFactory.createState(currentState, this);
-        return currentState.toString();
+        //  groepState = states.GroepStateFactory.createState(currentState, this);
+        return currentState;
 
     }
 
@@ -119,7 +118,7 @@ public class Groep implements Serializable {
         return getHuidigeMotivatie().isVerstuurd();
     }
 
-    public Activiteit getActie(String titelActie) {
+    Activiteit getActie(String titelActie) {
 
         for (Activiteit a : acties) {
             if (a.getTitel().equals(titelActie)) {
@@ -130,34 +129,34 @@ public class Groep implements Serializable {
         //    return acties.stream().filter(a -> a.getTitel().equals(titelActie)).findFirst().get();
         return null;
     }
-
-    public int getId() {
+    
+    public int getId(){
         return GBGroepId;
     }
 
     public boolean actiesToegankelijk() {
-        return currentState.getState(this).actiesToegankelijk();
+        return groepState.actiesToegankelijk();
     }
 
     public String toonMotivatie() {
-        return currentState.getState(this).toonMotivatie();
+        return groepState.toonMotivatie();
     }
 
     public String geefMotivatieStatus() {
-        return currentState.getState(this).geefMotivatieStatus();
+        return groepState.geefMotivatieStatus();
     }
 
     public boolean MotivatieKeurbaar() {
-        return getState().equals(States.pending.toString());
+        return getState().toString().equals(States.pending.toString());
     }
 
     public void toState(String state) {
-        currentState.setState(state, this);
-    //    currentState = state;
+        groepState = GroepStateFactory.createState(state, this);
+        currentState = state;
     }
 
     public void actiesgekeurd(String titelActie, String feedback) {
-        currentState.getState(this).actiesgekeurd(titelActie, feedback);
+        groepState.actiesgekeurd(titelActie, feedback);
     }
 
     public void setFeedbackActie(String titel, String feedback) {
