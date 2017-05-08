@@ -40,6 +40,9 @@ public abstract class GroepState {
     public void actiesgekeurd(String titelActie, String feedback) {
     };
     
+    @Override
+    public abstract String toString();
+    
     
    
 /* public String getId() {
