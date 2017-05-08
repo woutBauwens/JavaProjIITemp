@@ -346,7 +346,7 @@ public class GroepOverzichtController extends GridPane {
 
         try {
             if (gc.getSelectedGroep() != null) {
-                DraaiboekOverzichtController dc = new DraaiboekOverzichtController(new DraaiboekController(gc.getSelectedGroep(), new GenericDaoJpa(Groep.class)));
+                DraaiboekOverzichtController dc = new DraaiboekOverzichtController(new DraaiboekController(gc.getSelectedGroep(), new GenericDaoJpa(Groep.class)), gc.getLector());
                 Stage stage = (Stage) (this.getScene().getWindow());
                 stage.setTitle("Draaiboek: ");
                 Scene scene = new Scene(dc);

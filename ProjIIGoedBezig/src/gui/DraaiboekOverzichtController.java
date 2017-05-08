@@ -42,6 +42,7 @@ import repository.LoginDaoJpa;
 public class DraaiboekOverzichtController extends GridPane {
 
     private DraaiboekController dc;
+    private ContactPersoon lector;
     @FXML
     private ListView<String> actiesListview;
     @FXML
@@ -74,9 +75,9 @@ public class DraaiboekOverzichtController extends GridPane {
     /**
      * Initializes the controller class.
      */
-    public DraaiboekOverzichtController(DraaiboekController dc) {
+    public DraaiboekOverzichtController(DraaiboekController dc, ContactPersoon lector) {
         this.dc = dc;
-
+        this.lector = lector;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Draaiboek.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -142,9 +143,8 @@ public class DraaiboekOverzichtController extends GridPane {
     @FXML
     private void naarGroepOverzicht(ActionEvent event) {
         try {
+            
 
-            InlogController ic = new InlogController(new LoginDaoJpa());
-            ContactPersoon lector = ic.getLector();
             GroepController gc = new GroepController(new GenericDaoJpa(Groep.class), new CursistDaoJpa(), lector);
             GroepOverzichtController GOC = new GroepOverzichtController(gc);
             Stage stage = (Stage) (this.getScene().getWindow());
