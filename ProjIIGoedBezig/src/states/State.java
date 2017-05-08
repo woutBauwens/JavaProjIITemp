@@ -29,6 +29,11 @@ public class State implements Serializable {
     public State() {
     }
     
+    public State(String name, GroepState state){
+        this.name = name;
+        this.state = state;
+    }
+    
     public void setState(String s, Groep g){
         state = GroepStateFactory.createState(s, g);
     }
