@@ -6,6 +6,8 @@
 package domein;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,7 +46,7 @@ public class Taak implements Serializable {
     private String lectorBijsturing;
     @Column(name="IsGoedgekeurd")
     private boolean isGoedgekeurd;
-
+    
     protected Taak() {
 
     }
@@ -65,14 +67,14 @@ public class Taak implements Serializable {
         return wat;
     }
 
-    public Date getWanneer() {
-        return wanneer;
+    public String getWanneer() {
+        return DateFormat.getInstance().format(wanneer);
     }
 
     public String getRealisatie() {
         return realisatie;
     }
-
+    
     public String getGroepBijsturing() {
         return groepBijsturing;
     }

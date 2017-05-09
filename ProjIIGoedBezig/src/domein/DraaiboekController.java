@@ -56,6 +56,10 @@ public class DraaiboekController {
         return takenMap;
 
     }
+    
+    public List<Taak> geefTaken(String actie){
+        return selectedGroep.getActie(actie).getTaken();
+    }
 
 //    public String getWie(String s) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

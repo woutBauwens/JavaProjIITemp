@@ -5,6 +5,7 @@
  */
 package domein;
 
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name ="Cursist")
 @NamedQuery(name = "Cursist.getCursistenByGroep", query="SELECT c from Cursist c WHERE c.gbGroepId = :groepId")
-public class Cursist {
+public class Cursist implements Serializable {
 
     @Id
     @Column(name="GBGroepId")
@@ -36,6 +37,11 @@ public class Cursist {
     }
     
     public String getEmail(){
+        return email;
+    }
+    
+    @Override
+    public String toString(){
         return email;
     }
 }

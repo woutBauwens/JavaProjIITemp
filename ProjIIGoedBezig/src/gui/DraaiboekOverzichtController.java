@@ -12,10 +12,12 @@ import domein.GroepController;
 import domein.InlogController;
 import domein.Taak;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +48,7 @@ public class DraaiboekOverzichtController extends GridPane {
     @FXML
     private ListView<String> actiesListview;
     @FXML
-    private TableView<String> draaiboekTable;
+    private TableView<Taak> draaiboekTable;
     @FXML
     private TableColumn<Taak, String> wieColumn;
     @FXML
@@ -71,6 +73,9 @@ public class DraaiboekOverzichtController extends GridPane {
     private Button logoutBtn;
     @FXML
     private Label errorLbl;
+
+    private final ObservableList<Taak> data
+            = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
@@ -98,16 +103,16 @@ public class DraaiboekOverzichtController extends GridPane {
 //        String realisatie;
 //        String groepBijsturing;
 //        String lectorBijsturing;
-        Map<Integer, List<String>> taken = dc.getTaken(actiesListview.getSelectionModel().getSelectedItem());
-        Set<Integer> keyset = taken.keySet();
-        for (int s : keyset) {
-            List<String> values = taken.get(s);
-            wieColumn.setCellValueFactory(new PropertyValueFactory(values.get(0)));
-            watColumn.setCellValueFactory(new PropertyValueFactory(values.get(1)));
-            wanneerColumn.setCellValueFactory(new PropertyValueFactory(values.get(2)));
-            realisatieColumn.setCellValueFactory(new PropertyValueFactory(values.get(3)));
-            groepSturingColumn.setCellValueFactory(new PropertyValueFactory(values.get(4)));
-            lectorSturingColumn.setCellValueFactory(new PropertyValueFactory(values.get(5)));
+        List<Taak> taken = dc.geefTaken(actiesListview.getSelectionModel().getSelectedItem());
+        for (Taak t : taken) {
+            wieColumn.setCellValueFactory(new PropertyValueFactory("wie"));
+            watColumn.setCellValueFactory(new PropertyValueFactory("wat"));
+            wanneerColumn.setCellValueFactory(new PropertyValueFactory("wanneer"));
+            realisatieColumn.setCellValueFactory(new PropertyValueFactory("realisatie"));
+            groepSturingColumn.setCellValueFactory(new PropertyValueFactory("groepBijsturing"));
+            lectorSturingColumn.setCellValueFactory(new PropertyValueFactory("lectorBijsturing"));
+            data.add(t);
+            draaiboekTable.setItems(data);
         }
         //  List<String> taken = dc.getTaken(actiesListview.getSelectionModel().getSelectedItem());
 //        for (String s : taken) {
@@ -143,7 +148,6 @@ public class DraaiboekOverzichtController extends GridPane {
     @FXML
     private void naarGroepOverzicht(ActionEvent event) {
         try {
-            
 
             GroepController gc = new GroepController(new GenericDaoJpa(Groep.class), new CursistDaoJpa(), lector);
             GroepOverzichtController GOC = new GroepOverzichtController(gc);
