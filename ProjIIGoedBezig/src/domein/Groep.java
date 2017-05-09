@@ -85,7 +85,7 @@ public class Groep implements Serializable {
     }
 
     public List<Activiteit> getActies() {
-        return acties;
+        return acties.subList(0,acties.size());
     }
 
     public void addMotivatie(Motivatie m) {
@@ -106,7 +106,7 @@ public class Groep implements Serializable {
     }
 
     public String getState() {
-        //  groepState = states.GroepStateFactory.createState(currentState, this);
+       //  groepState = states.GroepStateFactory.createState(currentState, this);
         return currentState.toString();
 
     }

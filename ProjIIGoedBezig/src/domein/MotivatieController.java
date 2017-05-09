@@ -62,13 +62,13 @@ public class MotivatieController {
         //list gereversed ipv telkens historiek te overschrijven en er opnieuw aan te plakken, same effect?
 
         StringBuilder historiek = new StringBuilder();
-        motivaties.stream().filter(m -> m.isVerstuurd() && m.getFeedback() != null)
-                .forEach(m -> historiek.append("\n").append(m.toString()));
-        /*for(Motivatie m : motivaties){
+//        motivaties.stream().filter(m -> m.isVerstuurd() && m.getFeedback() != null)
+//                .forEach(m -> historiek.append("\n").append(m.toString()));
+        for(Motivatie m : motivaties){
     if(m.isVerstuurd() && m.getFeedback()!= null){
         historiek.append("\n" +m.toString());
     } 
-} */
+} 
 
         return historiek.toString();
     }
