@@ -33,12 +33,15 @@ public abstract class GroepState {
         return "Motivatie goedgekeurd";
     }
 
-    public void verwerkMotivatieKeuring(boolean keuring){
-        
+    public State verwerkMotivatieKeuring(boolean keuring){
+        return null;
     }
 
     public void actiesgekeurd(String titelActie, String feedback) {
     };
+    
+    @Override
+    public abstract String toString();
     
     
    

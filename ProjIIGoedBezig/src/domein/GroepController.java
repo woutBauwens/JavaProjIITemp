@@ -108,14 +108,16 @@ public class GroepController {
 //        // return selectedGroep.getHuidigeMotivatie().isVerstuurd();
 //    }
     public void setSelectedGroep(String naam) {
+        try {
+            List<Groep> groepen = lector.getGroepen();
+            selectedGroep = groepen.stream().filter(g -> g.getNaam().equals(naam)).findFirst().get();
+            selectedGroep.toState(selectedGroep.getState());
+        } catch (Exception e) {
 
-        List<Groep> groepen = lector.getGroepen();
-        selectedGroep = groepen.stream().filter(g -> g.getNaam().equals(naam)).findFirst().get();
-        selectedGroep.toState(selectedGroep.getState());
-
+        }
 //        selectedGroep.initializeState();
 //als findfirst geen resultaat levert => null
-   /*     for (Groep g : groepen) {
+        /*     for (Groep g : groepen) {
             if (g.getNaam().equals(naam)) {
                 g.toState(g.getState());
                 selectedGroep = g;
@@ -211,13 +213,13 @@ public class GroepController {
 //            String achternaam = email.substring(voornaam.length() + 1,email.indexOf((".", email.indexOf(".") + 1)));
 
 //            ledenlijst.append(String.format("%s %s,%n", voornaam, achternaam));
-ledenlijst.append(c.getEmail()).append("\n");
+            ledenlijst.append(c.getEmail()).append("\n");
         });
         return ledenlijst.toString();
     }
 
     public boolean draaiboekBeschikbaar() {
-       return !selectedGroep.getState().equals(States.actiegoedgekeurd.toString());
+        return !selectedGroep.getState().equals(States.actiegoedgekeurd.toString());
     }
 
 }

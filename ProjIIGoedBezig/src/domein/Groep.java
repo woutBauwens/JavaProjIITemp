@@ -85,7 +85,7 @@ public class Groep implements Serializable {
     }
 
     public List<Activiteit> getActies() {
-        return acties.subList(0,acties.size());
+        return acties.subList(0, acties.size());
     }
 
     public void addMotivatie(Motivatie m) {
@@ -94,7 +94,7 @@ public class Groep implements Serializable {
 
     void setKeuring(boolean keuring) {
         MotivatieIsGoedgekeurd = keuring;
-        currentState.getState(this).verwerkMotivatieKeuring(keuring);
+        currentState = currentState.getCurrentState().verwerkMotivatieKeuring(keuring);
     }
     
     public State getCurrentState(){
@@ -102,7 +102,7 @@ public class Groep implements Serializable {
     }
 
     public List<Motivatie> getMotivaties() {
-        return motivaties;
+        return motivaties.subList(0, motivaties.size());
     }
 
     public String getState() {

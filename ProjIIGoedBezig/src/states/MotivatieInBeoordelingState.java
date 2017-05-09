@@ -33,12 +33,11 @@ public class MotivatieInBeoordelingState extends GroepState {
     }
 
     @Override
-    public void verwerkMotivatieKeuring(boolean keuring) {
-
-        if (!keuring) {
-            groep.toState("written");
+    public State verwerkMotivatieKeuring(boolean keuring) {
+        if(keuring){
+            return new State(States.approved.toString(), this);
         } else {
-            groep.toState("approved");
+            return new State(States.empty.toString(), this);
         }
     }
 

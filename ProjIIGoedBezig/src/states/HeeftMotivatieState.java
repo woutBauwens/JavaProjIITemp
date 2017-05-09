@@ -28,11 +28,11 @@ public class HeeftMotivatieState extends GroepState {
     }
 
     @Override
-    public void verwerkMotivatieKeuring(boolean keuring) {
+    public State verwerkMotivatieKeuring(boolean keuring) {
         if(keuring){
-            state.setState(new MotivatieGoedgekeurdState(groep));
+            return new State(States.approved.toString(), this);
         } else {
-            state.setState(new GeenMotivatieState(groep));
+            return new State(States.empty.toString(), this);
         }
     }
 

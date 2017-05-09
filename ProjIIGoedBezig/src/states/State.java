@@ -28,23 +28,21 @@ public class State implements Serializable {
 
     public State() {
     }
-
-    public GroepState getState(Groep g) {
-        state = GroepStateFactory.createState(name, g);
-        return state;
+    
+    public State(String name, GroepState state){
+        this.name = name;
+        this.state = state;
     }
     
     public void setState(String s, Groep g){
-        this.state = GroepStateFactory.createState(s, g);
-    }
-    
-    public void setState(GroepState s){
-        state = s;
+        state = GroepStateFactory.createState(s, g);
     }
     
     @Override
     public String toString(){
-        return name;
+        if(state == null)
+            return name;
+        return state.toString();
     }
     
     public GroepState getCurrentState(){
