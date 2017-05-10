@@ -100,10 +100,6 @@ public class GroepOverzichtController extends GridPane {
             throw new RuntimeException(ex);
         }
         List<String> groepsnamen = groepen.stream().map(Groep::getNaam).collect(Collectors.toList());
-        // groepen.stream().filter(g-> groepsnamen.add(g.getNaam()) );
-        /*   for (Groep g : groepen) {
-            groepsnamen.add(g.getNaam());
-        } */
         LectorLabel.setText(LectorLabel.getText() + gc.getLector().toString());
         groepListView.setItems(FXCollections.observableArrayList(groepsnamen));
         errorLbl.setVisible(false);
@@ -245,14 +241,6 @@ public class GroepOverzichtController extends GridPane {
             keurActieAfBtn.setDisable(true);
             keurActieGoed.setDisable(true);
 
-//            List<Activiteit> acties = ac.getActies();
-//            List<String> actienamen = new ArrayList<>();
-//            acties.stream().filter(a -> a.getFeedback() == null).forEach(a -> actienamen.add(a.getTitel()));
-//            for (Activiteit a : acties) {
-//                if (a.getFeedback() == null) {
-//                    actienamen.add(a.getTitel());
-//                }
-            //          }
             actiesListView.setItems(FXCollections.observableArrayList(ac.getActieNamenLijst()));
         }
 
@@ -270,26 +258,6 @@ public class GroepOverzichtController extends GridPane {
         }
     }
 
-//    private void setMotivatieHistoriek() {
-////        List<String> motivaties = mc.getMotivaties();
-////        Collections.reverse(motivaties);
-//        //list gereversed ipv telkens historiek te overschrijven en er opnieuw aan te plakken, same effect?
-//
-//        //     StringBuilder historiek = new StringBuilder();
-////        motivaties.stream().filter(m -> m.isVerstuurd() && m.getFeedback() != null)
-////                .forEach(m -> historiek.append("\n" + m.toString()));
-//        historiek = mc.getMotivaties();
-//
-//        //als motivatie versturd is en geen feedback heeft => motivatie in historiek weergeven
-////        
-////        for (Motivatie m : motivaties) {
-////            if (m.isVerstuurd() && m.getFeedback() != null) {
-////                StringBuilder mot = new StringBuilder(m.toString());
-////                historiek = mot.append("\n" + historiek);
-////                //    historiek.append(m.toString()).append("\n");
-////            }
-////        }
-//    }
     @FXML
     private void toonActieDetail() {
         String actie = actiesListView.getSelectionModel().getSelectedItem();
@@ -303,29 +271,6 @@ public class GroepOverzichtController extends GridPane {
             //hier alles apart goed of afkeuren => kunnen actiestates niet echt gebruiken...
             keurActieAfBtn.setDisable(ac.Actiekeurbaar(actie));
             keurActieGoed.setDisable(ac.Actiekeurbaar(actie));
-
-//            acties.stream().filter(a -> a.getTitel().equals(actie))
-//                    .forEach(a -> {
-//                        if (a.getFeedback() != null) {
-//                            keurActieAfBtn.setDisable(true);
-//                            keurActieGoed.setDisable(true);
-//                        } else {
-//                            keurActieAfBtn.setDisable(false);
-//                            keurActieGoed.setDisable(false);
-//                        }
-//                    });
-            //buttons disablen / enablen afhankelijk van of de actie al gekeurd is geweest(dus voorzien van feedback)
-//            for (Activiteit a : acties) {
-//                if (a.getTitel().equals(actie)) {
-//                    if (a.getFeedback() != null) {
-//                        keurActieAfBtn.setDisable(true);
-//                        keurActieGoed.setDisable(true);
-//                    } else {
-//                        keurActieAfBtn.setDisable(false);
-//                        keurActieGoed.setDisable(false);
-//                    }
-//                }
-//            }
         }
     }
 
@@ -346,7 +291,8 @@ public class GroepOverzichtController extends GridPane {
                 DraaiboekOverzichtController dc = new DraaiboekOverzichtController(new DraaiboekController(gc.getSelectedGroep(), new GenericDaoJpa(Taak.class)), gc.getLector());
                 Stage stage = (Stage) (this.getScene().getWindow());
                 stage.setTitle("Draaiboek: ");
-                Scene scene = new Scene(dc);
+                Scene scene;
+                scene = new Scene(dc);
                 scene.getStylesheets().add("/gui/GiveADayStyle.css");
 
                 stage.setScene(scene);

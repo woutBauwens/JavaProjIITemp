@@ -5,17 +5,9 @@
  */
 package persistentie;
 
-import domein.Activiteit;
 import domein.ContactPersoon;
-import domein.Groep;
-import domein.Lector;
-import domein.Motivatie;
 import java.sql.*;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import repository.GenericDao;
-import repository.GenericDaoJpa;
-import repository.LoginDao;
 import repository.LoginDaoJpa;
 import util.JPAUtil;
 

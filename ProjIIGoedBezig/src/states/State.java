@@ -26,26 +26,30 @@ public class State implements Serializable {
     @Transient
     private GroepState state;
 
+    @Transient
+    private GroepStateFactory stateFactory;
+
     public State() {
     }
-    
-    public State(String name, GroepState state){
-        this.name = name;
+
+    public State(States name, GroepState state) {
+        this.name = name.name();
         this.state = state;
     }
-    
-    public void setState(String s, Groep g){
-        state = GroepStateFactory.createState(s, g);
+
+    public void setState(States s, Groep g) {
+        state = new GroepStateFactory(g).createState(s);
     }
-    
+
     @Override
-    public String toString(){
-        if(state == null)
+    public String toString() {
+        if (state == null) {
             return name;
+        }
         return state.toString();
     }
-    
-    public GroepState getCurrentState(){
+
+    public GroepState getCurrentState() {
         return state;
     }
 }

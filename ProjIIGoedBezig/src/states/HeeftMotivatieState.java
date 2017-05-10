@@ -30,9 +30,9 @@ public class HeeftMotivatieState extends GroepState {
     @Override
     public State verwerkMotivatieKeuring(boolean keuring) {
         if(keuring){
-            return new State(States.approved.toString(), this);
+            return new State(States.approved, this);
         } else {
-            return new State(States.empty.toString(), this);
+            return new State(States.empty, this);
         }
     }
 

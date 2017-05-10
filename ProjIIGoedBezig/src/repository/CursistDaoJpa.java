@@ -23,16 +23,7 @@ public class CursistDaoJpa extends GenericDaoJpa<Cursist> implements CursistDao 
     @Override
     public List<Cursist> getCursistenByGroep(int groepId) {
         List<Cursist> cursistenlijst;
-//                   try {
-  cursistenlijst = em.createNamedQuery("Cursist.getCursistenByGroep", Cursist.class).setParameter("groepId", groepId).getResultList();
-
-//                    } catch (Exception ex) {
-//           throw new Exception("Geen cursisten gevonden");
-//
-//        }
+        cursistenlijst = em.createNamedQuery("Cursist.getCursistenByGroep", Cursist.class).setParameter("groepId", groepId).getResultList();
         return cursistenlijst;
     }
-
-
-
 }
