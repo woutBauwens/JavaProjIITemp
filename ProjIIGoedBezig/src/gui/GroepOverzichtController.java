@@ -6,16 +6,13 @@
 package gui;
 
 import domein.ActieController;
-import domein.Activiteit;
 import domein.DraaiboekController;
 import domein.Groep;
 import domein.GroepController;
 import domein.InlogController;
-import domein.Motivatie;
 import domein.MotivatieController;
+import domein.Taak;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
@@ -33,10 +30,8 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import repository.CursistDaoJpa;
 import repository.GenericDaoJpa;
 import repository.LoginDaoJpa;
-import states.States;
 
 /**
  * FXML Controller class
@@ -106,7 +101,7 @@ public class GroepOverzichtController extends GridPane {
         }
         List<String> groepsnamen = groepen.stream().map(Groep::getNaam).collect(Collectors.toList());
         // groepen.stream().filter(g-> groepsnamen.add(g.getNaam()) );
-     /*   for (Groep g : groepen) {
+        /*   for (Groep g : groepen) {
             groepsnamen.add(g.getNaam());
         } */
         LectorLabel.setText(LectorLabel.getText() + gc.getLector().toString());
@@ -227,17 +222,19 @@ public class GroepOverzichtController extends GridPane {
         dialog.showAndWait()
                 .ifPresent(response -> {
                     if (!ta.getText().isEmpty()) {
+                        ac.keurActie(b, titel);
                         ac.setFeedbackActie(titel, ta.getText());
-                        ac.keurActie(b, titel);
                     } else {
-                        ac.setFeedbackActie(titel, "Geen feedback");
                         ac.keurActie(b, titel);
+                        ac.setFeedbackActie(titel, "Geen feedback");
+
                     }
                 });
+        gc.update();
         toonActies();
         toonActieHistoriek();
         draaiboekBtn.setDisable(gc.draaiboekBeschikbaar());
-        gc.update();
+
         actieDetailTxtArea.clear();
 
     }
@@ -258,9 +255,9 @@ public class GroepOverzichtController extends GridPane {
             //          }
             actiesListView.setItems(FXCollections.observableArrayList(ac.getActieNamenLijst()));
         }
-        
-            draaiboekBtn.setDisable(gc.draaiboekBeschikbaar());
-        
+
+        draaiboekBtn.setDisable(gc.draaiboekBeschikbaar());
+
     }
 
     @FXML
@@ -346,7 +343,7 @@ public class GroepOverzichtController extends GridPane {
 
         try {
             if (gc.getSelectedGroep() != null) {
-                DraaiboekOverzichtController dc = new DraaiboekOverzichtController(new DraaiboekController(gc.getSelectedGroep(), new GenericDaoJpa(Groep.class)), gc.getLector());
+                DraaiboekOverzichtController dc = new DraaiboekOverzichtController(new DraaiboekController(gc.getSelectedGroep(), new GenericDaoJpa(Taak.class)), gc.getLector());
                 Stage stage = (Stage) (this.getScene().getWindow());
                 stage.setTitle("Draaiboek: ");
                 Scene scene = new Scene(dc);

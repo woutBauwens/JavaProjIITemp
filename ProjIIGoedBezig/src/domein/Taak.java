@@ -11,9 +11,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -22,12 +25,14 @@ import javax.persistence.TemporalType;
  * @author kenne
  */
 @Entity
+@Table(name = "Taak")
 public class Taak implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TaakId")
     private int taakId;
-    @JoinColumn(name="ActiviteitId")
+    @JoinColumn(name = "ActiviteitId")
     @ManyToOne
     private Activiteit activiteitId;
     @JoinColumn(name = "WieCursistId")
@@ -44,9 +49,9 @@ public class Taak implements Serializable {
     private String groepBijsturing;
     @Column(name = "LectorBijsturing")
     private String lectorBijsturing;
-    @Column(name="IsGoedgekeurd")
+    @Column(name = "IsGoedgekeurd")
     private boolean isGoedgekeurd;
-    
+
     protected Taak() {
 
     }
@@ -74,7 +79,7 @@ public class Taak implements Serializable {
     public String getRealisatie() {
         return realisatie;
     }
-    
+
     public String getGroepBijsturing() {
         return groepBijsturing;
     }
@@ -82,14 +87,13 @@ public class Taak implements Serializable {
     public String getLectorBijsturing() {
         return lectorBijsturing;
     }
-    
-    public void setIsGoedgekeurd(boolean keuring){
-        isGoedgekeurd=keuring;
+
+    public void setIsGoedgekeurd(boolean keuring) {
+        isGoedgekeurd = keuring;
     }
-    
-    public void setLectorBijsturing(String tekst){
-        lectorBijsturing=tekst;
+
+    public void setLectorBijsturing(String tekst) {
+        lectorBijsturing = tekst;
     }
-    
 
 }

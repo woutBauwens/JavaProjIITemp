@@ -18,11 +18,11 @@ import repository.GenericDao;
 public class DraaiboekController {
 
     private Groep selectedGroep;
-    private GenericDao groepRepo;
+    private GenericDao taakRepo;
 
-    public DraaiboekController(Groep gr, GenericDao<Groep> groeprepo) {
+    public DraaiboekController(Groep gr, GenericDao<Taak> groeprepo) {
         selectedGroep = gr;
-        groepRepo = groeprepo;
+        taakRepo = groeprepo;
     }
 
     public Groep getSelectedGroep() {
@@ -44,8 +44,8 @@ public class DraaiboekController {
         Map<Integer, List<String>> takenMap = new TreeMap<>();
         for (Taak t : taken) {
             List<String> taakValues = new ArrayList<>();
-            //   taakValues.add(t.getWie().getEmail());
-            taakValues.add("AAAAAH");
+               taakValues.add(t.getWie().getEmail());
+//            taakValues.add("AAAAAH");
             taakValues.add(t.getWat());
             taakValues.add(t.getWanneer().toString());
             taakValues.add(t.getRealisatie());
@@ -56,8 +56,8 @@ public class DraaiboekController {
         return takenMap;
 
     }
-    
-    public List<Taak> geefTaken(String actie){
+
+    public List<Taak> geefTaken(String actie) {
         return selectedGroep.getActie(actie).getTaken();
     }
 
@@ -90,8 +90,9 @@ public class DraaiboekController {
         for (Taak t : taken) {
             t.setIsGoedgekeurd(keuring);
             t.setLectorBijsturing(feedback);
-            groepRepo.update(selectedGroep);
         }
+        taakRepo.update(selectedGroep);
+        taakRepo.persist(taken);
     }
 
 }

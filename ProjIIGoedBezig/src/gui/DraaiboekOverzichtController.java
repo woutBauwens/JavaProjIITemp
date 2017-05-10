@@ -97,12 +97,10 @@ public class DraaiboekOverzichtController extends GridPane {
 
     @FXML
     private void toonActieDraaiboek() {
-//        String wie;
-//        String wat;
-//        String wanneer;
-//        String realisatie;
-//        String groepBijsturing;
-//        String lectorBijsturing;
+        draaiboekTable.getItems().clear();
+        feedbackTextArea.setEditable(true);
+        goedkeurenBtn.setDisable(false);
+        afkeurenBtn.setDisable(false);
         List<Taak> taken = dc.geefTaken(actiesListview.getSelectionModel().getSelectedItem());
         for (Taak t : taken) {
             wieColumn.setCellValueFactory(new PropertyValueFactory("wie"));
@@ -113,16 +111,13 @@ public class DraaiboekOverzichtController extends GridPane {
             lectorSturingColumn.setCellValueFactory(new PropertyValueFactory("lectorBijsturing"));
             data.add(t);
             draaiboekTable.setItems(data);
+            if (t.getLectorBijsturing() != null) {
+                feedbackTextArea.setEditable(false);
+                goedkeurenBtn.setDisable(true);
+                afkeurenBtn.setDisable(true);
+            }
+
         }
-        //  List<String> taken = dc.getTaken(actiesListview.getSelectionModel().getSelectedItem());
-//        for (String s : taken) {
-//            wieColumn.setCellValueFactory(new PropertyValueFactory(dc.getWie(s)));
-//            watColumn.setCellValueFactory(new PropertyValueFactory(dc.getWat(s)));
-//            wanneerColumn.setCellValueFactory(new PropertyValueFactory(dc.getWanneer(s)));
-//            realisatieColumn.setCellValueFactory(new PropertyValueFactory(dc.getRealisatie(s)));
-//            groepSturingColumn.setCellValueFactory(new PropertyValueFactory(dc.getGroepBijsturing(s)));
-//            lectorSturingColumn.setCellValueFactory(new PropertyValueFactory(dc.getLectorBijsturing(s)));
-//        }
 
     }
 
@@ -141,8 +136,11 @@ public class DraaiboekOverzichtController extends GridPane {
     }
 
     private void keurDraaiBoek(boolean keuring) {
+
         dc.keurDraaiboek(keuring, feedbackTextArea.getText() == null ? "" : feedbackTextArea.getText(), actiesListview.getSelectionModel().getSelectedItem());
+        feedbackTextArea.clear();
         toonActieDraaiboek();
+
     }
 
     @FXML
