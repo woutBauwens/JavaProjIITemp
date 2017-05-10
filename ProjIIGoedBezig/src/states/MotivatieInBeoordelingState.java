@@ -37,7 +37,7 @@ public class MotivatieInBeoordelingState extends GroepState {
         if(keuring){
             return new State(States.approved.toString(), this);
         } else {
-            return new State(States.empty.toString(), this);
+            return new State(States.written.toString(), this);
         }
     }
 

@@ -26,14 +26,13 @@ import util.JPAUtil;
 public class SQLConnection {
 
     private static Connection con;
+    private static EntityManager em;
 
     public static ContactPersoon refreshLector(ContactPersoon lector) {
         em.refresh(lector);
         return lector;
     }
     private final String url = "jdbc:sqlserver://127.0.0.1:1433;databaseName=GBDB;user=Login;password=1234";
-
-    private static EntityManager em;
 
     protected SQLConnection() throws SQLException, ClassNotFoundException {
         connect();

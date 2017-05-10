@@ -14,7 +14,8 @@ import java.util.List;
  * @author kenne
  */
 public class ActiesInBeoordelingState extends GroepState {
-
+     private   boolean allesgekeurd = true;
+      private boolean goedgekeurdeActieAanwezig=false;
     public ActiesInBeoordelingState(Groep gr) {
         super(gr);
     }
@@ -36,18 +37,30 @@ public class ActiesInBeoordelingState extends GroepState {
 
     @Override
     public void actiesgekeurd(String titel, String feedback) {
-        boolean allesgekeurd = true;
-        boolean goedgekeurdeActieAanwezig=false;
+//        boolean allesgekeurd = true;
+//        boolean goedgekeurdeActieAanwezig=false;
         groep.setFeedbackActie(titel, feedback);
         List<Activiteit> acties = groep.getActies();
-        for (Activiteit a : acties) {
-            if (a.getFeedback() == null) {
+        groep.getActies().stream().forEach(a->{
+                if (a.getFeedback() == null) {
                 allesgekeurd = false;
             }
             if(a.getGoedgekeurd()){
                 goedgekeurdeActieAanwezig=true;
             }
         }
+        
+        );
+        
+//        
+//        for (Activiteit a : acties) {
+//            if (a.getFeedback() == null) {
+//                allesgekeurd = false;
+//            }
+//            if(a.getGoedgekeurd()){
+//                goedgekeurdeActieAanwezig=true;
+//            }
+//        }
 
         if (allesgekeurd && goedgekeurdeActieAanwezig) {
             groep.toState("actiegoedgekeurd");

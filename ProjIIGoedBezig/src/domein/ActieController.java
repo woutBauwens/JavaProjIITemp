@@ -32,20 +32,12 @@ public class ActieController {
     }
 
     public String toonDetailActie(String titelActie) {
-        List<Activiteit> acties = selectedGroep.getActies();
-      //  Activiteit actie = acties.stream().filter(a -> a.getTitel().equals(titelActie)).findFirst().get();
-    //    return actie.toString();
-       for (Activiteit a : acties) {
-            if (a.getTitel().equals(titelActie)) {
-                return a.toString();
-            }
-        }
-       return null;
+
+        return selectedGroep.getActie(titelActie).toString();
+
     }
 
     public void setFeedbackActie(String titelActie, String feedback) {
-//        Activiteit a = selectedGroep.getActie(titelActie);
-//        a.setFeedback(feedback);
         selectedGroep.actiesgekeurd(titelActie, feedback);
     }
 
@@ -56,32 +48,14 @@ public class ActieController {
     }
 
     public String getActieHistoriek() {
-        List<Activiteit> acties = selectedGroep.getActies();
         StringBuilder historiek = new StringBuilder();
-      //  acties.stream().filter(a -> a.getFeedback() != null).forEach(a -> historiek.append(a.toString()).append("\n"));
-        //als actie feedback heeft en dus gekeurd is tostring aan historiek toevoegen
-
-        for (Activiteit a : acties) {
-            if (a.getFeedback() != null) {
-                historiek.append(a.toString()).append("\n");
-            }
-        }
+        selectedGroep.getActies().stream().filter(a -> a.getFeedback() != null).forEach(a -> historiek.append(a.toString()).append("\n"));
         return historiek.toString();
     }
 
     public List<String> getActieNamenLijst() {
         List<String> actienamen = new ArrayList<>();
-        // selectedGroep.getActies().stream().filter(a -> a.getFeedback() == null).forEach(a -> actienamen.add(a.getTitel());
-     List<Activiteit> acties = selectedGroep.getActies();
-//     acties.stream().filter((a) -> (a.getFeedback()==null)).forEachOrdered((a) -> {
-//         actienamen.add(a.getTitel());
-//        });
-//stream werkt niet dus laat for nog staan tot we streams werkend krijgen...
-     for(Activiteit a : acties){
-         if(a.getFeedback()==null){
-             actienamen.add(a.getTitel());
-         }
-     }
+        selectedGroep.getActies().stream().filter(a -> a.getFeedback() == null).forEach(a -> actienamen.add(a.getTitel()));
         return actienamen;
     }
 
@@ -90,13 +64,7 @@ public class ActieController {
     }
 
     public boolean Actiekeurbaar(String actie) {
-
-//        selectedGroep.getActies().stream().filter(a -> a.getTitel().equals(actie))
-//                .forEach(a -> {
-//                    keurbaar = a.getFeedback() != null;
-//                });
         Activiteit activiteit = selectedGroep.getActie(actie);
-        return activiteit.getFeedback()!=null;
-      //  return keurbaar;
+        return activiteit.getFeedback() != null;
     }
 }

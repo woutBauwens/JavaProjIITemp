@@ -55,12 +55,6 @@ public class GroepController {
         }
     }
 
-//    public void setGroep(Groep g) {
-//        if (selectedGroep != null) {
-//            lector.getGroepen().remove(lector.getGroepen().indexOf(selectedGroep));
-//            lector.getGroepen().add(g);
-//        }
-//    }
     public void setObject(Object o) {
         if (o instanceof Lector) {
             lector = (Lector) o;
@@ -69,44 +63,10 @@ public class GroepController {
         }
     }
 
-//    public void updateLector() {
-//        lector = SQLConnection.refreshLector(lector);
-//    }
     public List<Groep> getGroepenByLector() {
         return lector.getGroepen();
     }
 
-//    public void setMotivatieFeedback(String response) {
-//        MC.setFeedback(response);
-//        // selectedGroep.getHuidigeMotivatie().setFeedback(response);
-//    }
-//
-//    public void keurMotivatie(boolean keuring) {
-//        MC.setKeuring(keuring);
-//        //selectedGroep.setKeuring(keuring);
-//    }
-//
-//    public String toonMotivatie() {
-//        return MC.toonMotivatie();
-////        if (selectedGroep.isGoedgekeurd()) {
-////            Motivatie goedgekeurd = selectedGroep.getMotivaties().get(selectedGroep.getMotivaties().size() - 1);
-////            return String.format("De motivatie is goedgekeurd.%n%n%s", goedgekeurd.toString());
-////        }
-////        if (selectedGroep.getHuidigeMotivatie().isVerstuurd()) {
-////            return selectedGroep.getHuidigeMotivatie().getTekst();
-////        } else {
-////            try {
-////                return selectedGroep.getMotivaties().stream().findFirst().filter(m -> m.isVerstuurd()).orElseThrow(NullPointerException::new).getTekst();
-////            } catch (NullPointerException nullex) {
-////                return "Nog geen motivatie verstuurd";
-////            }
-////        }
-//    }
-//
-//    public boolean isMotivatieVerstuurd() {
-//        return MC.isMotivatieVerstuurd();
-//        // return selectedGroep.getHuidigeMotivatie().isVerstuurd();
-//    }
     public void setSelectedGroep(String naam) {
         try {
             List<Groep> groepen = lector.getGroepen();
@@ -115,81 +75,18 @@ public class GroepController {
         } catch (Exception e) {
 
         }
-//        selectedGroep.initializeState();
-//als findfirst geen resultaat levert => null
-        /*     for (Groep g : groepen) {
-            if (g.getNaam().equals(naam)) {
-                g.toState(g.getState());
-                selectedGroep = g;
-            }
 
-        } */
     }
 
     public Groep getSelectedGroep() {
-//        if (selectedGroep == null) {
-//            return lector.getGroepen().get(0);
-//        }
         return selectedGroep;
     }
 
     public void update() {
         groepRepo.update(selectedGroep);
-        //     GenericDao entity = new GenericDaoJpa(Groep.class);
         groepRepo.persist(selectedGroep);
     }
 
-//    public String toonDetailActie(String titelActie) {
-//        return AC.toonDetailActie(titelActie);
-////        List<Activiteit> acties = selectedGroep.getActies();
-////        Activiteit actie = acties.stream().filter(a -> a.getTitel().equals(titelActie)).findFirst().orElse(null);
-////        return actie.toString();
-////        for (Activiteit a : acties) {
-////            if (a.getTitel().equals(titelActie)) {
-////                return a.toString();
-////            }
-////        }
-////        return null;
-//    }
-//    public void setFeedbackActie(String titelActie, String feedback) {
-//        AC.setFeedbackActie(titelActie, feedback);
-////        Activiteit a = getActie(titelActie);
-////        a.setFeedback(feedback);
-//
-//    }
-//
-//    public void keurActie(boolean b, String titel) {
-//        AC.keurActie(b, titel);
-////        Activiteit a = getActie(titel);
-////        a.setGoedgekeurd(b);
-//    }
-//    private Activiteit getActie(String titel) {
-//
-//        List<Activiteit> acties = getSelectedGroep().getActies();
-//        return acties.stream().filter(a -> a.getTitel().equals(titel)).findFirst().orElse(null);
-//
-////        for (Activiteit a : acties) {
-////            if (a.getTitel().equals(titel)) {
-////
-////                return a;
-////            }
-////        }
-////        return null;
-//    }
-//    public String getActieHistoriek() {
-//        return AC.getActieHistoriek();
-////        List<Activiteit> acties = selectedGroep.getActies();
-////        StringBuilder historiek = new StringBuilder();
-////        acties.stream().filter(a -> a.getFeedback() != null).forEach(a -> historiek.append(a.toString()).append("\n"));
-////        //als actie feedback heeft en dus gekeurd is tostring aan historiek toevoegen
-////
-//////        for (Activiteit a : acties) {
-//////            if (a.getFeedback() != null) {
-//////                historiek.append(a.toString()).append("\n");
-//////            }
-//////        }
-////        return historiek.toString();
-//    }
     public String getGroepState() {
         return selectedGroep.getState();
     }
@@ -208,11 +105,6 @@ public class GroepController {
         StringBuilder ledenlijst = new StringBuilder();
         List<Cursist> cursistenlijst = ledenRepo.getCursistenByGroep(selectedGroep.getId());
         cursistenlijst.forEach((c) -> {
-            //            String email = c.getEmail();
-//            String voornaam = email.substring(0, email.indexOf('.'));
-//            String achternaam = email.substring(voornaam.length() + 1,email.indexOf((".", email.indexOf(".") + 1)));
-
-//            ledenlijst.append(String.format("%s %s,%n", voornaam, achternaam));
             ledenlijst.append(c.getEmail()).append("\n");
         });
         return ledenlijst.toString();

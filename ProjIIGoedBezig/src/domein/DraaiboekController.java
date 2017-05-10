@@ -44,7 +44,7 @@ public class DraaiboekController {
         Map<Integer, List<String>> takenMap = new TreeMap<>();
         for (Taak t : taken) {
             List<String> taakValues = new ArrayList<>();
-               taakValues.add(t.getWie().getEmail());
+            taakValues.add(t.getWie().getEmail());
 //            taakValues.add("AAAAAH");
             taakValues.add(t.getWat());
             taakValues.add(t.getWanneer().toString());
@@ -90,9 +90,11 @@ public class DraaiboekController {
         for (Taak t : taken) {
             t.setIsGoedgekeurd(keuring);
             t.setLectorBijsturing(feedback);
+            taakRepo.update(selectedGroep);
+            taakRepo.persist(t);
         }
-        taakRepo.update(selectedGroep);
-        taakRepo.persist(taken);
+//        taakRepo.update(selectedGroep);
+//        taakRepo.persist(taken);
     }
 
 }
