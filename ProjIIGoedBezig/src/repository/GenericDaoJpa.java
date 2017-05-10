@@ -59,12 +59,6 @@ public class GenericDaoJpa<T> implements GenericDao<T> {
     }
 
     @Override
-    public List<T> getStates() {
-        return em.createQuery("SELECT s FROM State s").getResultList();
-    }
-    //moet in StateDaoJpa, maar w niet meer gebruikt
-
-    @Override
     public T get(int id) {
         T entity = em.find(type, id);
         return entity;
@@ -87,12 +81,6 @@ public class GenericDaoJpa<T> implements GenericDao<T> {
         em.getTransaction().commit();
     }
 
-    /* @Override    -werkt niet geimplementeerd in .NET
-    public void addColumn(String table, String column){
-        em.getTransaction().begin();
-        em.createNativeQuery("ALTER TABLE " + table + " ADD " + column + " VARCHAR(50)");
-        em.getTransaction().commit();
-    } */
     @Override
     public boolean exists(Long id) {
         T entity = em.find(type, id);
