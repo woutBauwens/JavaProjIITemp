@@ -23,7 +23,9 @@ public class ActieController {
 
     private Groep selectedGroep;
     boolean keurbaar;
-
+public Groep getSelectedGroep(){
+    return selectedGroep;
+}
     public ActieController() {
     }
 
@@ -36,16 +38,16 @@ public class ActieController {
         return selectedGroep.getActie(titelActie).toString();
 
     }
-
-    public void setFeedbackActie(String titelActie, String feedback) {
-        selectedGroep.actiesgekeurd(titelActie, feedback);
-    }
-
-    public void keurActie(boolean b, String titel) {
-
-        Activiteit a = selectedGroep.getActie(titel);
-        a.setGoedgekeurd(b);
-    }
+//
+//    public void setFeedbackActie(String titelActie, String feedback) {
+//        selectedGroep.actiesgekeurd(titelActie, feedback);
+//    }
+//
+//    public void keurActie(boolean b, String titel) {
+//
+//        Activiteit a = selectedGroep.getActie(titel);
+//        a.setGoedgekeurd(b);
+//    }
 
     public String getActieHistoriek() {
         StringBuilder historiek = new StringBuilder();
@@ -67,4 +69,12 @@ public class ActieController {
         Activiteit activiteit = selectedGroep.getActie(actie);
         return activiteit.getFeedback() != null;
     }
+
+    public void keurActie(boolean b, String titel, String actiefeedback) {
+
+
+        selectedGroep.actiesgekeurd(b,titel, actiefeedback);
+    }
+
+
 }

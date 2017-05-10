@@ -31,5 +31,10 @@ public class ActiesGoedgekeurdState extends GroepState {
     public String toonMotivatie() {
         return groep.getHuidigeMotivatie().getTekst();
     }
+    
+    @Override
+    public boolean draaiboekBeschikbaar(){
+        return false;
+    }
 
 }

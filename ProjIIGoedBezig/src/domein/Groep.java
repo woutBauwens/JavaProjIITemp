@@ -119,7 +119,7 @@ public class Groep implements Serializable {
         return getHuidigeMotivatie().isVerstuurd();
     }
 
-    Activiteit getActie(String titelActie) {
+    public Activiteit getActie(String titelActie) {
 
         for (Activiteit a : acties) {
             if (a.getTitel().equals(titelActie)) {
@@ -156,13 +156,21 @@ public class Groep implements Serializable {
     //    currentState = state;
     }
 
-    public void actiesgekeurd(String titelActie, String feedback) {
-        currentState.getCurrentState().actiesgekeurd(titelActie, feedback);
-    }
+//    public void actiesgekeurd(String titelActie, String feedback) {
+//        currentState.getCurrentState().actiesgekeurd(titelActie, feedback);
+//    }
+//
+//    public void setFeedbackActie(String titel, String feedback) {
+//        Activiteit a = getActie(titel);
+//        a.setFeedback(feedback);
+//    }
 
-    public void setFeedbackActie(String titel, String feedback) {
-        Activiteit a = getActie(titel);
-        a.setFeedback(feedback);
-    }
+    public boolean draaiboekBeschikbaar() {
+        return currentState.getCurrentState().draaiboekBeschikbaar();
+       }
+
+    public void actiesgekeurd(boolean b, String titel, String actiefeedback) {
+      currentState.getCurrentState().actiesgekeurd(b,titel, actiefeedback); }
+
 
 }

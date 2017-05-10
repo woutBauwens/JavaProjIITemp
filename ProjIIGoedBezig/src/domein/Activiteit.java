@@ -102,4 +102,5 @@ public class Activiteit implements Serializable {
     public List<Taak> getTaken(){
         return taken;
     }
+
 }

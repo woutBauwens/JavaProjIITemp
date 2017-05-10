@@ -34,23 +34,47 @@ public class ActiesInBeoordelingState extends GroepState {
         return groep.getHuidigeMotivatie().getTekst();
     }
 
+//    @Override
+//    public void actiesgekeurd(String titel, String feedback) {
+//        boolean allesgekeurd = true;
+//        boolean goedgekeurdeActieAanwezig = false;
+//        groep.setFeedbackActie(titel, feedback);
+//        List<Activiteit> acties = groep.getActies();
+//        for (Activiteit a : acties) {
+//            if (a.getFeedback() == null) {
+//                allesgekeurd = false;
+//            }
+//            if (a.getGoedgekeurd()) {
+//                goedgekeurdeActieAanwezig = true;
+//            }
+//        }
+//
+//        if (allesgekeurd && goedgekeurdeActieAanwezig) {
+//            groep.toState(States.actiegoedgekeurd);
+//        }
+//    }
+
     @Override
-    public void actiesgekeurd(String titel, String feedback) {
+    public void actiesgekeurd(boolean b, String titel, String feedback) {
         boolean allesgekeurd = true;
-        boolean goedgekeurdeActieAanwezig=false;
-        groep.setFeedbackActie(titel, feedback);
+        boolean goedgekeurdeActieAanwezig = false;
+        Activiteit actie = groep.getActie(titel);
+        actie.setGoedgekeurd(b);
+        actie.setFeedback(feedback);
+
         List<Activiteit> acties = groep.getActies();
         for (Activiteit a : acties) {
             if (a.getFeedback() == null) {
                 allesgekeurd = false;
             }
-            if(a.getGoedgekeurd()){
-                goedgekeurdeActieAanwezig=true;
+            if (a.getGoedgekeurd()) {
+                goedgekeurdeActieAanwezig = true;
             }
         }
 
         if (allesgekeurd && goedgekeurdeActieAanwezig) {
             groep.toState(States.actiegoedgekeurd);
         }
+
     }
 }

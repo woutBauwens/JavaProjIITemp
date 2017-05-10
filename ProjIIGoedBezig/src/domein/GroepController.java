@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import repository.CursistDaoJpa;
 import repository.GenericDao;
 import states.States;
@@ -27,6 +28,10 @@ public class GroepController {
     private CursistDaoJpa ledenRepo;
     private ActieController AC;
     private MotivatieController MC;
+    
+    public void setGroep(Groep g){
+        selectedGroep=g;
+    }
 
     public GroepController(GenericDao groepRepo, CursistDaoJpa ledenRepo, ContactPersoon lector) {
         try {
@@ -111,6 +116,14 @@ public class GroepController {
     }
 
     public boolean draaiboekBeschikbaar() {
-        return !selectedGroep.getState().equals(States.actiegoedgekeurd.toString());
+     return    selectedGroep.draaiboekBeschikbaar();
+//        return !selectedGroep.getState().equals(States.actiegoedgekeurd.toString());
     }
+
+    public List<String> getGroepsNamen() {
+      List<Groep> groepen = lector.getGroepen();
+     return  groepen.stream().map(Groep::getNaam).collect(Collectors.toList());
+    }
+
+
 }

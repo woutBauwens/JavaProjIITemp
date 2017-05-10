@@ -6,16 +6,20 @@
 package states;
 
 import domein.Groep;
+import javax.persistence.Column;
+import javax.persistence.Id;
 /**
  *
  * @author kenne
  */
 public abstract class GroepState {
+ 
+  
 
     protected Groep groep;
     
     protected State state;
-
+    
     public GroepState(Groep gr) {
         groep = gr;
         state = gr.getCurrentState();
@@ -38,7 +42,7 @@ public abstract class GroepState {
     }
 
     public void actiesgekeurd(String titelActie, String feedback) {
-    };
+    }
     
     @Override
     public abstract String toString();
@@ -52,4 +56,12 @@ public abstract class GroepState {
     public void setId(String id) {
         this.id = id;
     } */
+
+    public boolean draaiboekBeschikbaar() {
+      return true;
+    }
+
+    public void actiesgekeurd(boolean b, String titel, String actiefeedback) {
+  
+       };
 }

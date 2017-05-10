@@ -85,11 +85,12 @@ public class GroepOverzichtController extends GridPane {
     @FXML
     private Button draaiboekBtn;
 
+    String actiefeedback;
+
     public GroepOverzichtController(GroepController gc) {
         this.gc = gc;
         mc = new MotivatieController();
         ac = new ActieController();
-        List<Groep> groepen = gc.getGroepenByLector();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GroepOverzicht.fxml"));
         loader.setRoot(this);
@@ -99,16 +100,15 @@ public class GroepOverzichtController extends GridPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        List<String> groepsnamen = groepen.stream().map(Groep::getNaam).collect(Collectors.toList());
+
         LectorLabel.setText(LectorLabel.getText() + gc.getLector().toString());
-        groepListView.setItems(FXCollections.observableArrayList(groepsnamen));
+        groepListView.setItems(FXCollections.observableArrayList(gc.getGroepsNamen()));
         errorLbl.setVisible(false);
         actieDetailTxtArea.setEditable(false);
         historiekTxtArea.clear();
         tabPane.setDisable(true);
         ledenTextArea.setEditable(false);
         draaiboekBtn.setDisable(true);
-        //for loop
     }
 
     @FXML
@@ -129,7 +129,6 @@ public class GroepOverzichtController extends GridPane {
         goedkeurenBtn.setDisable(true);
         afkeurenBtn.setDisable(true);
         feedbackTxtArea.setEditable(false);
-        //eventueel feedback area clearen
         gc.update();
         toonMotivatieHistoriek();
     }
@@ -217,15 +216,18 @@ public class GroepOverzichtController extends GridPane {
 
         dialog.showAndWait()
                 .ifPresent(response -> {
-                    if (!ta.getText().isEmpty()) {
-                        ac.keurActie(b, titel);
-                        ac.setFeedbackActie(titel, ta.getText());
-                    } else {
-                        ac.keurActie(b, titel);
-                        ac.setFeedbackActie(titel, "Geen feedback");
-
-                    }
+//                    if (!ta.getText().isEmpty()) {
+                    actiefeedback = ta.getText().isEmpty() ? "Geen feedback" : ta.getText();
+                    ac.keurActie(b, titel, actiefeedback);
+//                        ac.keurActie(b, titel);
+//                        ac.setFeedbackActie(titel, ta.getText());
+//                    } else {
+//                        ac.keurActie(b, titel);
+//                        ac.setFeedbackActie(titel, "Geen feedback");
+//
+//                    }
                 });
+    //    gc.setGroep(ac.getSelectedGroep());
         gc.update();
         toonActies();
         toonActieHistoriek();
@@ -266,9 +268,6 @@ public class GroepOverzichtController extends GridPane {
             keurActieGoed.setDisable(false);
             actieDetailTxtArea.setEditable(false);
             actieDetailTxtArea.setText(ac.toonDetailActie(actie));
-//            List<Activiteit> acties = ac.getActies();
-            //state in .net is actiesgoedgekeurd of pending => alles tegelijk goed/afkeuren in .net.
-            //hier alles apart goed of afkeuren => kunnen actiestates niet echt gebruiken...
             keurActieAfBtn.setDisable(ac.Actiekeurbaar(actie));
             keurActieGoed.setDisable(ac.Actiekeurbaar(actie));
         }
