@@ -151,7 +151,7 @@ public class Groep implements Serializable {
         return getState().equals(States.pending.toString());
     }
 
-    public void toState(String state) {
+    public void toState(States state) {
         currentState.setState(state, this);
     //    currentState = state;
     }

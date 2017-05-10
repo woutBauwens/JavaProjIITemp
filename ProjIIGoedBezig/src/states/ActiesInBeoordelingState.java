@@ -50,7 +50,7 @@ public class ActiesInBeoordelingState extends GroepState {
         }
 
         if (allesgekeurd && goedgekeurdeActieAanwezig) {
-            groep.toState("actiegoedgekeurd");
+            groep.toState(States.actiegoedgekeurd);
         }
     }
 }
