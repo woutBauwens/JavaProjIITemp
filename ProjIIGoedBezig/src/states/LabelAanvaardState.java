@@ -26,8 +26,14 @@ public class LabelAanvaardState extends GroepState {
     public boolean actiesToegankelijk() {
         return false;
     }
-        @Override
-    public String toonMotivatie(){
+
+    @Override
+    public String toonMotivatie() {
         return groep.getHuidigeMotivatie().getTekst();
+    }
+
+    @Override
+    public boolean draaiboekBeschikbaar() {
+        return false;
     }
 }

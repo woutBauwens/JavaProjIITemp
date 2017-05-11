@@ -96,7 +96,7 @@ public class Groep implements Serializable {
     public void setKeuring(boolean keuring) {
         MotivatieIsGoedgekeurd = keuring;
 
-        currentState = currentState.getCurrentState().verwerkMotivatieKeuring(keuring);
+        currentState.getCurrentState().verwerkMotivatieKeuring(keuring);
     }
 
     public State getCurrentState() {

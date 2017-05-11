@@ -37,8 +37,7 @@ public abstract class GroepState {
         return "Motivatie goedgekeurd";
     }
 
-    public State verwerkMotivatieKeuring(boolean keuring){
-        return null;
+    public void verwerkMotivatieKeuring(boolean keuring){
     }
 
     public void actiesgekeurd(String titelActie, String feedback) {

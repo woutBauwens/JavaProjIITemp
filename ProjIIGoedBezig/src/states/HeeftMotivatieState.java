@@ -27,13 +27,6 @@ public class HeeftMotivatieState extends GroepState {
         return "Motivatie nog niet verstuurd";
     }
 
-    @Override
-    public State verwerkMotivatieKeuring(boolean keuring) {
-        if(keuring){
-            return new State(States.approved, this);
-        } else {
-            return new State(States.empty, this);
-        }
-    }
+
 
 }
