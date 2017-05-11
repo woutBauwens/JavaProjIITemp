@@ -36,7 +36,7 @@ public class GroepStateFactory {
         add(States.actiepending, () -> new ActiesInBeoordelingState(gr));
     }
 
-    public GroepState createState(States currentState) {
+    public  GroepState createState(States currentState) {
         return map.get(currentState).get();
     }
 /*
