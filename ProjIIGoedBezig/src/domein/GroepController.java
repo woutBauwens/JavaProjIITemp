@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import repository.CursistDao;
 import repository.CursistDaoJpa;
 import repository.GenericDao;
 import states.States;
@@ -25,7 +26,7 @@ public class GroepController {
     private ContactPersoon lector;
     private Groep selectedGroep;
     private GenericDao groepRepo;
-    private CursistDaoJpa ledenRepo;
+    private CursistDao ledenRepo;
     private ActieController AC;
     private MotivatieController MC;
     
@@ -33,7 +34,7 @@ public class GroepController {
         selectedGroep=g;
     }
 
-    public GroepController(GenericDao groepRepo, CursistDaoJpa ledenRepo, ContactPersoon lector) {
+    public GroepController(GenericDao groepRepo, CursistDao ledenRepo, ContactPersoon lector) {
         try {
             AC = new ActieController();
             MC = new MotivatieController();
