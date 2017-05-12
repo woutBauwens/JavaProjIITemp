@@ -64,16 +64,15 @@ public class DraaiboekOverzichtController extends GridPane {
     @FXML
     private TextArea feedbackTextArea;
     @FXML
-    private Button goedkeurenBtn;
-    @FXML
-    private Button afkeurenBtn;
-    @FXML
     private Button terugBtn;
     @FXML
     private Button logoutBtn;
     @FXML
     private Label errorLbl;
-
+    @FXML
+    private Label draaiboeklbl;
+    @FXML
+    private Button verzendBtn;
     private final ObservableList<Taak> data
             = FXCollections.observableArrayList();
 
@@ -83,7 +82,7 @@ public class DraaiboekOverzichtController extends GridPane {
     public DraaiboekOverzichtController(DraaiboekController dc, ContactPersoon lector) {
         this.dc = dc;
         this.lector = lector;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Draaiboek.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DraaiboekOverzicht.fxml"));
         loader.setRoot(this);
         loader.setController(this);
 
@@ -93,14 +92,14 @@ public class DraaiboekOverzichtController extends GridPane {
             throw new RuntimeException(ex);
         }
         vulViewOp();
+        draaiboeklbl.setText("Draaiboek van "+ dc.getSelectedGroep().getNaam());
     }
 
     @FXML
     private void toonActieDraaiboek() {
         draaiboekTable.getItems().clear();
-        feedbackTextArea.setEditable(true);
-        goedkeurenBtn.setDisable(false);
-        afkeurenBtn.setDisable(false);
+        feedbackTextArea.setEditable(false);
+        verzendBtn.setDisable(true);
         List<Taak> taken = dc.geefTaken(actiesListview.getSelectionModel().getSelectedItem());
         for (Taak t : taken) {
             wieColumn.setCellValueFactory(new PropertyValueFactory("wie"));
@@ -111,26 +110,24 @@ public class DraaiboekOverzichtController extends GridPane {
             lectorSturingColumn.setCellValueFactory(new PropertyValueFactory("lectorBijsturing"));
             data.add(t);
             draaiboekTable.setItems(data);
-            if (t.getLectorBijsturing() != null) {
-                feedbackTextArea.setEditable(false);
-                goedkeurenBtn.setDisable(true);
-                afkeurenBtn.setDisable(true);
-            }
+//            if (t.getLectorBijsturing() != null) {
+//                feedbackTextArea.setEditable(false);
+//                verzendBtn.setDisable(true);
+//            }
 
         }
 
     }
 
-    @FXML
-    private void keurDraaiboekGoed(ActionEvent event) {
-        keurDraaiBoek(true);
-    }
-
-    @FXML
-    private void keurDraaiboekAf(ActionEvent event) {
-        keurDraaiBoek(false);
-    }
-
+//    @FXML
+//    private void keurDraaiboekGoed(ActionEvent event) {
+//        keurDraaiBoek(true);
+//    }
+//
+//    @FXML
+//    private void keurDraaiboekAf(ActionEvent event) {
+//        keurDraaiBoek(false);
+//    }
     private void vulViewOp() {
         actiesListview.setItems(FXCollections.observableArrayList(dc.getActies()));
     }
@@ -185,4 +182,23 @@ public class DraaiboekOverzichtController extends GridPane {
 
     }
 
+    @FXML
+    private void enableFeedback(MouseEvent event) {
+        Taak t = draaiboekTable.getSelectionModel().getSelectedItem();
+        if (t.getLectorBijsturing() == null) {
+            feedbackTextArea.setEditable(true);
+            verzendBtn.setDisable(false);
+        }
+    }
+
+    @FXML
+    private void setFeedbackTaak(ActionEvent event) {
+        dc.setFeedbackTaak(draaiboekTable.getSelectionModel().getSelectedItem(), feedbackTextArea.getText());
+//        Taak t = draaiboekTable.getSelectionModel().getSelectedItem();
+//        t.setLectorBijsturing(feedbackTextArea.getText());
+        feedbackTextArea.setEditable(false);
+        feedbackTextArea.clear();
+        verzendBtn.setDisable(true);
+        toonActieDraaiboek();
+    }
 }

@@ -53,28 +53,49 @@ public class ActiesInBeoordelingState extends GroepState {
 //            groep.toState(States.actiegoedgekeurd);
 //        }
 //    }
-
     @Override
     public void actiesgekeurd(boolean b, String titel, String feedback) {
-        boolean allesgekeurd = true;
-        boolean goedgekeurdeActieAanwezig = false;
+//        boolean allesgekeurd = true;
+//        boolean goedgekeurdeActieAanwezig = false;
         Activiteit actie = groep.getActie(titel);
         actie.setGoedgekeurd(b);
         actie.setFeedback(feedback);
 
+//        List<Activiteit> acties = groep.getActies();
+//        for (Activiteit a : acties) {
+//            if (a.getFeedback() == null) {
+//                allesgekeurd = false;
+//            }
+//            if (a.getGoedgekeurd()) {
+//                goedgekeurdeActieAanwezig = true;
+//            }
+//        }
+//
+//        if (allesgekeurd && goedgekeurdeActieAanwezig) {
+//            groep.toState(States.actiegoedgekeurd);
+//        }
+
+    }
+
+    public boolean actiesgekeurd() {
         List<Activiteit> acties = groep.getActies();
+        boolean allesgekeurd = true;
         for (Activiteit a : acties) {
             if (a.getFeedback() == null) {
                 allesgekeurd = false;
             }
-            if (a.getGoedgekeurd()) {
-                goedgekeurdeActieAanwezig = true;
-            }
         }
-
-        if (allesgekeurd && goedgekeurdeActieAanwezig) {
+        return allesgekeurd;
+    }
+    
+    @Override
+        public void keurActiePlan(boolean b, String globaleFeedback){
+            if(!b && globaleFeedback.isEmpty()){
+                throw new IllegalArgumentException();
+            }
+        groep.setActieplanFeedback(globaleFeedback);
+        if(b){
             groep.toState(States.actiegoedgekeurd);
         }
-
     }
 }

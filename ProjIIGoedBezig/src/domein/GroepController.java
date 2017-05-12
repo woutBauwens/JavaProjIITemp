@@ -60,14 +60,14 @@ public class GroepController {
             System.out.println("Er zijn nieuwe meldingen.");
         }
     }
-
-    public void setObject(Object o) {
-        if (o instanceof Lector) {
-            lector = (Lector) o;
-        } else if (o instanceof Groep) {
-            selectedGroep = (Groep) o;
-        }
-    }
+//
+//    public void setObject(Object o) {
+//        if (o instanceof Lector) {
+//            lector = (Lector) o;
+//        } else if (o instanceof Groep) {
+//            selectedGroep = (Groep) o;
+//        }
+//    }
 
     public List<Groep> getGroepenByLector() {
         return lector.getGroepen();
@@ -93,9 +93,9 @@ public class GroepController {
         groepRepo.persist(selectedGroep);
     }
 
-    public String getGroepState() {
-        return selectedGroep.getState();
-    }
+//    public String getGroepState() {
+//        return selectedGroep.getState();
+//    }
 
     public boolean actiesToegankelijk() {
         return selectedGroep.actiesToegankelijk();
@@ -117,13 +117,17 @@ public class GroepController {
     }
 
     public boolean draaiboekBeschikbaar() {
-     return    selectedGroep.draaiboekBeschikbaar();
-//        return !selectedGroep.getState().equals(States.actiegoedgekeurd.toString());
+    return    selectedGroep.draaiboekBeschikbaar();
+       // return !selectedGroep.getState().equals(States.actiegoedgekeurd.toString());
     }
 
     public List<String> getGroepsNamen() {
       List<Groep> groepen = lector.getGroepen();
      return  groepen.stream().map(Groep::getNaam).collect(Collectors.toList());
+    }
+
+    public void keurActieplan(boolean b,String feedback) {
+       selectedGroep.keurActieplan(b,feedback);
     }
 
 

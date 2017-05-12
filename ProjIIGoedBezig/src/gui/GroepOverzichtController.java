@@ -194,12 +194,20 @@ public class GroepOverzichtController extends GridPane {
 
     @FXML
     private void keurActieAf(ActionEvent event) {
-        geefFeedbackWindow(false);
+        if (ac.actiesgekeurd()) {
+            keurActieplan(false, actieDetailTxtArea.getText());
+        } else {
+            geefFeedbackWindow(false);
+        }
     }
 
     @FXML
     private void keurActieGoed(ActionEvent event) {
-        geefFeedbackWindow(true);
+        if (ac.actiesgekeurd()) {
+            keurActieplan(true, actieDetailTxtArea.getText());
+        } else {
+            geefFeedbackWindow(true);
+        }
     }
 
     private void geefFeedbackWindow(boolean b) {
@@ -212,6 +220,7 @@ public class GroepOverzichtController extends GridPane {
         dialog.setHeaderText("Feedback:");
         dialog.getEditor().visibleProperty().set(false);
         TextArea ta = new TextArea();
+        ta.promptTextProperty().setValue("Feedback is optioneel");
         dialog.getDialogPane().setContent(ta);
 
         dialog.showAndWait()
@@ -227,11 +236,14 @@ public class GroepOverzichtController extends GridPane {
 //
 //                    }
                 });
-    //    gc.setGroep(ac.getSelectedGroep());
+        //    gc.setGroep(ac.getSelectedGroep());
         gc.update();
         toonActies();
         toonActieHistoriek();
         draaiboekBtn.setDisable(gc.draaiboekBeschikbaar());
+        if (gc.getSelectedGroep().actiesGekeurd()) {
+            actieButtonsSwitch();
+        }
 
         actieDetailTxtArea.clear();
 
@@ -242,11 +254,15 @@ public class GroepOverzichtController extends GridPane {
 
             keurActieAfBtn.setDisable(true);
             keurActieGoed.setDisable(true);
-
+            actieDetailTxtArea.clear();
+            actieDetailTxtArea.setEditable(false);
             actiesListView.setItems(FXCollections.observableArrayList(ac.getActieNamenLijst()));
         }
 
         draaiboekBtn.setDisable(gc.draaiboekBeschikbaar());
+        if (gc.getSelectedGroep().actiesGekeurd()) {
+            actieButtonsSwitch();
+        }
 
     }
 
@@ -305,5 +321,23 @@ public class GroepOverzichtController extends GridPane {
             errorLbl.setText(e.getMessage());
         }
 
+    }
+
+    private void keurActieplan(boolean b, String feedback) {
+        try {
+            gc.keurActieplan(b, feedback);
+        } catch (IllegalArgumentException e) {
+            errorLbl.setText("U moet een feedback ingeven");
+        }
+
+    }
+
+    private void actieButtonsSwitch() {
+        //allesgekeurd = true
+
+        keurActieAfBtn.setText("Actieplan afkeuren");
+        keurActieGoed.setText("Actieplan goedkeuren");
+        actieDetailTxtArea.setEditable(true);
+        actieDetailTxtArea.promptTextProperty().setValue("Geef hier je feedback op het globale actieplan in");
     }
 }

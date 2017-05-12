@@ -18,11 +18,11 @@ public abstract class GroepState {
 
     protected Groep groep;
     
-    protected State state;
+ //  protected State state;
     
     public GroepState(Groep gr) {
         groep = gr;
-        state = gr.getCurrentState();
+  //     state = gr.getCurrentState();
     }
 
     public boolean actiesToegankelijk() {
@@ -63,4 +63,11 @@ public abstract class GroepState {
     public void actiesgekeurd(boolean b, String titel, String actiefeedback) {
   
        };
+
+    public boolean actiesgekeurd() {
+      return false; }
+    
+    public void keurActiePlan(boolean b,String globaleFeedback){
+        
+    }
 }

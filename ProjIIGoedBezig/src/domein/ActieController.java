@@ -76,5 +76,9 @@ public Groep getSelectedGroep(){
         selectedGroep.actiesgekeurd(b,titel, actiefeedback);
     }
 
+    public boolean actiesgekeurd() {
+    return selectedGroep.getCurrentState().getCurrentState().actiesgekeurd();
+    }
+
 
 }
