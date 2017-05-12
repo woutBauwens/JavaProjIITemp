@@ -28,7 +28,6 @@ public class SQLConnection {
 
     protected SQLConnection() throws SQLException, ClassNotFoundException {
         connect();
-        System.out.println("You are now connected to the server.");
         PasswordGenerator.generate();
     }
 
