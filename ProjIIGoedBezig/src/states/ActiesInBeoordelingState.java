@@ -94,8 +94,6 @@ public class ActiesInBeoordelingState extends GroepState {
                 throw new IllegalArgumentException();
             }
         groep.setActieplanFeedback(globaleFeedback);
-        if(b){
-            groep.toState(States.actiegoedgekeurd);
-        }
+            groep.keurActie(b);
     }
 }

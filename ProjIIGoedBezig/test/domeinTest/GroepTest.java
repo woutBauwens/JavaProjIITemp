@@ -46,7 +46,7 @@ public class GroepTest {
     @Test
     public void veranderStateTest() {
         States state = groep.getState().equals(States.empty.name()) ? States.written : States.empty;
-        groep.toState(state);
+    //    groep.toState(state);
         Assert.assertEquals(groep.getState(), state.name());
     }
 
