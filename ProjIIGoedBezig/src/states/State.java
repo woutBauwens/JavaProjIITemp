@@ -33,6 +33,7 @@ public class State implements Serializable {
     }
 
     public State(States name, GroepState state) {
+        
         this.name = name.name();
         this.state = state;
     }

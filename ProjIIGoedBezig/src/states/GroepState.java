@@ -18,11 +18,11 @@ public abstract class GroepState {
 
     protected Groep groep;
     
-    protected State state;
+ //  protected State state;
     
     public GroepState(Groep gr) {
         groep = gr;
-        state = gr.getCurrentState();
+  //     state = gr.getCurrentState();
     }
 
     public boolean actiesToegankelijk() {

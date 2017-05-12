@@ -157,9 +157,9 @@ public class Groep implements Serializable {
     }
 
     public void toState(States state) {
-        if (stateFactory == null) {
-            stateFactory = new GroepStateFactory(this);
-        }
+
+       stateFactory = new GroepStateFactory(this);
+
         currentState = new State(state, stateFactory.createState(state));
 
     }
