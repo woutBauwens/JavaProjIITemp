@@ -116,8 +116,8 @@ public class GroepController {
     }
 
     public boolean draaiboekBeschikbaar() {
-     return    selectedGroep.draaiboekBeschikbaar();
-//        return !selectedGroep.getState().equals(States.actiegoedgekeurd.toString());
+    return    selectedGroep.draaiboekBeschikbaar();
+       // return !selectedGroep.getState().equals(States.actiegoedgekeurd.toString());
     }
 
     public List<String> getGroepsNamen() {

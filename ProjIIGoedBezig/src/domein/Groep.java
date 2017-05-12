@@ -93,6 +93,9 @@ public class Groep implements Serializable {
     }
 
     void setKeuring(boolean keuring) {
+        //het state toekennen deel van deze method moet in de state die eraan mag
+        //en die state moet dan setkeuring oproepen voor de motivatiekeuring te setten
+        //en daarna de tostate om die hieronder te bereiken.
         MotivatieIsGoedgekeurd = keuring;
         currentState = currentState.getCurrentState().verwerkMotivatieKeuring(keuring);
     }
