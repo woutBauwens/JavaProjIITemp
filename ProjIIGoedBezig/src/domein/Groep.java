@@ -10,6 +10,7 @@ package domein;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -44,6 +45,11 @@ public class Groep implements Serializable {
     @ManyToOne
     @JoinColumn(name = "HoofdLectorContactPersoonId")
     private ContactPersoon HoofdLectorContactPersoonId;
+    
+    
+   @Column(name = "ActieplanFeedback")
+    String actieplanFeedback;
+    //dit moet nog in de DB komen
 
     @Transient
     GroepStateFactory stateFactory;
@@ -179,5 +185,22 @@ public class Groep implements Serializable {
     public void actiesgekeurd(boolean b, String titel, String actiefeedback) {
         currentState.getCurrentState().actiesgekeurd(b, titel, actiefeedback);
     }
+
+    void keurActieplan(boolean b,String actieplanFeedback) {
+      currentState.getCurrentState().keurActiePlan(b, actieplanFeedback);}
+
+    public String getActieplanFeedback() {
+        return actieplanFeedback;
+    }
+
+    public void setActieplanFeedback(String actieplanFeedback) {
+        
+        this.actieplanFeedback = actieplanFeedback;
+    }
+    
+    public boolean actiesGekeurd(){
+        return currentState.getCurrentState().actiesgekeurd();
+    }
+    
 
 }

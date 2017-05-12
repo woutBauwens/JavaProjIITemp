@@ -63,4 +63,11 @@ public abstract class GroepState {
     public void actiesgekeurd(boolean b, String titel, String actiefeedback) {
   
        };
+
+    public boolean actiesgekeurd() {
+      return false; }
+    
+    public void keurActiePlan(boolean b,String globaleFeedback){
+        
+    }
 }

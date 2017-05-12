@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import repository.CursistDao;
 import repository.CursistDaoJpa;
 import repository.GenericDao;
 import states.States;
@@ -25,7 +26,7 @@ public class GroepController {
     private ContactPersoon lector;
     private Groep selectedGroep;
     private GenericDao groepRepo;
-    private CursistDaoJpa ledenRepo;
+    private CursistDao ledenRepo;
     private ActieController AC;
     private MotivatieController MC;
     
@@ -33,7 +34,7 @@ public class GroepController {
         selectedGroep=g;
     }
 
-    public GroepController(GenericDao groepRepo, CursistDaoJpa ledenRepo, ContactPersoon lector) {
+    public GroepController(GenericDao groepRepo, CursistDao ledenRepo, ContactPersoon lector) {
         try {
             AC = new ActieController();
             MC = new MotivatieController();
@@ -59,14 +60,14 @@ public class GroepController {
             System.out.println("Er zijn nieuwe meldingen.");
         }
     }
-
-    public void setObject(Object o) {
-        if (o instanceof Lector) {
-            lector = (Lector) o;
-        } else if (o instanceof Groep) {
-            selectedGroep = (Groep) o;
-        }
-    }
+//
+//    public void setObject(Object o) {
+//        if (o instanceof Lector) {
+//            lector = (Lector) o;
+//        } else if (o instanceof Groep) {
+//            selectedGroep = (Groep) o;
+//        }
+//    }
 
     public List<Groep> getGroepenByLector() {
         return lector.getGroepen();
@@ -92,9 +93,9 @@ public class GroepController {
         groepRepo.persist(selectedGroep);
     }
 
-    public String getGroepState() {
-        return selectedGroep.getState();
-    }
+//    public String getGroepState() {
+//        return selectedGroep.getState();
+//    }
 
     public boolean actiesToegankelijk() {
         return selectedGroep.actiesToegankelijk();
@@ -123,6 +124,10 @@ public class GroepController {
     public List<String> getGroepsNamen() {
       List<Groep> groepen = lector.getGroepen();
      return  groepen.stream().map(Groep::getNaam).collect(Collectors.toList());
+    }
+
+    public void keurActieplan(boolean b,String feedback) {
+       selectedGroep.keurActieplan(b,feedback);
     }
 
 
