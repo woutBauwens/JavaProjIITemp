@@ -45,9 +45,8 @@ public class Groep implements Serializable {
     @ManyToOne
     @JoinColumn(name = "HoofdLectorContactPersoonId")
     private ContactPersoon HoofdLectorContactPersoonId;
-    
-    
- //  @Column(name = "ActieplanFeedback")
+
+    //  @Column(name = "ActieplanFeedback")
     @Transient
     String actieplanFeedback;
     //dit moet nog in de DB komen
@@ -96,14 +95,14 @@ public class Groep implements Serializable {
         motivaties.add(m);
     }
 
-
     public void setKeuring(boolean keuring) {
 
         MotivatieIsGoedgekeurd = keuring;
-        if(keuring)
+        if (keuring) {
             toState(States.approved);
-        else
+        } else {
             toState(States.written);
+        }
     }
 
     public State getCurrentState() {
@@ -163,7 +162,7 @@ public class Groep implements Serializable {
 
     private void toState(States state) {
 
-       stateFactory = new GroepStateFactory(this);
+        stateFactory = new GroepStateFactory(this);
 
         currentState = new State(state, stateFactory.createState(state));
 
@@ -182,31 +181,33 @@ public class Groep implements Serializable {
     }
 
     public void actiesgekeurd(boolean b, String titel, String actiefeedback) {
-        keurActie(b);
         currentState.getCurrentState(this).actiesgekeurd(b, titel, actiefeedback);
+        keurActie(b);
     }
 
-    void keurActieplan(boolean b,String actieplanFeedback) {
-      currentState.getCurrentState(this).keurActiePlan(b, actieplanFeedback);}
+    void keurActieplan(boolean b, String actieplanFeedback) {
+        currentState.getCurrentState(this).keurActiePlan(b, actieplanFeedback);
+    }
 
     public String getActieplanFeedback() {
         return actieplanFeedback;
     }
 
     public void setActieplanFeedback(String actieplanFeedback) {
-        
+
         this.actieplanFeedback = actieplanFeedback;
     }
-    
-    public boolean actiesGekeurd(){
+
+    public boolean actiesGekeurd() {
         return currentState.getCurrentState(this).actiesgekeurd();
     }
 
     public void keurActie(boolean b) {
-        if(b)
+        if (b) {
             toState(States.actiegoedgekeurd);
-        else
+        } else {
             toState(States.approved);
+        }
     }
 
 }

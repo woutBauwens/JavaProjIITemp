@@ -37,6 +37,12 @@ public class ActiesGoedgekeurdState extends GroepState {
         return false;
     }
 
-
-
+    @Override
+    public void actiesgekeurd(boolean b, String titel, String actiefeedback) {
+        if (!actiesgekeurd()) {
+            groep.getCurrentState().setState(States.actiepending, groep);
+            groep.actiesgekeurd(b, titel, actiefeedback);
+        }
+    }
+;
 }
