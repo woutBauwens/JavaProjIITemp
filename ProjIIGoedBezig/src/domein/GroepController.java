@@ -29,9 +29,9 @@ public class GroepController {
     private CursistDao ledenRepo;
     private ActieController AC;
     private MotivatieController MC;
-    
-    public void setGroep(Groep g){
-        selectedGroep=g;
+
+    public void setGroep(Groep g) {
+        selectedGroep = g;
     }
 
     public GroepController(GenericDao groepRepo, CursistDao ledenRepo, ContactPersoon lector) {
@@ -60,14 +60,6 @@ public class GroepController {
             System.out.println("Er zijn nieuwe meldingen.");
         }
     }
-//
-//    public void setObject(Object o) {
-//        if (o instanceof Lector) {
-//            lector = (Lector) o;
-//        } else if (o instanceof Groep) {
-//            selectedGroep = (Groep) o;
-//        }
-//    }
 
     public List<Groep> getGroepenByLector() {
         return lector.getGroepen();
@@ -77,7 +69,7 @@ public class GroepController {
         try {
             List<Groep> groepen = lector.getGroepen();
             selectedGroep = groepen.stream().filter(g -> g.getNaam().equals(naam)).findFirst().get();
-           // selectedGroep.toState(States.valueOf(selectedGroep.getState()));
+            // selectedGroep.toState(States.valueOf(selectedGroep.getState()));
         } catch (Exception e) {
 
         }
@@ -96,7 +88,6 @@ public class GroepController {
 //    public String getGroepState() {
 //        return selectedGroep.getState();
 //    }
-
     public boolean actiesToegankelijk() {
         return selectedGroep.actiesToegankelijk();
     }
@@ -117,18 +108,25 @@ public class GroepController {
     }
 
     public boolean draaiboekBeschikbaar() {
-    return    selectedGroep.draaiboekBeschikbaar();
-       // return !selectedGroep.getState().equals(States.actiegoedgekeurd.toString());
+        return selectedGroep.draaiboekBeschikbaar();
+        // return !selectedGroep.getState().equals(States.actiegoedgekeurd.toString());
     }
 
     public List<String> getGroepsNamen() {
-      List<Groep> groepen = lector.getGroepen();
-     return  groepen.stream().map(Groep::getNaam).collect(Collectors.toList());
+        List<Groep> groepen = lector.getGroepen();
+        return groepen.stream().map(Groep::getNaam).collect(Collectors.toList());
     }
 
-    public void keurActieplan(boolean b,String feedback) {
-       selectedGroep.keurActieplan(b,feedback);
+    public void keurActieplan(boolean b, String feedback) {
+        selectedGroep.keurActieplan(b, feedback);
     }
 
+    public String getActieplanFeedback() {
+        return selectedGroep.getActieplanFeedback();
+    }
+
+    public boolean actieplanReedsGekeurd() {
+        return selectedGroep.actieplanReedsGekeurd();
+    }
 
 }

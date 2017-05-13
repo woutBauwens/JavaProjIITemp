@@ -29,7 +29,7 @@ public class ActiesGoedgekeurdState extends GroepState {
 
     @Override
     public String toonMotivatie() {
-        return groep.getHuidigeMotivatie().getTekst();
+        return String.format("Organisatie: %s%n%s%n", groep.getHuidigeMotivatie().getNaamOrganisatie(), groep.getHuidigeMotivatie().getTekst());
     }
 
     @Override
@@ -44,5 +44,15 @@ public class ActiesGoedgekeurdState extends GroepState {
             groep.actiesgekeurd(b, titel, actiefeedback);
         }
     }
-;
+
+    @Override
+    public boolean actiesgekeurd() {
+        return true;
+    }
+
+    @Override
+    public boolean actieplanReedsGekeurd() {
+        return true;
+    }
+
 }

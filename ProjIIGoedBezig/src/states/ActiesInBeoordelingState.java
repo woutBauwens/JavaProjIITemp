@@ -31,7 +31,7 @@ public class ActiesInBeoordelingState extends GroepState {
 
     @Override
     public String toonMotivatie() {
-        return groep.getHuidigeMotivatie().getTekst();
+        return String.format("Organisatie: %s%n%s%n", groep.getHuidigeMotivatie().getNaamOrganisatie(), groep.getHuidigeMotivatie().getTekst());
     }
 
 //    @Override
@@ -57,9 +57,10 @@ public class ActiesInBeoordelingState extends GroepState {
     public void actiesgekeurd(boolean b, String titel, String feedback) {
 //        boolean allesgekeurd = true;
 //        boolean goedgekeurdeActieAanwezig = false;
-        Activiteit actie = groep.getActie(titel);
-        actie.setGoedgekeurd(b);
-        actie.setFeedback(feedback);
+//        Activiteit actie = groep.getActie(titel);
+//        actie.setGoedgekeurd(b);
+//        actie.setFeedback(feedback);
+        groep.verwerkActieKeuring(b,titel,feedback);
 
 //        List<Activiteit> acties = groep.getActies();
 //        for (Activiteit a : acties) {
@@ -74,7 +75,6 @@ public class ActiesInBeoordelingState extends GroepState {
 //        if (allesgekeurd && goedgekeurdeActieAanwezig) {
 //            groep.toState(States.actiegoedgekeurd);
 //        }
-
     }
 
     @Override
@@ -82,19 +82,30 @@ public class ActiesInBeoordelingState extends GroepState {
         List<Activiteit> acties = groep.getActies();
         boolean allesgekeurd = true;
         for (Activiteit a : acties) {
+            //!a.isGekeurd() || in if
             if (!a.isGekeurd()) {
                 allesgekeurd = false;
             }
+
         }
         return allesgekeurd;
     }
+
+//    @Override
+//    public void keurActiePlan(boolean b, String globaleFeedback) {
+//        if (!b && globaleFeedback.isEmpty()) {
+//            throw new IllegalArgumentException();
+//        }
+//        groep.setActieplanFeedback(globaleFeedback);
+//        groep.keurActie(b);
+//    }
     
-    @Override
-        public void keurActiePlan(boolean b, String globaleFeedback){
-            if(!b && globaleFeedback.isEmpty()){
-                throw new IllegalArgumentException();
-            }
+        @Override
+    public void keurActiePlan(boolean b, String globaleFeedback) {
+        if (!b && globaleFeedback.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
         groep.setActieplanFeedback(globaleFeedback);
-            groep.keurActie(b);
+        groep.keurActie(b);
     }
 }

@@ -24,7 +24,7 @@ public class MotivatieInBeoordelingState extends GroepState {
 
     @Override
     public String toonMotivatie() {
-        return groep.getHuidigeMotivatie().getTekst();
+        return String.format("Organisatie: %s%n%s%n",groep.getHuidigeMotivatie().getNaamOrganisatie(),groep.getHuidigeMotivatie().getTekst());
     }
 
     @Override
@@ -34,13 +34,14 @@ public class MotivatieInBeoordelingState extends GroepState {
 
     @Override
     public void verwerkMotivatieKeuring(boolean keuring) {
-        if(keuring){
-//           groep.toState(States.approved);
-// return new State(States.approved, this);
-        } else {
-  //          groep.toState(States.written);
-          //  return new State(States.written, this);
-        }
+       groep.verwerkMotivatieKeuring(keuring);
+//        if(keuring){
+////           groep.toState(States.approved);
+//// return new State(States.approved, this);
+//        } else {
+//  //          groep.toState(States.written);
+//          //  return new State(States.written, this);
+//        }
     }
 
 }

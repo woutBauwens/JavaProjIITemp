@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -46,7 +47,7 @@ public class Activiteit implements Serializable {
     private String feedback;
     private boolean isGoedgekeurd;
     
-    @Transient
+   @Column(name="IsGekeurd")
     private boolean isGekeurd;
 
     public int getId() {
@@ -80,10 +81,15 @@ public class Activiteit implements Serializable {
             b.append(String.format("%s%n", DateFormat.getInstance().format(UitvoeringsDate)));
         }
         b.append(String.format("%nOmschrijving:%n%s%n", omschrijving));
-        if (feedback != null) {
+    //    if (feedback != null) {
             b.append(String.format("%n%n%s%nFeedback:%n%s%n-------------------------------------------------------------%n", isGoedgekeurd ? "Goedgekeurd" : "Afgekeurd", feedback));
-        }
+  //      }
+        
         return b.toString();
+    }
+    
+    public String getActieDetail(){
+        return  String.format("%s%nOmschrijving:%n%s%n",titel,omschrijving);
     }
 
     public String getFeedback() {

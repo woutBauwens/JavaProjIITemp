@@ -32,6 +32,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import repository.GenericDaoJpa;
 import repository.LoginDaoJpa;
+import states.States;
 
 /**
  * FXML Controller class
@@ -152,6 +153,7 @@ public class GroepOverzichtController extends GridPane {
         String selectedgroep = groepListView.getSelectionModel().getSelectedItem();
         setSelectedGroep(selectedgroep);
         tabPane.setDisable(false);
+        historiekTxtArea.clear();
 
         toonMotivatie();
         toonActies();
@@ -225,33 +227,30 @@ public class GroepOverzichtController extends GridPane {
 
         dialog.showAndWait()
                 .ifPresent(response -> {
-//                    if (!ta.getText().isEmpty()) {
                     actiefeedback = ta.getText().isEmpty() ? "Geen feedback" : ta.getText();
                     ac.keurActie(b, titel, actiefeedback);
-//                        ac.keurActie(b, titel);
-//                        ac.setFeedbackActie(titel, ta.getText());
-//                    } else {
-//                        ac.keurActie(b, titel);
-//                        ac.setFeedbackActie(titel, "Geen feedback");
-//
-//                    }
+
                 });
-        //    gc.setGroep(ac.getSelectedGroep());
+
         gc.update();
         toonActies();
         toonActieHistoriek();
-        draaiboekBtn.setDisable(gc.draaiboekBeschikbaar());
-        if (gc.getSelectedGroep().actiesGekeurd()) {
-            actieButtonsSwitch();
-        }
+//        draaiboekBtn.setDisable(gc.draaiboekBeschikbaar());
+//        if (gc.getSelectedGroep().actiesGekeurd()) {
+//            actieButtonsSwitch();
+//        }
 
         actieDetailTxtArea.clear();
 
     }
 
     private void toonActies() {
-        if (!gc.actiesToegankelijk()) {
 
+        actieDetailTxtArea.clear();
+        actiesListView.getItems().clear();
+        if (!gc.actiesToegankelijk()) {
+            keurActieAfBtn.setText("Afkeuren");
+            keurActieGoed.setText("Goedkeuren");
             keurActieAfBtn.setDisable(true);
             keurActieGoed.setDisable(true);
             actieDetailTxtArea.clear();
@@ -260,9 +259,12 @@ public class GroepOverzichtController extends GridPane {
         }
 
         draaiboekBtn.setDisable(gc.draaiboekBeschikbaar());
-        if (gc.getSelectedGroep().actiesGekeurd()) {
+        //   if (gc.getSelectedGroep().actiesGekeurd()) {
+        if (gc.getSelectedGroep().actiesGekeurd() && !gc.actieplanReedsGekeurd()) {
             actieButtonsSwitch();
+
         }
+        //   }
 
     }
 
@@ -280,8 +282,8 @@ public class GroepOverzichtController extends GridPane {
     private void toonActieDetail() {
         String actie = actiesListView.getSelectionModel().getSelectedItem();
         if (actie != null) {
-            keurActieAfBtn.setDisable(false);
-            keurActieGoed.setDisable(false);
+//            keurActieAfBtn.setDisable(false);
+//            keurActieGoed.setDisable(false);
             actieDetailTxtArea.setEditable(false);
             actieDetailTxtArea.setText(ac.toonDetailActie(actie));
             keurActieAfBtn.setDisable(ac.Actiekeurbaar(actie));
@@ -294,6 +296,7 @@ public class GroepOverzichtController extends GridPane {
         if (!gc.actiesToegankelijk()) {
             historiekTxtArea.setEditable(false);
             historiekTxtArea.setWrapText(true);
+
             historiekTxtArea.setText(ac.getActieHistoriek());
         }
     }
@@ -326,6 +329,12 @@ public class GroepOverzichtController extends GridPane {
     private void keurActieplan(boolean b, String feedback) {
         try {
             gc.keurActieplan(b, feedback);
+            actieDetailTxtArea.setEditable(false);
+            actieDetailTxtArea.clear();
+            keurActieGoed.setDisable(true);
+            keurActieAfBtn.setDisable(true);
+            gc.update();
+            toonActieHistoriek();
         } catch (IllegalArgumentException e) {
             errorLbl.setText("U moet een feedback ingeven");
         }
@@ -337,7 +346,11 @@ public class GroepOverzichtController extends GridPane {
 
         keurActieAfBtn.setText("Actieplan afkeuren");
         keurActieGoed.setText("Actieplan goedkeuren");
+
         actieDetailTxtArea.setEditable(true);
         actieDetailTxtArea.promptTextProperty().setValue("Geef hier je feedback op het globale actieplan in");
+        keurActieAfBtn.setDisable(false);
+        keurActieGoed.setDisable(false);
+
     }
 }

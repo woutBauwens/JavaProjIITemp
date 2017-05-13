@@ -58,6 +58,10 @@ public class Motivatie implements Serializable {
     public String getTekst() {
         return MotivatieTekst;
     }
+    
+    public String getNaamOrganisatie(){
+        return NaamOrganisatie;
+    }
 
     public void setTekst(String tekst) {
         MotivatieTekst = tekst;
@@ -81,7 +85,7 @@ public class Motivatie implements Serializable {
 
   @Override
   public String toString(){
-      return String.format("%s%nMotivatie:%n%s%n%n%s%n-------------------------------------------------------------%n",DateFormat.getInstance().format(Date), MotivatieTekst, Feedback==null?"": "Feedback: \n" + Feedback);
+      return String.format("%s%n%s%nMotivatie:%n%s%n%n%s%n-------------------------------------------------------------%n",NaamOrganisatie,DateFormat.getInstance().format(Date), MotivatieTekst, Feedback==null?"": "Feedback: \n" + Feedback);
   }
 
 }
