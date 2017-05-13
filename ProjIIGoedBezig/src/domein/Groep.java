@@ -46,9 +46,8 @@ public class Groep implements Serializable {
     @JoinColumn(name = "HoofdLectorContactPersoonId")
     private ContactPersoon HoofdLectorContactPersoonId;
 
-    //  @Column(name = "ActieplanFeedback")
-    @Transient
-    String actieplanFeedback;
+    @Column(name = "ActieplanFeedback")
+    private String actieplanFeedback;
     //dit moet nog in de DB komen
 
     @Transient
