@@ -250,7 +250,7 @@ public class GroepOverzichtController extends GridPane {
     }
 
     private void toonActies() {
-        if (!gc.actiesToegankelijk()) {
+        if (gc.actiesToegankelijk()) {
 
             keurActieAfBtn.setDisable(true);
             keurActieGoed.setDisable(true);
@@ -291,11 +291,14 @@ public class GroepOverzichtController extends GridPane {
 
     @FXML
     private void toonActieHistoriek() {
-        if (!gc.actiesToegankelijk()) {
+        historiekTxtArea.setEditable(false);
+        historiekTxtArea.setWrapText(true);
+        historiekTxtArea.setText(ac.getGekeurdeActiesHistoriek());
+        /*   if (!gc.actiesToegankelijk()) {
             historiekTxtArea.setEditable(false);
             historiekTxtArea.setWrapText(true);
             historiekTxtArea.setText(ac.getActieHistoriek());
-        }
+        } */
     }
 
     @FXML

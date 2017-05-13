@@ -19,6 +19,7 @@ import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -28,10 +29,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import repository.CursistDaoJpa;
 import repository.GenericDaoJpa;
 import repository.LoginDaoJpa;
@@ -92,7 +96,7 @@ public class DraaiboekOverzichtController extends GridPane {
             throw new RuntimeException(ex);
         }
         vulViewOp();
-        draaiboeklbl.setText("Draaiboek van "+ dc.getSelectedGroep().getNaam());
+        draaiboeklbl.setText("Draaiboek van " + dc.getSelectedGroep().getNaam());
     }
 
     @FXML
@@ -108,8 +112,24 @@ public class DraaiboekOverzichtController extends GridPane {
             realisatieColumn.setCellValueFactory(new PropertyValueFactory("realisatie"));
             groepSturingColumn.setCellValueFactory(new PropertyValueFactory("groepBijsturing"));
             lectorSturingColumn.setCellValueFactory(new PropertyValueFactory("lectorBijsturing"));
+            lectorSturingColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<String>() {
+                @Override
+                public String toString(String object) {
+                    return object;
+                }
+
+                @Override
+                public String fromString(String string) {
+                    return string;
+                }
+            }));
+            lectorSturingColumn.setEditable(true);
+            lectorSturingColumn.setOnEditCommit((TableColumn.CellEditEvent<Taak, String> t1) -> {
+                ((Taak) t1.getTableView().getItems().get(t1.getTablePosition().getRow())).setLectorBijsturing(t1.getNewValue());
+            });
             data.add(t);
             draaiboekTable.setItems(data);
+            draaiboekTable.setEditable(true);
 //            if (t.getLectorBijsturing() != null) {
 //                feedbackTextArea.setEditable(false);
 //                verzendBtn.setDisable(true);

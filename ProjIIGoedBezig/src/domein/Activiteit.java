@@ -46,7 +46,6 @@ public class Activiteit implements Serializable {
     private String feedback;
     private boolean isGoedgekeurd;
     
-    @Transient
     private boolean isGekeurd;
 
     public int getId() {

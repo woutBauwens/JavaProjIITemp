@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import persistentie.ConnectionReceiver;
 import repository.GenericDao;
@@ -68,8 +69,9 @@ public Groep getSelectedGroep(){
     }
 
     public boolean Actiekeurbaar(String actie) {
-        Activiteit activiteit = selectedGroep.getActie(actie);
-        return activiteit.getFeedback() != null;
+        return !selectedGroep.getActie(actie).isGekeurd();
+    //    Activiteit activiteit = selectedGroep.getActie(actie);
+    //    return activiteit.getFeedback() != null;
     }
 
     public void keurActie(boolean b, String titel, String actiefeedback) {
@@ -82,5 +84,11 @@ public Groep getSelectedGroep(){
     return selectedGroep.getCurrentState().getCurrentState(selectedGroep).actiesgekeurd();
     }
 
-
+    public String getGekeurdeActiesHistoriek() {
+        String historiek = "";
+        for(Activiteit act: selectedGroep.getActies().stream().filter(a -> a.isGekeurd()).collect(Collectors.toList())){
+            historiek = act.toString() + "\n" + historiek;
+        }
+        return historiek;
+    }
 }
