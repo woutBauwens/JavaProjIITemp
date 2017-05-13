@@ -102,8 +102,8 @@ public class DraaiboekOverzichtController extends GridPane {
     @FXML
     private void toonActieDraaiboek() {
         draaiboekTable.getItems().clear();
-        feedbackTextArea.setEditable(false);
-        verzendBtn.setDisable(true);
+//        feedbackTextArea.setEditable(false);
+//        verzendBtn.setDisable(true);
         List<Taak> taken = dc.geefTaken(actiesListview.getSelectionModel().getSelectedItem());
         for (Taak t : taken) {
             wieColumn.setCellValueFactory(new PropertyValueFactory("wie"));
@@ -112,20 +112,11 @@ public class DraaiboekOverzichtController extends GridPane {
             realisatieColumn.setCellValueFactory(new PropertyValueFactory("realisatie"));
             groepSturingColumn.setCellValueFactory(new PropertyValueFactory("groepBijsturing"));
             lectorSturingColumn.setCellValueFactory(new PropertyValueFactory("lectorBijsturing"));
-            lectorSturingColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<String>() {
-                @Override
-                public String toString(String object) {
-                    return object;
-                }
-
-                @Override
-                public String fromString(String string) {
-                    return string;
-                }
-            }));
+            lectorSturingColumn.setCellFactory(TextFieldTableCell.forTableColumn());
             lectorSturingColumn.setEditable(true);
             lectorSturingColumn.setOnEditCommit((TableColumn.CellEditEvent<Taak, String> t1) -> {
                 ((Taak) t1.getTableView().getItems().get(t1.getTablePosition().getRow())).setLectorBijsturing(t1.getNewValue());
+                dc.setFeedbackTaak(t, t.getLectorBijsturing());
             });
             data.add(t);
             draaiboekTable.setItems(data);
@@ -204,21 +195,21 @@ public class DraaiboekOverzichtController extends GridPane {
 
     @FXML
     private void enableFeedback(MouseEvent event) {
-        Taak t = draaiboekTable.getSelectionModel().getSelectedItem();
+/*        Taak t = draaiboekTable.getSelectionModel().getSelectedItem();
         if (t.getLectorBijsturing() == null) {
             feedbackTextArea.setEditable(true);
             verzendBtn.setDisable(false);
-        }
+        } */
     }
 
     @FXML
-    private void setFeedbackTaak(ActionEvent event) {
+    private void setFeedbackTaak(ActionEvent event) { /*
         dc.setFeedbackTaak(draaiboekTable.getSelectionModel().getSelectedItem(), feedbackTextArea.getText());
-//        Taak t = draaiboekTable.getSelectionModel().getSelectedItem();
-//        t.setLectorBijsturing(feedbackTextArea.getText());
+        Taak t = draaiboekTable.getSelectionModel().getSelectedItem();
+        t.setLectorBijsturing(feedbackTextArea.getText());
         feedbackTextArea.setEditable(false);
         feedbackTextArea.clear();
         verzendBtn.setDisable(true);
-        toonActieDraaiboek();
+        toonActieDraaiboek(); */
     }
 }
