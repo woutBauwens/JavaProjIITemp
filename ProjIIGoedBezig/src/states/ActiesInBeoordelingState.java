@@ -77,11 +77,12 @@ public class ActiesInBeoordelingState extends GroepState {
 
     }
 
+    @Override
     public boolean actiesgekeurd() {
         List<Activiteit> acties = groep.getActies();
         boolean allesgekeurd = true;
         for (Activiteit a : acties) {
-            if (a.getFeedback() == null) {
+            if (!a.isGekeurd()) {
                 allesgekeurd = false;
             }
         }
@@ -94,8 +95,6 @@ public class ActiesInBeoordelingState extends GroepState {
                 throw new IllegalArgumentException();
             }
         groep.setActieplanFeedback(globaleFeedback);
-        if(b){
-            groep.toState(States.actiegoedgekeurd);
-        }
+            groep.keurActie(b);
     }
 }

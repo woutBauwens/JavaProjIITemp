@@ -51,13 +51,15 @@ public Groep getSelectedGroep(){
 
     public String getActieHistoriek() {
         StringBuilder historiek = new StringBuilder();
-        selectedGroep.getActies().stream().filter(a -> a.getFeedback() != null).forEach(a -> historiek.append(a.toString()).append("\n"));
+        selectedGroep.getActies().stream().filter(a -> a.isGekeurd()).forEach(a -> historiek.append(a.toString()).append("\n"));
         return historiek.toString();
     }
 
     public List<String> getActieNamenLijst() {
         List<String> actienamen = new ArrayList<>();
-        selectedGroep.getActies().stream().filter(a -> a.getFeedback() == null).forEach(a -> actienamen.add(a.getTitel()));
+        selectedGroep.getActies().stream().filter(a -> {
+            return !a.isGekeurd();
+        }).forEach(a -> actienamen.add(a.getTitel()));
         return actienamen;
     }
 
@@ -77,7 +79,7 @@ public Groep getSelectedGroep(){
     }
 
     public boolean actiesgekeurd() {
-    return selectedGroep.getCurrentState().getCurrentState().actiesgekeurd();
+    return selectedGroep.getCurrentState().getCurrentState(selectedGroep).actiesgekeurd();
     }
 
 

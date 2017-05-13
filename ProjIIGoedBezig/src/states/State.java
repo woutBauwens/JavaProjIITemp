@@ -26,14 +26,10 @@ public class State implements Serializable {
     @Transient
     private GroepState state;
 
-    @Transient
-    private GroepStateFactory stateFactory;
-
     public State() {
     }
 
     public State(States name, GroepState state) {
-        
         this.name = name.name();
         this.state = state;
     }
@@ -50,7 +46,10 @@ public class State implements Serializable {
         return state.toString();
     }
 
-    public GroepState getCurrentState() {
+    public GroepState getCurrentState(Groep g) {
+        if (state == null) {
+            setState(States.valueOf(name), g);
+        }
         return state;
     }
 }

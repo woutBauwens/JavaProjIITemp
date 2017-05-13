@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -32,9 +33,9 @@ public class Activiteit implements Serializable {
     @ManyToOne
     @JoinColumn(name = "GBGroepId")
     private Groep GBGroepId;
-    
-   @OneToMany(mappedBy = "activiteitId", cascade = CascadeType.REFRESH)
-   @JoinColumn(name="ActiviteitId")
+
+    @OneToMany(mappedBy = "activiteitId", cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "ActiviteitId")
     private List<Taak> taken;
 
     private String titel;
@@ -44,6 +45,9 @@ public class Activiteit implements Serializable {
 
     private String feedback;
     private boolean isGoedgekeurd;
+    
+    @Transient
+    private boolean isGekeurd;
 
     public int getId() {
         return ActiviteitId;
@@ -92,15 +96,19 @@ public class Activiteit implements Serializable {
     }
 
     public void setGoedgekeurd(boolean b) {
+        isGekeurd = true;
         isGoedgekeurd = b;
     }
 
     public boolean getGoedgekeurd() {
         return isGoedgekeurd;
     }
-    
-    public List<Taak> getTaken(){
+
+    public List<Taak> getTaken() {
         return taken;
     }
 
+    public boolean isGekeurd() {
+        return isGekeurd;
+    }
 }

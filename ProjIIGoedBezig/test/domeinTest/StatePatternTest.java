@@ -48,14 +48,14 @@ public class StatePatternTest {
     public void toApprovedState(){
         Groep groep = groepen.stream().filter(g -> g.getState().equals(States.pending.name())).findFirst().orElse(alterGroep(States.pending));
         groep.setKeuring(true);
-  //      Assert.assertEquals(groep.getState(), States.approved.name());
+        Assert.assertEquals(groep.getState(), States.approved.name());
     }
     
     @Test
     public void toDeniedState(){
         Groep groep = groepen.stream().filter(g -> g.getState().equals(States.pending.name())).findFirst().orElse(alterGroep(States.pending));
         groep.setKeuring(false);
-  //      Assert.assertTrue(groep.isGoedgekeurd());
+        Assert.assertTrue(groep.isGoedgekeurd());
     }
     
     @Test(expected = Exception.class)

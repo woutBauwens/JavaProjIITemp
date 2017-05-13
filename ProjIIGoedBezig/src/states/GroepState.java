@@ -65,7 +65,8 @@ public abstract class GroepState {
        };
 
     public boolean actiesgekeurd() {
-      return false; }
+        return groep.getActies().stream().filter(a -> a.isGekeurd()).findAny().isPresent();
+    }
     
     public void keurActiePlan(boolean b,String globaleFeedback){
         

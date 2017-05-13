@@ -45,9 +45,9 @@ public class Groep implements Serializable {
     @ManyToOne
     @JoinColumn(name = "HoofdLectorContactPersoonId")
     private ContactPersoon HoofdLectorContactPersoonId;
-    
-    
-   @Column(name = "ActieplanFeedback")
+
+    //  @Column(name = "ActieplanFeedback")
+    @Transient
     String actieplanFeedback;
     //dit moet nog in de DB komen
 
@@ -62,10 +62,6 @@ public class Groep implements Serializable {
 
     }
 
-//    public void initializeState() {
-//        GroepStateFactory gsf = new GroepStateFactory();
-//        state = gsf.createPlayerFactory(currentState);
-//    }
     @Override
     public String toString() {
         return String.format("%s\n%s\n%s", naam, motivaties.get(0).getTekst(), acties.isEmpty() ? "Geen acties" : acties.get(0).getId());
@@ -99,12 +95,14 @@ public class Groep implements Serializable {
         motivaties.add(m);
     }
 
-
     public void setKeuring(boolean keuring) {
 
         MotivatieIsGoedgekeurd = keuring;
-
-        currentState.getCurrentState().verwerkMotivatieKeuring(keuring);
+        if (keuring) {
+            toState(States.approved);
+        } else {
+            toState(States.written);
+        }
     }
 
     public State getCurrentState() {
@@ -122,11 +120,11 @@ public class Groep implements Serializable {
 
     }
 
-    void setFeedback(String response) {
+    public void setFeedback(String response) {
         getHuidigeMotivatie().setFeedback(response);
     }
 
-    boolean isMotivatieVerstuurd() {
+    public boolean isMotivatieVerstuurd() {
         return getHuidigeMotivatie().isVerstuurd();
     }
 
@@ -147,24 +145,24 @@ public class Groep implements Serializable {
     }
 
     public boolean actiesToegankelijk() {
-        return currentState.getCurrentState().actiesToegankelijk();
+        return currentState.getCurrentState(this).actiesToegankelijk();
     }
 
     public String toonMotivatie() {
-        return currentState.getCurrentState().toonMotivatie();
+        return currentState.getCurrentState(this).toonMotivatie();
     }
 
     public String geefMotivatieStatus() {
-        return currentState.getCurrentState().geefMotivatieStatus();
+        return currentState.getCurrentState(this).geefMotivatieStatus();
     }
 
     public boolean MotivatieKeurbaar() {
         return getState().equals(States.pending.toString());
     }
 
-    public void toState(States state) {
+    private void toState(States state) {
 
-       stateFactory = new GroepStateFactory(this);
+        stateFactory = new GroepStateFactory(this);
 
         currentState = new State(state, stateFactory.createState(state));
 
@@ -179,28 +177,37 @@ public class Groep implements Serializable {
 //        a.setFeedback(feedback);
 //    }
     public boolean draaiboekBeschikbaar() {
-        return currentState.getCurrentState().draaiboekBeschikbaar();
+        return currentState.getCurrentState(this).draaiboekBeschikbaar();
     }
 
     public void actiesgekeurd(boolean b, String titel, String actiefeedback) {
-        currentState.getCurrentState().actiesgekeurd(b, titel, actiefeedback);
+        currentState.getCurrentState(this).actiesgekeurd(b, titel, actiefeedback);
+        keurActie(b);
     }
 
-    void keurActieplan(boolean b,String actieplanFeedback) {
-      currentState.getCurrentState().keurActiePlan(b, actieplanFeedback);}
+    void keurActieplan(boolean b, String actieplanFeedback) {
+        currentState.getCurrentState(this).keurActiePlan(b, actieplanFeedback);
+    }
 
     public String getActieplanFeedback() {
         return actieplanFeedback;
     }
 
     public void setActieplanFeedback(String actieplanFeedback) {
-        
+
         this.actieplanFeedback = actieplanFeedback;
     }
-    
-    public boolean actiesGekeurd(){
-        return currentState.getCurrentState().actiesgekeurd();
+
+    public boolean actiesGekeurd() {
+        return currentState.getCurrentState(this).actiesgekeurd();
     }
-    
+
+    public void keurActie(boolean b) {
+        if (b) {
+            toState(States.actiegoedgekeurd);
+        } else {
+            toState(States.approved);
+        }
+    }
 
 }

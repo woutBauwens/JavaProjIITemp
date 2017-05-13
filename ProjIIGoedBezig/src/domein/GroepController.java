@@ -77,7 +77,7 @@ public class GroepController {
         try {
             List<Groep> groepen = lector.getGroepen();
             selectedGroep = groepen.stream().filter(g -> g.getNaam().equals(naam)).findFirst().get();
-            selectedGroep.toState(States.valueOf(selectedGroep.getState()));
+           // selectedGroep.toState(States.valueOf(selectedGroep.getState()));
         } catch (Exception e) {
 
         }
