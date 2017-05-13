@@ -12,31 +12,31 @@ import domein.Groep;
  * @author kenne
  */
 public class ActiesGoedgekeurdState extends GroepState {
-
+    
     public ActiesGoedgekeurdState(Groep gr) {
         super(gr);
     }
-
+    
     @Override
     public String toString() {
         return States.actiegoedgekeurd.toString();
     }
-
+    
     @Override
     public boolean actiesToegankelijk() {
         return false;
     }
-
+    
     @Override
     public String toonMotivatie() {
         return String.format("Organisatie: %s%n%s%n", groep.getHuidigeMotivatie().getNaamOrganisatie(), groep.getHuidigeMotivatie().getTekst());
     }
-
+    
     @Override
     public boolean draaiboekBeschikbaar() {
         return false;
     }
-
+    
     @Override
     public void actiesgekeurd(boolean b, String titel, String actiefeedback) {
         if (!actiesgekeurd()) {
