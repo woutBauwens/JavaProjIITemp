@@ -13,9 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import repository.CursistDao;
-import repository.CursistDaoJpa;
 import repository.GenericDao;
-import states.States;
 
 /**
  *

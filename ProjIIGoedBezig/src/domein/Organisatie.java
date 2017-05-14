@@ -5,12 +5,9 @@
  */
 package domein;
 
-import persistentie.SQLConnection;
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.Id;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 
 /**
  *

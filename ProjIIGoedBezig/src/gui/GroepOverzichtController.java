@@ -7,14 +7,11 @@ package gui;
 
 import domein.ActieController;
 import domein.DraaiboekController;
-import domein.Groep;
 import domein.GroepController;
 import domein.InlogController;
 import domein.MotivatieController;
 import domein.Taak;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,7 +29,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import repository.GenericDaoJpa;
 import repository.LoginDaoJpa;
-import states.States;
 
 /**
  * FXML Controller class

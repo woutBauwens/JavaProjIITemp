@@ -18,7 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.persistence.Transient;
 
 /**
  *
@@ -90,11 +89,6 @@ public class Activiteit implements Serializable {
     
     public String getActieDetail(){
         return  String.format("%s%nOmschrijving:%n%s%n",titel,omschrijving);
-    }
-
-    public String getFeedback() {
-        //  return feedback;
-        return feedback;
     }
 
     public void setFeedback(String feedback) {
