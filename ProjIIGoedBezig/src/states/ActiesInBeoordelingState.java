@@ -40,14 +40,13 @@ public class ActiesInBeoordelingState extends GroepState {
         List<Activiteit> acties = groep.getActies();
         boolean allesgekeurd = true;
         for (Activiteit a : acties) {
-            //!a.isGekeurd() || in if
             if (!a.isGekeurd()) {
                 allesgekeurd = false;
             }
         }
         return allesgekeurd;
     }
-  
+
         @Override
     public void keurActiePlan(boolean b, String globaleFeedback) {
         if (!b && globaleFeedback.isEmpty()) {

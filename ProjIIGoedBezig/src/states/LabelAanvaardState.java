@@ -29,7 +29,12 @@ public class LabelAanvaardState extends GroepState {
 
     @Override
     public String toonMotivatie() {
-        return groep.getHuidigeMotivatie().getTekst();
+        return String.format("Organisatie: %s%n%s%n", groep.getHuidigeMotivatie().getNaamOrganisatie(), groep.getHuidigeMotivatie().getTekst());
+    }
+
+    @Override
+    public boolean actiesgekeurd() {
+        return true;
     }
 
     @Override
