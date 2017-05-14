@@ -27,4 +27,9 @@ public class MotivatieInBeoordelingState extends GroepState {
     public void verwerkMotivatieKeuring(boolean keuring) {
         groep.setKeuring(keuring);
     }
+
+
+    public void setMotivatieKeuring(boolean keuring) {
+       groep.setMotivatieKeuring(keuring);
+    }
 }

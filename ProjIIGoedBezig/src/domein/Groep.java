@@ -48,6 +48,10 @@ public class Groep implements Serializable {
     @Column(name = "ActieplanFeedback")
     private String actieplanFeedback;
 
+    public Groep(State state) {
+        currentState = state;
+    }
+
     protected Groep() {
 
     }
@@ -87,12 +91,14 @@ public class Groep implements Serializable {
     }
 
     public void setKeuring(boolean keuring) {
-        MotivatieIsGoedgekeurd = keuring;
-        if (keuring) {
-            toState(States.approved);
-        } else {
-            toState(States.written);
-        }
+
+        currentState.getCurrentState(this).setMotivatieKeuring(keuring);
+//        MotivatieIsGoedgekeurd = keuring;
+//        if (keuring) {
+//            toState(States.approved);
+//        } else {
+//            toState(States.written);
+//        }
     }
 
     public State getCurrentState() {
@@ -208,6 +214,15 @@ public class Groep implements Serializable {
 
     public boolean actieplanReedsGekeurd() {
         return currentState.getCurrentState(this).actieplanReedsGekeurd();
+    }
+
+    public void setMotivatieKeuring(boolean keuring) {
+        MotivatieIsGoedgekeurd = keuring;
+        if (keuring) {
+            toState(States.approved);
+        } else {
+            toState(States.written);
+        }
     }
 
 }

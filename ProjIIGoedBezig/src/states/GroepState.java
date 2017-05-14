@@ -60,4 +60,8 @@ public abstract class GroepState {
     public boolean actieplanReedsGekeurd() {
         return false;
     }
+
+    public void setMotivatieKeuring(boolean keuring) {
+        throw new IllegalArgumentException("Ongeldige operatie");
+    }
 }
