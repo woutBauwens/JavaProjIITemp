@@ -58,10 +58,6 @@ public class Groep implements Serializable {
 
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s\n%s\n%s", naam, motivaties.get(0).getTekst(), acties.isEmpty() ? "Geen acties" : acties.get(0).getId());
-    }
 
     public boolean isGoedgekeurd() {
         return MotivatieIsGoedgekeurd;
@@ -70,11 +66,6 @@ public class Groep implements Serializable {
     public boolean isVerstuurd() {
         return motivaties.get(0).isVerstuurd();
     }
-//
-//    public void keur(String feedback, boolean b) {
-//        currentState.getCurrentState(this).verwerkMotivatieKeuring(b);
-//        motivaties.get(0).setFeedback(feedback);
-//    }
 
     public String getNaam() {
         return naam;
@@ -106,8 +97,6 @@ public class Groep implements Serializable {
     }
 
     public String getState() {
-
-        //  groepState = states.GroepStateFactory.createState(currentState, this);
         return currentState.toString();
 
     }
@@ -128,7 +117,6 @@ public class Groep implements Serializable {
 
             }
         }
-        //    return acties.stream().filter(a -> a.getTitel().equals(titelActie)).findFirst().get();
         return null;
     }
 
@@ -191,15 +179,6 @@ public class Groep implements Serializable {
             toState(States.approved);
         }
     }
-//
-//    public void verwerkMotivatieKeuring(boolean keuring) {
-//        currentState.getCurrentState(this).verwerkMotivatieKeuring(keuring);
-//        if (keuring) {
-//            toState(States.approved);
-//        } else {
-//            toState(States.written);
-//        }
-//    }
 
     public void verwerkActieKeuring(boolean b, String titel, String feedback) {
         Activiteit actie = getActie(titel);

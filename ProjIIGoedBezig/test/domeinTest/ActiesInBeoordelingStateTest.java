@@ -30,18 +30,13 @@ public class ActiesInBeoordelingStateTest {
     public void before() {
         groep = new Groep(new State(States.actiepending, new ActiesInBeoordelingState(groep)));
         groep.addMotivatie(new Motivatie("org", "tekst"));
-        
+
     }
 
     @Test
     public void actiesToegankelijkTest() {
         Assert.assertFalse(groep.actiesToegankelijk());
     }
-//
-//    @Test
-//    public void toonMotivatieTest() {
-//        Assert.assertEquals(String.format("Organisatie: %s%n%s%n", "org", "tekst"), groep.toonMotivatie());
-//    }
 
     @Test
     public void geefMotivatieStatusTest() {
@@ -57,21 +52,6 @@ public class ActiesInBeoordelingStateTest {
     public void draaiboekBeschikbaarTest() {
         Assert.assertTrue(groep.draaiboekBeschikbaar());
     }
-//    @Test
-//    public void actiesgekeurdTest(boolean b, String titel, String actiefeedback) {
-//      
-//    }
-//
-//    @Test
-//    public void actiesgekeurdTest() {
-//        Assert.assertTrue(groep.actiesGekeurd());
-//    }
-
-//    @Test
-//    public void keurActiePlanTest() {
-//        groep.keurActieplan(true, "string");
-//        Assert.assertEquals(States.actiegoedgekeurd, groep.getState());
-//    }
 
     @Test
     public void actieplanReedsGekeurdTest() {

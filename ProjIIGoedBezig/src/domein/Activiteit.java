@@ -64,14 +64,6 @@ public class Activiteit implements Serializable {
         return titel;
     }
 
-    public String getOmschrijving() {
-        return omschrijving;
-    }
-
-    public Date getUitvoeringsdatum() {
-        return UitvoeringsDate;
-    }
-
     @Override
     public String toString() {
         StringBuilder b = new StringBuilder();
@@ -80,10 +72,7 @@ public class Activiteit implements Serializable {
             b.append(String.format("%s%n", DateFormat.getInstance().format(UitvoeringsDate)));
         }
         b.append(String.format("%nOmschrijving:%n%s%n", omschrijving));
-    //    if (feedback != null) {
             b.append(String.format("%n%n%s%nFeedback:%n%s%n-------------------------------------------------------------%n", isGoedgekeurd ? "Goedgekeurd" : "Afgekeurd", feedback));
-  //      }
-        
         return b.toString();
     }
     

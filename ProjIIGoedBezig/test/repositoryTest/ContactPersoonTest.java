@@ -13,7 +13,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import persistentie.SQLConnection;
 import repository.GenericDao;
 import repository.GenericDaoJpa;
@@ -43,11 +42,11 @@ public class ContactPersoonTest {
 
     @Test
     public void ContactHeeftGroepenTest() {
-        Assert.assertTrue(contact.getGroepen()!=null);
+        Assert.assertTrue(contact.getGroepen() != null);
     }
-    
+
     @Test
-    public void ContactHeeftJuisteGroep(){
-        Assert.assertEquals(gDao.get(contact.getGroepen().get(0).getId()),contact.getGroepen().get(0));
+    public void ContactHeeftJuisteGroep() {
+        Assert.assertEquals(gDao.get(contact.getGroepen().get(0).getId()), contact.getGroepen().get(0));
     }
 }

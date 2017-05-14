@@ -19,7 +19,8 @@ import states.States;
  * @author kenne
  */
 public class MotivatieGoedgekeurdStateTest {
-      private Groep groep;
+
+    private Groep groep;
 
     public MotivatieGoedgekeurdStateTest() {
 
@@ -33,15 +34,8 @@ public class MotivatieGoedgekeurdStateTest {
 
     @Test
     public void actiesToegankelijkTest() {
-        Assert.assertFalse( groep.actiesToegankelijk());
+        Assert.assertFalse(groep.actiesToegankelijk());
     }
-
-//
-//    @Test
-//    public void toonMotivatieTest() {
-//        Assert.assertEquals(String.format("Organisatie: %s%n%s%n", "org", "tekst"), groep.toonMotivatie());
-//    }
-
 
     @Test
     public void geefMotivatieStatusTest() {
@@ -57,10 +51,6 @@ public class MotivatieGoedgekeurdStateTest {
     public void draaiboekBeschikbaarTest() {
         Assert.assertTrue(groep.draaiboekBeschikbaar());
     }
-//    @Test
-//    public void actiesgekeurdTest(boolean b, String titel, String actiefeedback) {
-//      
-//    }
 
     @Test
     public void actiesgekeurdTest() {

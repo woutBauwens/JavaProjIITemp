@@ -20,7 +20,8 @@ import states.States;
  * @author kenne
  */
 public class GeenMotivatieStateTest {
-        private Groep groep;
+
+    private Groep groep;
 
     public GeenMotivatieStateTest() {
 
@@ -33,7 +34,7 @@ public class GeenMotivatieStateTest {
 
     @Test
     public void actiesToegankelijkTest() {
-        Assert.assertTrue( groep.actiesToegankelijk());
+        Assert.assertTrue(groep.actiesToegankelijk());
     }
 
     @Test
@@ -55,10 +56,6 @@ public class GeenMotivatieStateTest {
     public void draaiboekBeschikbaarTest() {
         Assert.assertTrue(groep.draaiboekBeschikbaar());
     }
-//    @Test
-//    public void actiesgekeurdTest(boolean b, String titel, String actiefeedback) {
-//      
-//    }
 
     @Test
     public void actiesgekeurdTest() {

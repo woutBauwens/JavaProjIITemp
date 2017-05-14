@@ -28,14 +28,14 @@ public class PasswordDaoJpa extends GenericDaoJpa<LoginUser> implements Password
                 return false;
             }
         } catch (Exception ex) {
-            return false; //gooit nullpointerexception for some reason
+            return false;
         }
     }
 
     @Override
     public void generatePassword(int lectorId, String value) throws Exception {
         String pass = String.valueOf(lectorId) + value;
-        
+
         em.createNativeQuery("INSERT INTO LoginUser Value (:pass, :id)").setParameter("pass", pass).setParameter("id", lectorId).executeUpdate();
     }
 

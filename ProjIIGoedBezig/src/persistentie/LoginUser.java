@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @Table(name = "JavaUser")
 public class LoginUser implements Serializable {
 
-    private String password; // voorlopig simpel hashing later
+    private String password; 
 
     @Id
     @OneToOne
