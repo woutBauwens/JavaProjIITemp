@@ -59,10 +59,6 @@ public class GroepController {
         }
     }
 
-    public List<Groep> getGroepenByLector() {
-        return lector.getGroepen();
-    }
-
     public void setSelectedGroep(String naam) {
         try {
             List<Groep> groepen = lector.getGroepen();
@@ -71,7 +67,6 @@ public class GroepController {
         } catch (Exception e) {
 
         }
-
     }
 
     public Groep getSelectedGroep() {
@@ -83,17 +78,12 @@ public class GroepController {
         groepRepo.persist(selectedGroep);
     }
 
-//    public String getGroepState() {
-//        return selectedGroep.getState();
-//    }
     public boolean actiesToegankelijk() {
         return selectedGroep.actiesToegankelijk();
     }
 
     public boolean MotivatieKeurbaar() {
-
         return selectedGroep.MotivatieKeurbaar();
-
     }
 
     public String toonLeden() {
@@ -107,7 +97,6 @@ public class GroepController {
 
     public boolean draaiboekBeschikbaar() {
         return selectedGroep.draaiboekBeschikbaar();
-        // return !selectedGroep.getState().equals(States.actiegoedgekeurd.toString());
     }
 
     public List<String> getGroepsNamen() {
@@ -117,10 +106,6 @@ public class GroepController {
 
     public void keurActieplan(boolean b, String feedback) {
         selectedGroep.keurActieplan(b, feedback);
-    }
-
-    public String getActieplanFeedback() {
-        return selectedGroep.getActieplanFeedback();
     }
 
     public boolean actieplanReedsGekeurd() {

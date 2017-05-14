@@ -171,7 +171,6 @@ public class Groep implements Serializable {
     }
 
     public String getActieplanFeedback() {
-        
         return actieplanFeedback;
     }
 
