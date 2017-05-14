@@ -67,26 +67,33 @@ public class StatePatternTest {
     }
 
     @Test
-    public void noStateUpdate() {
-        Groep groep = getGroep(States.actiegoedgekeurd);
-        groep.keur("", true);
-        Assert.assertEquals(groep.getState(), States.actiegoedgekeurd.name());
-    }
-
-    @Test
     public void KeurActieGoed() {
         Groep groep = getGroep(States.actiepending);
         groep.actiesgekeurd(true, groep.getActies().get(0).getTitel(), "");
-        Assert.assertEquals(groep.getState(), States.actiegoedgekeurd.name());
         Assert.assertTrue(groep.getActies().get(0).isGekeurd());
+        Assert.assertTrue(groep.getActies().get(0).getGoedgekeurd());
     }
 
     @Test
     public void KeurActieAf() {
         Groep groep = getGroep(States.actiepending);
         groep.actiesgekeurd(false, groep.getActies().get(0).getTitel(), "");
-        Assert.assertEquals(groep.getState(), States.approved.name());
         Assert.assertTrue(groep.getActies().get(0).isGekeurd());
+        Assert.assertFalse(groep.getActies().get(0).getGoedgekeurd());
+    }
+
+    @Test
+    public void KeurActiePlanGoed() {
+        Groep groep = getGroep(States.actiepending);
+        groep.keurActieplan(true, "goed");
+        Assert.assertEquals(groep.getState(), States.actiegoedgekeurd.name());
+    }
+
+    @Test
+    public void KeurActiePlanAf() {
+        Groep groep = getGroep(States.actiepending);
+        groep.keurActieplan(false, "fout");
+        Assert.assertEquals(groep.getState(), States.approved.name());
     }
 
     @Test
@@ -98,5 +105,12 @@ public class StatePatternTest {
         } catch (Exception e) {
             Assert.assertEquals(groep.getState(), States.pending.name());
         }
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void noStateUpdate() {
+        Groep groep = getGroep(States.actiegoedgekeurd);
+        groep.keur("", true);
+        Assert.assertEquals(groep.getState(), States.actiegoedgekeurd.name());
     }
 }

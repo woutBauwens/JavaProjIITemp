@@ -24,9 +24,11 @@ public class ActieController {
 
     private Groep selectedGroep;
     boolean keurbaar;
-public Groep getSelectedGroep(){
-    return selectedGroep;
-}
+
+    public Groep getSelectedGroep() {
+        return selectedGroep;
+    }
+
     public ActieController() {
     }
 
@@ -36,8 +38,8 @@ public Groep getSelectedGroep(){
 
     public String toonDetailActie(String titelActie) {
 
-        return selectedGroep.getActie(titelActie).toString();
-
+        //   return selectedGroep.getActie(titelActie).toString();
+        return selectedGroep.getActie(titelActie).getActieDetail();
     }
 //
 //    public void setFeedbackActie(String titelActie, String feedback) {
@@ -52,6 +54,8 @@ public Groep getSelectedGroep(){
 
     public String getActieHistoriek() {
         StringBuilder historiek = new StringBuilder();
+        if(selectedGroep.getActieplanFeedback()!=null)
+            historiek.append("Actieplan feedback:").append("\n").append(selectedGroep.getActieplanFeedback()).append("\n");
         selectedGroep.getActies().stream().filter(a -> a.isGekeurd()).forEach(a -> historiek.append(a.toString()).append("\n"));
         return historiek.toString();
     }
@@ -76,12 +80,11 @@ public Groep getSelectedGroep(){
 
     public void keurActie(boolean b, String titel, String actiefeedback) {
 
-
-        selectedGroep.actiesgekeurd(b,titel, actiefeedback);
+        selectedGroep.actiesgekeurd(b, titel, actiefeedback);
     }
 
     public boolean actiesgekeurd() {
-    return selectedGroep.getCurrentState().getCurrentState(selectedGroep).actiesgekeurd();
+        return selectedGroep.getCurrentState().getCurrentState(selectedGroep).actiesgekeurd();
     }
 
     public String getGekeurdeActiesHistoriek() {
