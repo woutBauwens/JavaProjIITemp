@@ -18,11 +18,9 @@ public abstract class GroepState {
 
     protected Groep groep;
     
- //  protected State state;
     
     public GroepState(Groep gr) {
         groep = gr;
-  //     state = gr.getCurrentState();
     }
 
     public boolean actiesToegankelijk() {
@@ -46,15 +44,7 @@ public abstract class GroepState {
     @Override
     public abstract String toString();
     
-    
-   
-/* public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    } */
 
     public boolean draaiboekBeschikbaar() {
       return true;
@@ -67,12 +57,7 @@ public abstract class GroepState {
     public boolean actiesgekeurd(){
         return false;
     } ;
-//    
-//    {
-//       
-//        
-//        return !groep.getActies().stream().filter(a -> a.getFeedback()==null).findAny().isPresent();
-//    }
+
     
     public void keurActiePlan(boolean b,String globaleFeedback){
         

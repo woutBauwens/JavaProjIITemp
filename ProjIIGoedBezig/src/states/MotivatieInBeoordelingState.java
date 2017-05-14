@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package states;
 
 import domein.Groep;
 
-/**
- *
- * @author kenne
- */
 public class MotivatieInBeoordelingState extends GroepState {
 
     public MotivatieInBeoordelingState(Groep gr) {
@@ -24,7 +15,7 @@ public class MotivatieInBeoordelingState extends GroepState {
 
     @Override
     public String toonMotivatie() {
-        return String.format("Organisatie: %s%n%s%n",groep.getHuidigeMotivatie().getNaamOrganisatie(),groep.getHuidigeMotivatie().getTekst());
+        return String.format("Organisatie: %s%n%s%n", groep.getHuidigeMotivatie().getNaamOrganisatie(), groep.getHuidigeMotivatie().getTekst());
     }
 
     @Override
@@ -34,14 +25,7 @@ public class MotivatieInBeoordelingState extends GroepState {
 
     @Override
     public void verwerkMotivatieKeuring(boolean keuring) {
-       groep.verwerkMotivatieKeuring(keuring);
-//        if(keuring){
-////           groep.toState(States.approved);
-//// return new State(States.approved, this);
-//        } else {
-//  //          groep.toState(States.written);
-//          //  return new State(States.written, this);
-//        }
+        groep.verwerkMotivatieKeuring(keuring);
     }
 
 }

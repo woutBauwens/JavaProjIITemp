@@ -27,6 +27,4 @@ public class HeeftMotivatieState extends GroepState {
         return "Motivatie nog niet verstuurd";
     }
 
-
-
 }

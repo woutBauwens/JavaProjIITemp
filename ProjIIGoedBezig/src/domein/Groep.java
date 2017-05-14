@@ -189,7 +189,7 @@ public class Groep implements Serializable {
     }
 
     public String getActieplanFeedback() {
-        
+
         return actieplanFeedback;
     }
 
@@ -203,7 +203,7 @@ public class Groep implements Serializable {
     }
 
     public void keurActie(boolean b) {
-       
+
         if (b) {
             toState(States.actiegoedgekeurd);
         } else {
@@ -212,25 +212,22 @@ public class Groep implements Serializable {
     }
 
     public void verwerkMotivatieKeuring(boolean keuring) {
-       if(keuring){
-           toState(States.approved);
-       }
-       else{
-           toState(States.written);
-       }
-           }
+        if (keuring) {
+            toState(States.approved);
+        } else {
+            toState(States.written);
+        }
+    }
 
     public void verwerkActieKeuring(boolean b, String titel, String feedback) {
-                Activiteit actie = getActie(titel);
+        Activiteit actie = getActie(titel);
         actie.setGoedgekeurd(b);
         actie.setFeedback(feedback);
-        
-        
+
     }
 
     public boolean actieplanReedsGekeurd() {
-       return currentState.getCurrentState(this).actieplanReedsGekeurd();
+        return currentState.getCurrentState(this).actieplanReedsGekeurd();
     }
-
 
 }
