@@ -6,23 +6,19 @@
 package states;
 
 import domein.Groep;
-import javax.persistence.Column;
-import javax.persistence.Id;
+
 /**
  *
  * @author kenne
  */
 public abstract class GroepState {
- 
-  
 
     protected Groep groep;
-    
- //  protected State state;
-    
+
+    //  protected State state;
     public GroepState(Groep gr) {
         groep = gr;
-  //     state = gr.getCurrentState();
+        //     state = gr.getCurrentState();
     }
 
     public boolean actiesToegankelijk() {
@@ -37,48 +33,31 @@ public abstract class GroepState {
         return "Motivatie goedgekeurd";
     }
 
-    public void verwerkMotivatieKeuring(boolean keuring){
+    public void verwerkMotivatieKeuring(boolean keuring) {
+        throw new IllegalArgumentException("Ongeldige operatie");
     }
 
-    public void actiesgekeurd(String titelActie, String feedback) {
-    }
-    
+
     @Override
     public abstract String toString();
-    
-    
-   
-/* public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    } */
 
     public boolean draaiboekBeschikbaar() {
-      return true;
+        return true;
     }
 
     public void actiesgekeurd(boolean b, String titel, String actiefeedback) {
-  
-       };
+        throw new IllegalArgumentException("Ongeldige operatie");
+    }
 
-    public boolean actiesgekeurd(){
+    public boolean actiesgekeurd() {
         return false;
-    } ;
-//    
-//    {
-//       
-//        
-//        return !groep.getActies().stream().filter(a -> a.getFeedback()==null).findAny().isPresent();
-//    }
-    
-    public void keurActiePlan(boolean b,String globaleFeedback){
-        
+    }
+
+    public void keurActiePlan(boolean b, String globaleFeedback) {
+        throw new IllegalArgumentException("Ongeldige operatie");
     }
 
     public boolean actieplanReedsGekeurd() {
         return false;
-                }
+    }
 }
