@@ -8,6 +8,7 @@ package domein;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,54 +27,66 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "Motivatie")
 public class Motivatie implements Serializable {
-
-    private String Feedback;
+    @Column(name="Feedback")
+    private String feedback;
+    @Column(name="Date")
     @Temporal(TemporalType.DATE)
-    private Date Date;
+    private Date date;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int MotivatieId;
-    private String MotivatieTekst;
-    private String NaamOrganisatie;
-    private String AdresOrganisatie;
+    @Column(name = "MotivatieId;")
+    private int motivatieId;
+    @Column(name = "MotivatieTekst")
+    private String motivatieTekst;
+    @Column(name = "NaamOrganisatie")
+    private String naamOrganisatie;
+    @Column(name = "AdresOrganisatie")
+    private String adresOrganisatie;
+    @Column(name = "IsVerstuurd")
     private boolean isVerstuurd;
-    private String EmailOrganisatie;
-    private String WebsiteUrlOrganisatie;
-    private String NaamContactPersoon;
-    private String VoornaamContactPersoon;
-    private String EmailContactPersoon;
-    private String TitelContactPersoon;
+    @Column(name = "EmailOrganisatie")
+    private String emailOrganisatie;
+    @Column(name = "WebsiteUrlOrganisatie")
+    private String websiteUrlOrganisatie;
+    @Column(name = "NaamContactPersoon")
+    private String naamContactPersoon;
+    @Column(name = "VoornaamContactPersoon")
+    private String voornaamContactPersoon;
+    @Column(name = "EmailContactPersoon")
+    private String emailContactPersoon;
+    @Column(name = "TitelContactPersoon")
+    private String titelContactPersoon;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "GBGroepId")
-    private Groep GBGroepId;
-    
+    private Groep gBGroepId;
 
     private Motivatie() {
     }
-    public Motivatie(String organisatie, String tekst){
-        NaamOrganisatie=organisatie;
-        MotivatieTekst = tekst;
+
+    public Motivatie(String organisatie, String tekst) {
+        naamOrganisatie = organisatie;
+        motivatieTekst = tekst;
     }
 
     public String getTekst() {
-        return MotivatieTekst;
+        return motivatieTekst;
     }
-    
-    public String getNaamOrganisatie(){
-        return NaamOrganisatie;
+
+    public String getNaamOrganisatie() {
+        return naamOrganisatie;
     }
 
     public void setTekst(String tekst) {
-        MotivatieTekst = tekst;
+        motivatieTekst = tekst;
     }
 
     public String getFeedback() {
-        return Feedback;
+        return feedback;
     }
 
     public void setFeedback(String feedback) {
-        Feedback = feedback;
+        this.feedback = feedback;
     }
 
     public boolean isVerstuurd() {
@@ -81,12 +94,12 @@ public class Motivatie implements Serializable {
     }
 
     public int getMotivatieId() {
-        return MotivatieId;
+        return motivatieId;
     }
 
-  @Override
-  public String toString(){
-      return String.format("%s%n%s%nMotivatie:%n%s%n%n%s%n-------------------------------------------------------------%n",NaamOrganisatie,DateFormat.getInstance().format(Date), MotivatieTekst, Feedback==null?"": "Feedback: \n" + Feedback);
-  }
+    @Override
+    public String toString() {
+        return String.format("%s%n%s%nMotivatie:%n%s%n%n%s%n-------------------------------------------------------------%n", naamOrganisatie, DateFormat.getInstance().format(date), motivatieTekst, feedback == null ? "" : "Feedback: \n" + feedback);
+    }
 
 }
