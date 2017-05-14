@@ -27,79 +27,79 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "Motivatie")
 public class Motivatie implements Serializable {
-    @Column(name="Feedback")
-    private String feedback;
-    @Column(name="Date")
+
+    private String Feedback;
+
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Date Date;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MotivatieId;")
-    private int motivatieId;
-    @Column(name = "MotivatieTekst")
-    private String motivatieTekst;
-    @Column(name = "NaamOrganisatie")
-    private String naamOrganisatie;
-    @Column(name = "AdresOrganisatie")
-    private String adresOrganisatie;
-    @Column(name = "IsVerstuurd")
-    private boolean isVerstuurd;
-    @Column(name = "EmailOrganisatie")
-    private String emailOrganisatie;
-    @Column(name = "WebsiteUrlOrganisatie")
-    private String websiteUrlOrganisatie;
-    @Column(name = "NaamContactPersoon")
-    private String naamContactPersoon;
-    @Column(name = "VoornaamContactPersoon")
-    private String voornaamContactPersoon;
-    @Column(name = "EmailContactPersoon")
-    private String emailContactPersoon;
-    @Column(name = "TitelContactPersoon")
-    private String titelContactPersoon;
+
+    private int MotivatieId;
+
+    private String MotivatieTekst;
+
+    private String NaamOrganisatie;
+
+    private String AdresOrganisatie;
+
+    private boolean IsVerstuurd;
+
+    private String EmailOrganisatie;
+
+    private String WebsiteUrlOrganisatie;
+
+    private String NaamContactPersoon;
+
+    private String VoornaamContactPersoon;
+
+    private String EmailContactPersoon;
+
+    private String TitelContactPersoon;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "GBGroepId")
-    private Groep gBGroepId;
+    private Groep GBGroepId;
 
     private Motivatie() {
     }
 
     public Motivatie(String organisatie, String tekst) {
-        naamOrganisatie = organisatie;
-        motivatieTekst = tekst;
+        NaamOrganisatie = organisatie;
+        MotivatieTekst = tekst;
     }
 
     public String getTekst() {
-        return motivatieTekst;
+        return MotivatieTekst;
     }
 
     public String getNaamOrganisatie() {
-        return naamOrganisatie;
+        return NaamOrganisatie;
     }
 
     public void setTekst(String tekst) {
-        motivatieTekst = tekst;
+        MotivatieTekst = tekst;
     }
 
     public String getFeedback() {
-        return feedback;
+        return Feedback;
     }
 
     public void setFeedback(String feedback) {
-        this.feedback = feedback;
+        this.Feedback = feedback;
     }
 
     public boolean isVerstuurd() {
-        return isVerstuurd;
+        return IsVerstuurd;
     }
 
     public int getMotivatieId() {
-        return motivatieId;
+        return MotivatieId;
     }
 
     @Override
     public String toString() {
-        return String.format("%s%n%s%nMotivatie:%n%s%n%n%s%n-------------------------------------------------------------%n", naamOrganisatie, DateFormat.getInstance().format(date), motivatieTekst, feedback == null ? "" : "Feedback: \n" + feedback);
+        return String.format("%s%n%s%nMotivatie:%n%s%n%n%s%n-------------------------------------------------------------%n", NaamOrganisatie, DateFormat.getInstance().format(Date), MotivatieTekst, Feedback == null ? "" : "Feedback: \n" + Feedback);
     }
 
 }

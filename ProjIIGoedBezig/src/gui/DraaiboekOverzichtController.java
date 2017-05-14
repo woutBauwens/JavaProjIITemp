@@ -59,18 +59,14 @@ public class DraaiboekOverzichtController extends GridPane {
     private TableColumn<Taak, String> groepSturingColumn;
     @FXML
     private TableColumn<Taak, String> lectorSturingColumn;
-    @FXML
     private TextArea feedbackTextArea;
     @FXML
     private Button terugBtn;
     @FXML
     private Button logoutBtn;
-    @FXML
     private Label errorLbl;
     @FXML
     private Label draaiboeklbl;
-    @FXML
-    private Button verzendBtn;
     private final ObservableList<Taak> data
             = FXCollections.observableArrayList();
 
@@ -169,5 +165,9 @@ public class DraaiboekOverzichtController extends GridPane {
             errorLbl.setText(e.getMessage());
         }
 
+    }
+
+    @FXML
+    private void enableFeedback(MouseEvent event) {
     }
 }
