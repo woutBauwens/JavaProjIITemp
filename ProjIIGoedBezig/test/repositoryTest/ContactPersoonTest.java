@@ -7,19 +7,16 @@ package repositoryTest;
 
 import domein.ContactPersoon;
 import domein.Groep;
-import domein.InlogController;
 import java.sql.SQLException;
 import java.util.List;
-import javax.persistence.EntityManager;
-import junit.framework.Assert;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
+
+
 import persistentie.SQLConnection;
 import repository.GenericDao;
 import repository.GenericDaoJpa;
-import repository.LoginDao;
-import repository.LoginDaoJpa;
 
 /**
  *

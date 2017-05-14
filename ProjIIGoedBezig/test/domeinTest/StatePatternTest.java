@@ -50,14 +50,6 @@ public class StatePatternTest {
     }
 
     @Test
-    public void toApprovedState() {
-        Groep groep = getGroep(States.pending);
-        groep.keur("", true);
-        Assert.assertEquals(groep.getState(), States.approved.name());
-        Assert.assertTrue(groep.isGoedgekeurd());
-    }
-
-    @Test
     public void toDeniedState() {
         Groep groep = getGroep(States.pending);
         groep.keur("", false);
@@ -111,5 +103,6 @@ public class StatePatternTest {
         Groep groep = getGroep(States.actiegoedgekeurd);
         groep.keur("", true);
         Assert.assertEquals(groep.getState(), States.actiegoedgekeurd.name());
+
     }
 }
