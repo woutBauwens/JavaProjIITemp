@@ -48,14 +48,6 @@ public class Groep implements Serializable {
 
     @Column(name = "ActieplanFeedback")
     private String actieplanFeedback;
-    //dit moet nog in de DB komen
-
-    @Transient
-    GroepStateFactory stateFactory;
-//    @Transient
-//    private State state;
-//    @Transient
-//    private GroepState groepState;
 
     protected Groep() {
 
@@ -75,6 +67,7 @@ public class Groep implements Serializable {
     }
 
     public void keur(String feedback, boolean b) {
+        currentState.getCurrentState(this).verwerkMotivatieKeuring(b);
         motivaties.get(0).setFeedback(feedback);
     }
 
@@ -95,7 +88,6 @@ public class Groep implements Serializable {
     }
 
     public void setKeuring(boolean keuring) {
-
         MotivatieIsGoedgekeurd = keuring;
         if (keuring) {
             toState(States.approved);
@@ -160,21 +152,10 @@ public class Groep implements Serializable {
     }
 
     private void toState(States state) {
-
-        stateFactory = new GroepStateFactory(this);
-
+        GroepStateFactory stateFactory = new GroepStateFactory(this);
         currentState = new State(state, stateFactory.createState(state));
-
     }
 
-//    public void actiesgekeurd(String titelActie, String feedback) {
-//        currentState.getCurrentState().actiesgekeurd(titelActie, feedback);
-//    }
-//
-//    public void setFeedbackActie(String titel, String feedback) {
-//        Activiteit a = getActie(titel);
-//        a.setFeedback(feedback);
-//    }
     public boolean draaiboekBeschikbaar() {
         return currentState.getCurrentState(this).draaiboekBeschikbaar();
     }
