@@ -7,10 +7,6 @@ package states;
 
 import domein.Groep;
 
-/**
- *
- * @author kenne
- */
 public class HeeftMotivatieState extends GroepState {
 
     public HeeftMotivatieState(Groep gr) {

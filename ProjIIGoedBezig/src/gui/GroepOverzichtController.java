@@ -232,13 +232,8 @@ public class GroepOverzichtController extends GridPane {
         gc.update();
         toonActies();
         toonActieHistoriek();
-//        draaiboekBtn.setDisable(gc.draaiboekBeschikbaar());
-//        if (gc.getSelectedGroep().actiesGekeurd()) {
-//            actieButtonsSwitch();
-//        }
 
         actieDetailTxtArea.clear();
-
     }
 
     private void toonActies() {
@@ -256,13 +251,10 @@ public class GroepOverzichtController extends GridPane {
         }
 
         draaiboekBtn.setDisable(gc.draaiboekBeschikbaar());
-        //   if (gc.getSelectedGroep().actiesGekeurd()) {
         if (gc.getSelectedGroep().actiesGekeurd() && !gc.actieplanReedsGekeurd()) {
             actieButtonsSwitch();
 
         }
-        //   }
-
     }
 
     @FXML
@@ -270,7 +262,6 @@ public class GroepOverzichtController extends GridPane {
         if (gc.getSelectedGroep() != null) {
             historiekTxtArea.setEditable(false);
             historiekTxtArea.setWrapText(true);
-
             historiekTxtArea.setText(mc.getMotivaties());
         }
     }
@@ -279,8 +270,6 @@ public class GroepOverzichtController extends GridPane {
     private void toonActieDetail() {
         String actie = actiesListView.getSelectionModel().getSelectedItem();
         if (actie != null) {
-//            keurActieAfBtn.setDisable(false);
-//            keurActieGoed.setDisable(false);
             actieDetailTxtArea.setEditable(false);
             actieDetailTxtArea.setText(ac.toonDetailActie(actie));
             keurActieAfBtn.setDisable(ac.Actiekeurbaar(actie));
@@ -293,12 +282,6 @@ public class GroepOverzichtController extends GridPane {
         historiekTxtArea.setEditable(false);
         historiekTxtArea.setWrapText(true);
         historiekTxtArea.setText(ac.getGekeurdeActiesHistoriek());
-        /*   if (!gc.actiesToegankelijk()) {
-            historiekTxtArea.setEditable(false);
-            historiekTxtArea.setWrapText(true);
-
-            historiekTxtArea.setText(ac.getActieHistoriek());
-        } */
     }
 
     @FXML
@@ -338,12 +321,9 @@ public class GroepOverzichtController extends GridPane {
         } catch (IllegalArgumentException e) {
             errorLbl.setText("U moet een feedback ingeven");
         }
-
     }
 
     private void actieButtonsSwitch() {
-        //allesgekeurd = true
-
         keurActieAfBtn.setText("Actieplan afkeuren");
         keurActieGoed.setText("Actieplan goedkeuren");
 
@@ -351,6 +331,5 @@ public class GroepOverzichtController extends GridPane {
         actieDetailTxtArea.promptTextProperty().setValue("Geef hier je feedback op het globale actieplan in");
         keurActieAfBtn.setDisable(false);
         keurActieGoed.setDisable(false);
-
     }
 }
