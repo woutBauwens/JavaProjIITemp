@@ -25,7 +25,7 @@ public class MotivatieInBeoordelingState extends GroepState {
 
     @Override
     public void verwerkMotivatieKeuring(boolean keuring) {
-        groep.verwerkMotivatieKeuring(keuring);
+       groep.verwerkMotivatieKeuring(keuring);
     }
 
 }

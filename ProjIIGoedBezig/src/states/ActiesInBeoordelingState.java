@@ -30,9 +30,11 @@ public class ActiesInBeoordelingState extends GroepState {
         return String.format("Organisatie: %s%n%s%n", groep.getHuidigeMotivatie().getNaamOrganisatie(), groep.getHuidigeMotivatie().getTekst());
     }
 
+
     @Override
     public void actiesgekeurd(boolean b, String titel, String feedback) {
         groep.verwerkActieKeuring(b,titel,feedback);
+
     }
 
     @Override
@@ -47,6 +49,7 @@ public class ActiesInBeoordelingState extends GroepState {
         return allesgekeurd;
     }
 
+    
         @Override
     public void keurActiePlan(boolean b, String globaleFeedback) {
         if (!b && globaleFeedback.isEmpty()) {

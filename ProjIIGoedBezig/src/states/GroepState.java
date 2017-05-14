@@ -14,8 +14,8 @@ import domein.Groep;
 public abstract class GroepState {
 
     protected Groep groep;
-    
-    
+
+    //  protected State state;
     public GroepState(Groep gr) {
         groep = gr;
         //     state = gr.getCurrentState();
