@@ -35,7 +35,6 @@ public class LoginTest {
 
     @Test
     public void testLoginCheck() throws Exception {
-        // infromatie komt uit GBDB
         dao.CheckLogin("wout.bauwens@hotmail.com", "43217wb");
     }
 

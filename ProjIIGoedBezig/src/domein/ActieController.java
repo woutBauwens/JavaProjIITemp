@@ -30,20 +30,9 @@ public class ActieController {
     }
 
     public String toonDetailActie(String titelActie) {
-
-        //   return selectedGroep.getActie(titelActie).toString();
         return selectedGroep.getActie(titelActie).getActieDetail();
     }
-//
-//    public void setFeedbackActie(String titelActie, String feedback) {
-//        selectedGroep.actiesgekeurd(titelActie, feedback);
-//    }
-//
-//    public void keurActie(boolean b, String titel) {
-//
-//        Activiteit a = selectedGroep.getActie(titel);
-//        a.setGoedgekeurd(b);
-//    }
+
 
     public String getActieHistoriek() {
         StringBuilder historiek = new StringBuilder();
@@ -61,14 +50,9 @@ public class ActieController {
         return actienamen;
     }
 
-    public List<Activiteit> getActies() {
-        return selectedGroep.getActies();
-    }
 
     public boolean Actiekeurbaar(String actie) {
         return !selectedGroep.getActie(actie).isGekeurd();
-    //    Activiteit activiteit = selectedGroep.getActie(actie);
-    //    return activiteit.getFeedback() != null;
     }
 
     public void keurActie(boolean b, String titel, String actiefeedback) {

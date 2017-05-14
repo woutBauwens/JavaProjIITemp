@@ -18,5 +18,5 @@ import org.junit.runners.Suite;
     repositoryTest.LoginTest.class
 })
 public class TestAlles {
-    
+
 }

@@ -71,8 +71,6 @@ public class LoginController extends Pane {
         } catch (Exception e) {
             errorLbl.setText(e.getMessage());
         }
-        //dc.setUser(); lector setten zodat kan meegegeven worden et dc naar volgend scherm
-        // GroepOverzichtController GOC = new GroepOverzichtController(dc);
     }
 
 }

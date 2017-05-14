@@ -34,13 +34,8 @@ public class ActiesGoedgekeurdStateTest {
 
     @Test
     public void actiesToegankelijkTest() {
-        Assert.assertFalse( groep.actiesToegankelijk());
+        Assert.assertFalse(groep.actiesToegankelijk());
     }
-//
-//    @Test
-//    public void toonMotivatieTest() {
-//        Assert.assertEquals(String.format("Organisatie: %s%n%s%n", "org", "tekst"), groep.toonMotivatie());
-//    }
 
     @Test
     public void geefMotivatieStatusTest() {
@@ -56,10 +51,6 @@ public class ActiesGoedgekeurdStateTest {
     public void draaiboekBeschikbaarTest() {
         Assert.assertFalse(groep.draaiboekBeschikbaar());
     }
-//    @Test
-//    public void actiesgekeurdTest(boolean b, String titel, String actiefeedback) {
-//      
-//    }
 
     @Test
     public void actiesgekeurdTest() {

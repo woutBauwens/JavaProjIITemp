@@ -47,12 +47,6 @@ public class ContactPersoon implements Serializable {
         return contactPersoonId;
     }
 
-  /*  public ContactPersoon getLector() {
-        if (Discriminator.equals("Lector")) {
-            return this;
-        }
-        return null;
-    } */
 
     public List<Groep> getGroepen() {
         return groepen.subList(0, groepen.size());
