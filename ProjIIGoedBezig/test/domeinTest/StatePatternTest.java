@@ -103,6 +103,5 @@ public class StatePatternTest {
         Groep groep = getGroep(States.actiegoedgekeurd);
         groep.keur("", true);
         Assert.assertEquals(groep.getState(), States.actiegoedgekeurd.name());
-
     }
 }
