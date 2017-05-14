@@ -154,6 +154,7 @@ public class GroepOverzichtController extends GridPane {
         setSelectedGroep(selectedgroep);
         tabPane.setDisable(false);
         historiekTxtArea.clear();
+        feedbackTxtArea.clear();
 
         toonMotivatie();
         toonActies();

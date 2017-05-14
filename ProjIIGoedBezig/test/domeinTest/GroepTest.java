@@ -9,9 +9,10 @@ import domein.Activiteit;
 import domein.ContactPersoon;
 import domein.Groep;
 import java.sql.SQLException;
-import junit.framework.Assert;
+import org.junit.Assert;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
+
 import org.junit.Before;
 import persistentie.SQLConnection;
 import repository.GenericDao;
