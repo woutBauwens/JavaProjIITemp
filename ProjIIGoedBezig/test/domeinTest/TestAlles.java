@@ -8,7 +8,6 @@ import org.junit.runners.Suite;
     domeinTest.ActiesGoedgekeurdStateTest.class,
     domeinTest.ActiesInBeoordelingStateTest.class,
     domeinTest.GeenMotivatieStateTest.class,
-    domeinTest.GroepTest.class,
     domeinTest.HeeftMotivatieStateTest.class,
     domeinTest.LabelAanvaardStateTest.class,
     domeinTest.MotivatieGoedgekeurdStateTest.class,
