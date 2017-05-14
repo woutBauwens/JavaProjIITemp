@@ -287,7 +287,7 @@ public class GroepOverzichtController extends GridPane {
     @FXML
     private void toonDraaiboek(ActionEvent event) throws Exception {
 
-        try {
+       try {
             if (gc.getSelectedGroep() != null) {
                 DraaiboekOverzichtController dc = new DraaiboekOverzichtController(new DraaiboekController(gc.getSelectedGroep(),
                         new GenericDaoJpa(Taak.class)),
