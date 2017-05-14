@@ -66,7 +66,7 @@ public class ActieController {
     }
 
     public boolean Actiekeurbaar(String actie) {
-        return !selectedGroep.getActie(actie).isGekeurd();
+        return selectedGroep.getActie(actie).isGekeurd();
     //    Activiteit activiteit = selectedGroep.getActie(actie);
     //    return activiteit.getFeedback() != null;
     }
@@ -79,12 +79,12 @@ public class ActieController {
     public boolean actiesgekeurd() {
         return selectedGroep.getCurrentState().getCurrentState(selectedGroep).actiesgekeurd();
     }
-
-    public String getGekeurdeActiesHistoriek() {
-        String historiek = "";
-        for(Activiteit act: selectedGroep.getActies().stream().filter(a -> a.isGekeurd()).collect(Collectors.toList())){
-            historiek = act.toString() + "\n" + historiek;
-        }
-        return historiek;
-    }
+//
+//    public String getGekeurdeActiesHistoriek() {
+//        String historiek = "";
+//        for(Activiteit act: selectedGroep.getActies().stream().filter(a -> a.isGekeurd()).collect(Collectors.toList())){
+//            historiek = act.toString() + "\n" + historiek;
+//        }
+//        return historiek;
+//    }
 }

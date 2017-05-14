@@ -281,7 +281,7 @@ public class GroepOverzichtController extends GridPane {
     private void toonActieHistoriek() {
         historiekTxtArea.setEditable(false);
         historiekTxtArea.setWrapText(true);
-        historiekTxtArea.setText(ac.getGekeurdeActiesHistoriek());
+        historiekTxtArea.setText(ac.getActieHistoriek());
     }
 
     @FXML
@@ -289,7 +289,9 @@ public class GroepOverzichtController extends GridPane {
 
         try {
             if (gc.getSelectedGroep() != null) {
-                DraaiboekOverzichtController dc = new DraaiboekOverzichtController(new DraaiboekController(gc.getSelectedGroep(), new GenericDaoJpa(Taak.class)), gc.getLector());
+                DraaiboekOverzichtController dc = new DraaiboekOverzichtController(new DraaiboekController(gc.getSelectedGroep(),
+                        new GenericDaoJpa(Taak.class)),
+                        gc.getLector());
                 Stage stage = (Stage) (this.getScene().getWindow());
                 stage.setTitle("Draaiboek: ");
                 Scene scene;
@@ -321,6 +323,7 @@ public class GroepOverzichtController extends GridPane {
         } catch (IllegalArgumentException e) {
             errorLbl.setText("U moet een feedback ingeven");
         }
+        
     }
 
     private void actieButtonsSwitch() {
