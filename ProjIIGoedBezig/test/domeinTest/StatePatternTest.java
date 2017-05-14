@@ -35,7 +35,6 @@ public class StatePatternTest {
         groepen = dao.findAll();
     }
 
-
     private Groep getGroep(States state) {
         groepen = dao.findAll();
         return groepen.stream().filter(g -> g.getCurrentState().toString().equals(state.name())).findFirst().orElse(alterGroep(state));
@@ -44,17 +43,14 @@ public class StatePatternTest {
     private Groep alterGroep(States state) {
         Groep groep = groepen.get(0);
         groep.getCurrentState().setState(state, groep);
-        //   Assert.assertEquals(groep.getState(), state.name());
+     //   Assert.assertEquals(groep.getState(), state.name());
         return groep;
     }
-    
-    
-
 
     @Test
     public void toDeniedState() {
         Groep groep = getGroep(States.pending);
-        groep.setKeuring(false);
+        groep.setKeuring( false);
         Assert.assertEquals(groep.getState(), States.written.name());
         Assert.assertFalse(groep.isGoedgekeurd());
     }
@@ -76,20 +72,18 @@ public class StatePatternTest {
     }
 
     @Test
+    public void KeurActiePlanGoed() {
+        Groep groep = getGroep(States.actiepending);
+        groep.keurActieplan(true, "goed");
+        Assert.assertEquals(groep.getState(), States.actiegoedgekeurd.name());
+    }
+
+    @Test
     public void KeurActiePlanAf() {
         Groep groep = getGroep(States.actiepending);
         groep.keurActieplan(false, "fout");
-        Assert.assertEquals( States.approved.name(), groep.getState());
+        Assert.assertEquals(groep.getState(), States.approved.name());
     }
-
-    //Als je deze test apart laat lopen faalt hij niet, in de TestSuite wel, als onderdeel van de rest van de testen in deze klasse ook.
-    
-//    @Test
-//    public void KeurActiePlanGoed() {
-//        Groep groep = getGroep(States.actiepending);
-//        groep.keurActieplan(true, "goed");
-//        Assert.assertEquals(States.actiegoedgekeurd.name(), groep.getState());
-//    }
 
     @Test
     public void KeurActieTeVroeg() {
@@ -98,14 +92,14 @@ public class StatePatternTest {
             groep.actiesgekeurd(true, groep.getActies().get(0).getTitel(), ""); // geen acties, geeft error
             Assert.assertFalse(groep.getActies().get(0).isGekeurd());
         } catch (Exception e) {
-            Assert.assertEquals( States.pending.name(), groep.getState());
+            Assert.assertEquals(groep.getState(), States.pending.name());
         }
     }
-
+    
     @Test(expected = IllegalArgumentException.class)
     public void noStateUpdate() {
         Groep groep = getGroep(States.actiegoedgekeurd);
-        groep.setKeuring(true);
-        Assert.assertEquals( States.actiegoedgekeurd.name(), groep.getState());
+        groep.setKeuring( true);
+        Assert.assertEquals(groep.getState(), States.actiegoedgekeurd.name());
     }
 }
