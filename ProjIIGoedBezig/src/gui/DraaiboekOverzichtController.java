@@ -96,8 +96,6 @@ public class DraaiboekOverzichtController extends GridPane {
     @FXML
     private void toonActieDraaiboek() {
         draaiboekTable.getItems().clear();
-//        feedbackTextArea.setEditable(false);
-//        verzendBtn.setDisable(true);
         List<Taak> taken = dc.geefTaken(actiesListview.getSelectionModel().getSelectedItem());
         for (Taak t : taken) {
             wieColumn.setCellValueFactory(new PropertyValueFactory("wie"));
@@ -115,24 +113,10 @@ public class DraaiboekOverzichtController extends GridPane {
             data.add(t);
             draaiboekTable.setItems(data);
             draaiboekTable.setEditable(true);
-//            if (t.getLectorBijsturing() != null) {
-//                feedbackTextArea.setEditable(false);
-//                verzendBtn.setDisable(true);
-//            }
-
         }
 
     }
 
-//    @FXML
-//    private void keurDraaiboekGoed(ActionEvent event) {
-//        keurDraaiBoek(true);
-//    }
-//
-//    @FXML
-//    private void keurDraaiboekAf(ActionEvent event) {
-//        keurDraaiBoek(false);
-//    }
     private void vulViewOp() {
         actiesListview.setItems(FXCollections.observableArrayList(dc.getActies()));
     }
@@ -185,25 +169,5 @@ public class DraaiboekOverzichtController extends GridPane {
             errorLbl.setText(e.getMessage());
         }
 
-    }
-
-    @FXML
-    private void enableFeedback(MouseEvent event) {
-/*        Taak t = draaiboekTable.getSelectionModel().getSelectedItem();
-        if (t.getLectorBijsturing() == null) {
-            feedbackTextArea.setEditable(true);
-            verzendBtn.setDisable(false);
-        } */
-    }
-
-    @FXML
-    private void setFeedbackTaak(ActionEvent event) { /*
-        dc.setFeedbackTaak(draaiboekTable.getSelectionModel().getSelectedItem(), feedbackTextArea.getText());
-        Taak t = draaiboekTable.getSelectionModel().getSelectedItem();
-        t.setLectorBijsturing(feedbackTextArea.getText());
-        feedbackTextArea.setEditable(false);
-        feedbackTextArea.clear();
-        verzendBtn.setDisable(true);
-        toonActieDraaiboek(); */
     }
 }

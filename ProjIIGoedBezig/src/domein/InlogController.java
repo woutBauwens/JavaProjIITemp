@@ -28,10 +28,6 @@ public class InlogController {
         return user.getPassword().equals(password);
     }
 
-    public void setLector(ContactPersoon lector) {
-        this.lector = lector;
-    }
-
     public ContactPersoon getLector() {
         return lector;
     }
