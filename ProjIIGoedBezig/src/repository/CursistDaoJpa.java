@@ -7,7 +7,6 @@ package repository;
 
 import domein.Cursist;
 import java.util.List;
-import javax.persistence.Query;
 import static repository.GenericDaoJpa.em;
 
 /**

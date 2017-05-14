@@ -5,13 +5,10 @@
  */
 package main;
 
-import persistentie.ConnectionReceiver;
 import persistentie.SQLConnection;
 import domein.InlogController;
 import gui.LoginController;
 import java.sql.SQLException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;

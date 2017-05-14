@@ -5,8 +5,6 @@
  */
 package domeinTest;
 
-import domein.Activiteit;
-import domein.ContactPersoon;
 import domein.Groep;
 import java.sql.SQLException;
 import java.util.List;

@@ -7,8 +7,6 @@ package repository;
 
 import persistentie.LoginUser;
 import domein.ContactPersoon;
-import javax.persistence.NamedQuery;
-import javax.persistence.Query;
 
 /**
  *

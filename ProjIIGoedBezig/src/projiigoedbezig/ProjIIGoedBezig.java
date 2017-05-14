@@ -7,7 +7,6 @@ package projiigoedbezig;
 
 import persistentie.LoginUser;
 import persistentie.SQLConnection;
-import domein.Groep;
 import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
