@@ -23,6 +23,7 @@ import states.States;
 public class StatePatternTest {
 
     private List<Groep> groepen;
+    private GenericDao<Groep> dao;
 
     public StatePatternTest() {
     }
@@ -30,11 +31,16 @@ public class StatePatternTest {
     @Before
     public void initGroep() throws SQLException, ClassNotFoundException {
         SQLConnection.getConnection();
-        GenericDao<Groep> dao = new GenericDaoJpa(Groep.class);
+        dao = new GenericDaoJpa(Groep.class);
         groepen = dao.findAll();
     }
-    
-    private Groep alterGroep(States state){
+
+    private Groep getGroep(States state) {
+        groepen = dao.findAll();
+        return groepen.stream().filter(g -> g.getCurrentState().toString().equals(state.name())).findFirst().orElse(alterGroep(state));
+    }
+
+    private Groep alterGroep(States state) {
         Groep groep = groepen.get(0);
         groep.getCurrentState().setState(state, groep);
      //   Assert.assertEquals(groep.getState(), state.name());
@@ -42,23 +48,58 @@ public class StatePatternTest {
     }
 
     @Test
-    public void toApprovedState(){
-        Groep groep = groepen.stream().filter(g -> g.getState().equals(States.pending.name())).findFirst().orElse(alterGroep(States.pending));
-        groep.setKeuring(true);
-        Assert.assertEquals( States.approved.name(), groep.getState());
-    }
-    
-    @Test
-    public void toDeniedState(){
-        Groep groep = groepen.stream().filter(g -> g.getState().equals(States.pending.name())).findFirst().orElse(alterGroep(States.pending));
-        groep.setKeuring(false);
+    public void toDeniedState() {
+        Groep groep = getGroep(States.pending);
+        groep.keur("", false);
+        Assert.assertEquals(groep.getState(), States.written.name());
         Assert.assertFalse(groep.isGoedgekeurd());
+    }
+
+    @Test
+    public void KeurActieGoed() {
+        Groep groep = getGroep(States.actiepending);
+        groep.actiesgekeurd(true, groep.getActies().get(0).getTitel(), "");
+        Assert.assertTrue(groep.getActies().get(0).isGekeurd());
+        Assert.assertTrue(groep.getActies().get(0).getGoedgekeurd());
+    }
+
+    @Test
+    public void KeurActieAf() {
+        Groep groep = getGroep(States.actiepending);
+        groep.actiesgekeurd(false, groep.getActies().get(0).getTitel(), "");
+        Assert.assertTrue(groep.getActies().get(0).isGekeurd());
+        Assert.assertFalse(groep.getActies().get(0).getGoedgekeurd());
+    }
+
+    @Test
+    public void KeurActiePlanGoed() {
+        Groep groep = getGroep(States.actiepending);
+        groep.keurActieplan(true, "goed");
+        Assert.assertEquals(groep.getState(), States.actiegoedgekeurd.name());
+    }
+
+    @Test
+    public void KeurActiePlanAf() {
+        Groep groep = getGroep(States.actiepending);
+        groep.keurActieplan(false, "fout");
+        Assert.assertEquals(groep.getState(), States.approved.name());
+    }
+
+    @Test
+    public void KeurActieTeVroeg() {
+        Groep groep = getGroep(States.pending);
+        try {
+            groep.actiesgekeurd(true, groep.getActies().get(0).getTitel(), ""); // geen acties, geeft error
+            Assert.assertFalse(groep.getActies().get(0).isGekeurd());
+        } catch (Exception e) {
+            Assert.assertEquals(groep.getState(), States.pending.name());
+        }
     }
     
     @Test(expected = IllegalArgumentException.class)
-    public void noStateUpdate(){
-        Groep groep = groepen.stream().filter(g -> g.getState().equals(States.actiegoedgekeurd.name())).findFirst().orElse(alterGroep(States.actiegoedgekeurd));
-        groep.setKeuring(true);
-       // Assert.assertEquals( States.actiegoedgekeurd.toString(),groep.getState());
+    public void noStateUpdate() {
+        Groep groep = getGroep(States.actiegoedgekeurd);
+        groep.keur("", true);
+        Assert.assertEquals(groep.getState(), States.actiegoedgekeurd.name());
     }
 }

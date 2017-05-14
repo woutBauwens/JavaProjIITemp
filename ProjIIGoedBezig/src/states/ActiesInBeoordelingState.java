@@ -45,6 +45,7 @@ public class ActiesInBeoordelingState extends GroepState {
             if (!a.isGekeurd()) {
                 allesgekeurd = false;
             }
+
         }
         return allesgekeurd;
     }
@@ -52,7 +53,7 @@ public class ActiesInBeoordelingState extends GroepState {
     
         @Override
     public void keurActiePlan(boolean b, String globaleFeedback) {
-        if (!b && globaleFeedback.isEmpty()) {
+        if (globaleFeedback.isEmpty()) {
             throw new IllegalArgumentException();
         }
         groep.setActieplanFeedback(globaleFeedback);
