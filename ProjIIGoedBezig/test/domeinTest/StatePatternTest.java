@@ -50,7 +50,7 @@ public class StatePatternTest {
     @Test
     public void toDeniedState() {
         Groep groep = getGroep(States.pending);
-        groep.keur("", false);
+        groep.setKeuring( false);
         Assert.assertEquals(groep.getState(), States.written.name());
         Assert.assertFalse(groep.isGoedgekeurd());
     }
@@ -99,7 +99,7 @@ public class StatePatternTest {
     @Test(expected = IllegalArgumentException.class)
     public void noStateUpdate() {
         Groep groep = getGroep(States.actiegoedgekeurd);
-        groep.keur("", true);
+        groep.setKeuring( true);
         Assert.assertEquals(groep.getState(), States.actiegoedgekeurd.name());
     }
 }

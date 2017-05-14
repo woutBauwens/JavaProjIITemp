@@ -8,6 +8,7 @@ package domein;
 //import domein.gbGroepStatePattern.GroepStateFactory;
 //import domein.gbGroepStatePattern.State;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 import states.GroepStateFactory;
 import states.State;
 import states.States;
@@ -51,6 +51,7 @@ public class Groep implements Serializable {
 
     public Groep(State state) {
         currentState = state;
+        motivaties = new ArrayList<>();
     }
 
     protected Groep() {
@@ -69,11 +70,11 @@ public class Groep implements Serializable {
     public boolean isVerstuurd() {
         return motivaties.get(0).isVerstuurd();
     }
-
-    public void keur(String feedback, boolean b) {
-        currentState.getCurrentState(this).verwerkMotivatieKeuring(b);
-        motivaties.get(0).setFeedback(feedback);
-    }
+//
+//    public void keur(String feedback, boolean b) {
+//        currentState.getCurrentState(this).verwerkMotivatieKeuring(b);
+//        motivaties.get(0).setFeedback(feedback);
+//    }
 
     public String getNaam() {
         return naam;
@@ -94,12 +95,6 @@ public class Groep implements Serializable {
     public void setKeuring(boolean keuring) {
 
         currentState.getCurrentState(this).setMotivatieKeuring(keuring);
-//        MotivatieIsGoedgekeurd = keuring;
-//        if (keuring) {
-//            toState(States.approved);
-//        } else {
-//            toState(States.written);
-//        }
     }
 
     public State getCurrentState() {
@@ -189,7 +184,7 @@ public class Groep implements Serializable {
         return currentState.getCurrentState(this).actiesgekeurd();
     }
 
-    public void keurActie(boolean b) {
+    public void keurActiePlan(boolean b) {
 
         if (b) {
             toState(States.actiegoedgekeurd);
@@ -197,14 +192,15 @@ public class Groep implements Serializable {
             toState(States.approved);
         }
     }
-
-    public void verwerkMotivatieKeuring(boolean keuring) {
-        if (keuring) {
-            toState(States.approved);
-        } else {
-            toState(States.written);
-        }
-    }
+//
+//    public void verwerkMotivatieKeuring(boolean keuring) {
+//        currentState.getCurrentState(this).verwerkMotivatieKeuring(keuring);
+//        if (keuring) {
+//            toState(States.approved);
+//        } else {
+//            toState(States.written);
+//        }
+//    }
 
     public void verwerkActieKeuring(boolean b, String titel, String feedback) {
         Activiteit actie = getActie(titel);

@@ -40,7 +40,7 @@ public class GroepTest {
 
     @Test
     public void keurMotivatieTest() {
-        groep.keur("feedback", true);
+        groep.setKeuring( true);
         Assert.assertTrue(groep.isGoedgekeurd());
     }
 

@@ -54,6 +54,10 @@ public class Motivatie implements Serializable {
 
     private Motivatie() {
     }
+    public Motivatie(String organisatie, String tekst){
+        NaamOrganisatie=organisatie;
+        MotivatieTekst = tekst;
+    }
 
     public String getTekst() {
         return MotivatieTekst;

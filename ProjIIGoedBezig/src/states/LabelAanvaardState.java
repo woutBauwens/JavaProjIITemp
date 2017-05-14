@@ -41,4 +41,9 @@ public class LabelAanvaardState extends GroepState {
     public boolean draaiboekBeschikbaar() {
         return false;
     }
+    
+        @Override
+    public boolean actieplanReedsGekeurd() {
+        return true;
+    }
 }
